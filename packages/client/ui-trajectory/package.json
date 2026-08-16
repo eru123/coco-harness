@@ -58,7 +58,7 @@
     "@coco-harness/cch-compaction": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
@@ -72,10 +72,10 @@
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
     "@types/react": "~18.3.1",
-    "@types/react-dom": "~18.3.0",
+    "@types/react-dom": "~19.2.3",
     "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^19.2.7"
   },
   "files": [
     "lib/index.js",

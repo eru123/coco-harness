@@ -35,7 +35,7 @@
     "@coco-harness/cch-client-ui-theme": "workspace:^",
     "@coco-harness/cch-client-web-react": "workspace:^",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^19.2.7"
   },
   "devDependencies": {
     "@coco-harness/cordis-plugin-loader": "workspace:^",
@@ -43,7 +43,7 @@
     "@coco-harness/cch-client-test-runtime": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@types/react": "~18.3.1",
-    "@types/react-dom": "~18.3.0",
+    "@types/react-dom": "~19.2.3",
     "@coco-harness/cordis": "workspace:^",
     "typescript": "^6.0.3"
   },
