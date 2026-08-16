@@ -4,13 +4,13 @@
  * product methods, current thread/turn association, unattended approval
  * responses, and terminal-answer selection.
  *
- * @module @deepseek-ai/dsh-subagent-codex/wire
+ * @module @coco-harness/cch-subagent-codex/wire
  */
 
 import type { Readable, Writable } from 'node:stream'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import type { SubagentResult } from '@deepseek-ai/dsh-subagent'
-import { JsonRpcLineTransport } from '@deepseek-ai/dsh-sdk-protocol'
+import type { ContentBlock } from '@coco-harness/cch-llm'
+import type { SubagentResult } from '@coco-harness/cch-subagent'
+import { JsonRpcLineTransport } from '@coco-harness/cch-sdk-protocol'
 
 type JsonObject = Record<string, unknown>
 
@@ -132,8 +132,8 @@ export class CodexAppServerWire {
   async initialize(signal: AbortSignal): Promise<void> {
     object(await this.guarded(this.transport.request('initialize', {
       clientInfo: {
-        name: 'deepseek-harness',
-        title: 'DeepSeek Harness',
+        name: 'coco-harness',
+        title: 'Coco Harness',
         version: '0.0.1',
       },
       capabilities: {

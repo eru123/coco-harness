@@ -1,16 +1,16 @@
 /**
- * dsh-llm's owned branded ids: tool-call correlation and provider request
+ * cch-llm's owned branded ids: tool-call correlation and provider request
  * diagnostics.
  *
- * The `Branded<B>` primitive itself lives in `@deepseek-ai/dsh-brand` (a
+ * The `Branded<B>` primitive itself lives in `@coco-harness/cch-brand` (a
  * zero-dependency type-only package) so every owner of a cross-boundary id can
- * brand it without depending on dsh-llm; see that package's README for the
+ * brand it without depending on cch-llm; see that package's README for the
  * nominal-typing policy.
  *
- * @module @deepseek-ai/dsh-llm/brand
+ * @module @coco-harness/cch-llm/brand
  */
 
-import type { Branded } from '@deepseek-ai/dsh-brand'
+import type { Branded } from '@coco-harness/cch-brand'
 
 /** Stable identity carried by one message across inbox, log, and model-request boundaries. */
 export type MessageId = Branded<'MessageId'>

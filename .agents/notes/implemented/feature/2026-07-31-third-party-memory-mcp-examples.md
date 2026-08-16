@@ -2,8 +2,6 @@
 
 Status: implemented
 
-English | [中文](2026-07-31-third-party-memory-mcp-examples.zh.md)
-
 ## Problem
 
 A direct vendor integration made one provider's API, configuration, health behavior, and tool semantics part of DSH. That was too much product surface for a capability already expressible through MCP, and it would require repeating the same adaptation for every memory system. Users instead need a small, inspectable way to opt into one external memory server while preserving the generic MCP boundary.
@@ -12,7 +10,7 @@ The acceptance bar is stronger than "the socket connects": each reference must s
 
 ## Decision
 
-Ship three default-off Cordis overlay examples under `examples/mcp-memory`: Memorix, MCP Reference Memory, and Engram. Every file inserts exactly one `@deepseek-ai/dsh-mcp-client` row. None is referenced by the shipped composition, and the CLI declares the generic bridge only so an explicitly selected overlay can resolve it.
+Ship three default-off Cordis overlay examples under `examples/mcp-memory`: Memorix, MCP Reference Memory, and Engram. Every file inserts exactly one `@coco-harness/cch-mcp-client` row. None is referenced by the shipped composition, and the CLI declares the generic bridge only so an explicitly selected overlay can resolve it.
 
 These third-party configurations are provided as interoperability examples only. Their inclusion does not imply endorsement, recommendation, partnership, or ongoing support by DeepSeek. There is no memory preset registry, vendor-specific DSH plugin, universal memory service, installation UI, migration layer, health checker, or reconnect controller. Another memory MCP server uses the same documented stdio or Streamable HTTP row.
 
@@ -27,7 +25,7 @@ These third-party configurations are provided as interoperability examples only.
 | Account, auth, model, embedding, storage initialization | No | Yes |
 | Vendor data migration, retry, crash recovery | No | Yes |
 
-The generic stdio transport scrubs ambient credential-shaped and `DSH_*` variables while inheriting other ambient variables. Baseline examples add only required overrides; optional provider secrets must be added to `config.env` or configured in the provider's own files.
+The generic stdio transport scrubs ambient credential-shaped and `CCH_*` variables while inheriting other ambient variables. Baseline examples add only required overrides; optional provider secrets must be added to `config.env` or configured in the provider's own files.
 
 ## Pins, storage, and identity
 
@@ -37,13 +35,13 @@ The generic stdio transport scrubs ambient credential-shaped and `DSH_*` variabl
 | MCP Reference Memory | npm `2026.7.4`, package commit `6dd0a683e198783e30feabf7abaf42f925bd18b1` |
 | Engram | tag `v1.20.0`, commit `ba9e46ced152c37a7cb9e576153c41995873e2fc` |
 
-Storage remains provider-owned. Memorix uses `~/.memorix/data` and Engram uses `~/.engram` by default. The Reference Memory example sets a stable `$HOME/.dsh-mcp-reference-memory.jsonl` path instead of writing into the installed npm package directory. Each provider's own environment variable can override these locations before DSH starts.
+Storage remains provider-owned. Memorix uses `~/.memorix/data` and Engram uses `~/.engram` by default. The Reference Memory example sets a stable `$HOME/.cch-mcp-reference-memory.jsonl` path instead of writing into the installed npm package directory. Each provider's own environment variable can override these locations before DSH starts.
 
 Project identity remains provider-owned: Memorix and Engram use the DSH working directory's Git project, with Engram optionally accepting `ENGRAM_PROJECT`.
 
 ## Model guidance
 
-The examples do not patch `@deepseek-ai/dsh-system-prompt`: a config patch replaces a row's complete config and could erase an existing persona. The README instead offers one optional additive instruction:
+The examples do not patch `@coco-harness/cch-system-prompt`: a config patch replaces a row's complete config and could erase an existing persona. The README instead offers one optional additive instruction:
 
 > When the user asks you to remember something, call a memory write tool. When historical information may be relevant, search memory and use relevant results.
 

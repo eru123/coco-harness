@@ -6,7 +6,7 @@
 import { cleanup, render } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 import type { Root, RootContent } from 'mdast'
-import { MarkdownText } from '@deepseek-ai/dsh-client-ui-primitives'
+import { MarkdownText } from '@coco-harness/cch-client-ui-primitives'
 import { IncrementalMarkdownParser } from '../src/markdown/incremental.ts'
 import { parseGfm } from '../src/markdown/parse.ts'
 
@@ -224,24 +224,24 @@ describe('freeze dynamics around frontier-sensitive constructs', () => {
 
 describe('multibyte content', () => {
   const CJK_DOC = [
-    '# 标题 🎉',
+    '# だいみょうし 🎉',
     '',
-    '这是一段包含 **加粗**、`行内代码` 与表情 😀🚀 的中文段落。',
+    'これは **たいしょ**、`こうないコード` とえもじ 😀🚀 をふくむにほんごのぶんしょうです。',
     '',
-    '- 列表项一 ✅',
-    '- 列表项二',
+    '- こうもくいち ✅',
+    '- こうもくに',
     '',
-    '> 引用一行,带表情 🐟',
+    '> いんよういちぎょう,えもじつき 🐟',
     '',
     '```',
-    '中文代码 🎯',
+    'にほんごコード 🎯',
     '```',
     '',
-    '| 键 | 值 |',
+    '| キー | バリュー |',
     '| --- | --- |',
-    '| 甲 | 乙 |',
+    '| カ | ア |',
     '',
-    '结尾段落,足够多的块让前面全部冻结。🌊',
+    'まつびのぶんしょう,じゅうぶんなブロックすうでてまえがすべてとうけつされる。🌊',
   ].join('\n')
 
   it('code-unit chunking (splitting surrogate pairs mid-stream) matches fresh renders', () => {

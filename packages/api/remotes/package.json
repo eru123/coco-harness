@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-api-remotes",
+  "name": "@coco-harness/cch-api-remotes",
   "description": "Remote BFF assembly and Host Agent/Session lookup policy",
   "version": "0.1.0-rc.5",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/eru123/coco-harness.git",
     "directory": "packages/api/remotes"
   },
   "type": "module",
@@ -33,10 +33,10 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "cch": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-api-gateway"
+        "@coco-harness/cch-api-gateway"
       ],
       "platform": "web",
       "immediately": true
@@ -55,42 +55,42 @@
     "lib/types/**/*.d.ts"
   ],
   "dependencies": {
-    "@deepseek-ai/dsh-typert-protocol": "workspace:^"
+    "@coco-harness/cch-typert-protocol": "workspace:^"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "workspace:^",
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-api-gateway": "workspace:^",
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-credentials": "workspace:^",
-    "@deepseek-ai/dsh-goal": "workspace:^",
-    "@deepseek-ai/dsh-cordis-host-runner": "workspace:^",
-    "@deepseek-ai/dsh-host-plugin-inventory": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-agent-presets": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-message-feedback": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-persistence": "workspace:^",
-    "@deepseek-ai/dsh-settings": "workspace:^",
-    "@deepseek-ai/dsh-typert-registry": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cch-agent": "workspace:^",
+    "@coco-harness/cch-api-gateway": "workspace:^",
+    "@coco-harness/cch-commands": "workspace:^",
+    "@coco-harness/cch-credentials": "workspace:^",
+    "@coco-harness/cch-goal": "workspace:^",
+    "@coco-harness/cch-cordis-host-runner": "workspace:^",
+    "@coco-harness/cch-host-plugin-inventory": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-agent-presets": "workspace:^",
+    "@coco-harness/cch-llm": "workspace:^",
+    "@coco-harness/cch-message-feedback": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-session-persistence": "workspace:^",
+    "@coco-harness/cch-settings": "workspace:^",
+    "@coco-harness/cch-typert-registry": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-api-gateway": "workspace:^",
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-credentials": "workspace:^",
-    "@deepseek-ai/dsh-goal": "workspace:^",
-    "@deepseek-ai/dsh-cordis-host-runner": "workspace:^",
-    "@deepseek-ai/dsh-host-plugin-inventory": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-agent-presets": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-message-feedback": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-persistence": "workspace:^",
-    "@deepseek-ai/dsh-settings": "workspace:^",
-    "@deepseek-ai/dsh-typert-registry": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@coco-harness/cch-agent": "workspace:^",
+    "@coco-harness/cch-api-gateway": "workspace:^",
+    "@coco-harness/cch-commands": "workspace:^",
+    "@coco-harness/cch-credentials": "workspace:^",
+    "@coco-harness/cch-goal": "workspace:^",
+    "@coco-harness/cch-cordis-host-runner": "workspace:^",
+    "@coco-harness/cch-host-plugin-inventory": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-agent-presets": "workspace:^",
+    "@coco-harness/cch-llm": "workspace:^",
+    "@coco-harness/cch-message-feedback": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-session-persistence": "workspace:^",
+    "@coco-harness/cch-settings": "workspace:^",
+    "@coco-harness/cch-typert-registry": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
   }
 }

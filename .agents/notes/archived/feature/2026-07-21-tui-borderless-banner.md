@@ -3,8 +3,6 @@
 Status: implemented
 Archived: 2026-07-26
 
-English | [中文](2026-07-21-tui-borderless-banner.zh.md)
-
 ## Problem
 
 An intermediate no-banner design removed the boxed startup banner: it deleted `HeaderComponent` and its sweep, moved the model into the footer, dropped the session id, and rendered `welcome` as the transcript's first line. The user's verdict reversed that: bring the banner back — "just remove the border". The four-row box frame was the objectionable chrome, not the identifying facts it carried (model, session id) nor the sweep-in motion.
@@ -44,4 +42,4 @@ This note owns the current result of the discarded startup variants: random slog
 
 ## Testing
 
-`packages/ui/tui/tests/tui.spec.ts` pins: the borderless banner sweeps to natural completion — no box corners, title and `main-session` detail present — with at least one clipped mid-sweep frame; a configured `welcome` renders the whole banner with no clipped frame; the unset-welcome banner has no subtitle; and dispose clears the sweep interval mid-sweep. Independent color-scheme cases cover reported light/dark transitions, a same-scheme no-op, and a terminal that throws on the DSR query write; `applyColorScheme` relies on `setStatus` to rederive the editor border instead of repeating the dead assignment that had broken per-file coverage. The tui-agent and dsh-CLI PTY smokes boot on the `main-session-` detail marker and assert no box corners. Snapshots verify the full frames.
+`packages/ui/tui/tests/tui.spec.ts` pins: the borderless banner sweeps to natural completion — no box corners, title and `main-session` detail present — with at least one clipped mid-sweep frame; a configured `welcome` renders the whole banner with no clipped frame; the unset-welcome banner has no subtitle; and dispose clears the sweep interval mid-sweep. Independent color-scheme cases cover reported light/dark transitions, a same-scheme no-op, and a terminal that throws on the DSR query write; `applyColorScheme` relies on `setStatus` to rederive the editor border instead of repeating the dead assignment that had broken per-file coverage. The tui-agent and cch-CLI PTY smokes boot on the `main-session-` detail marker and assert no box corners. Snapshots verify the full frames.

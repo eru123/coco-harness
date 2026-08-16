@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-command-feedback",
+  "name": "@coco-harness/cch-command-feedback",
   "description": "Log-only session feedback producer and human-facing slash command",
   "version": "0.1.0-rc.5",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/eru123/coco-harness.git",
     "directory": "packages/feedback/command-feedback"
   },
   "type": "module",
@@ -32,23 +32,23 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-telemetry": "workspace:^",
-    "@deepseek-ai/dsh-anonymous-user-id": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@coco-harness/cch-commands": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-session-telemetry": "workspace:^",
+    "@coco-harness/cch-anonymous-user-id": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/cordis-plugin-include": "workspace:^",
-    "@deepseek-ai/cordis-plugin-loader": "workspace:^",
-    "@deepseek-ai/dsh-agent": "workspace:^",
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/dsh-session-telemetry": "workspace:^",
-    "@deepseek-ai/dsh-anonymous-user-id": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@coco-harness/cordis-plugin-include": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^",
+    "@coco-harness/cch-agent": "workspace:^",
+    "@coco-harness/cch-commands": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-llm": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-session-telemetry": "workspace:^",
+    "@coco-harness/cch-anonymous-user-id": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
   }
 }

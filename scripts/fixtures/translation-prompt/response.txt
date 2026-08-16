@@ -3,13 +3,13 @@
 layout: doc
 ---
 
-# 快照说明
+# Snapshot note
 
-agent（智能体）执行一个步骤。
+The agent performs one step.
 </translation>
 
 <review>
-- 无修正
+- No corrections
 </review>
 
 <final>
@@ -17,7 +17,7 @@ agent（智能体）执行一个步骤。
 layout: doc
 ---
 
-# 快照说明
+# Snapshot note
 
-agent（智能体）执行一个步骤。
+The agent performs one step.
 </final>

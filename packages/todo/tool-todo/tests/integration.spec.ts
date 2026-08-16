@@ -1,11 +1,11 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@coco-harness/cch-llm'
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import * as ToolTodo from '@deepseek-ai/dsh-tool-todo'
+import { Context } from '@coco-harness/cordis'
+import { SessionId, type SessionEvent } from '@coco-harness/cch-session'
+import type { Agent } from '@coco-harness/cch-agent'
+import AgentLoop from '@coco-harness/cch-agent-loop'
+import { mountAgentLoopTestDependencies } from '@coco-harness/cch-agent-loop-testkit'
+import * as ToolTodo from '@coco-harness/cch-tool-todo'
 import { MockAdapter, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 
 /**

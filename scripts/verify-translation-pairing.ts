@@ -167,13 +167,18 @@ if (writeMode) {
 const errors: string[] = []
 const state = new Map<string, 'ok' | 'out-of-sync' | 'missing'>()
 
-// 1. Every discovered, non-excluded source merges bilingual.
-for (const source of sources) {
-  if (isExcluded(source)) continue
-  const { zh } = translationPairPaths(source)
-  if (!repositoryFileExists(zh)) {
-    errors.push(`${source}: in-scope documentation must merge bilingual (docs/i18n/README.md); add the counterpart and record the pair`)
-    state.set(source, 'missing')
+// 1. Every discovered, non-excluded source merges bilingual. Vacuous in a
+// translation-free tree (this fork ships English only): with zero `.zh.md`
+// and zero `.i18n.yaml` files there is nothing to pair, so the rule stays
+// dormant until a translation is actually introduced.
+if (translations.length > 0 || metas.length > 0) {
+  for (const source of sources) {
+    if (isExcluded(source)) continue
+    const { zh } = translationPairPaths(source)
+    if (!repositoryFileExists(zh)) {
+      errors.push(`${source}: in-scope documentation must merge bilingual (docs/i18n/README.md); add the counterpart and record the pair`)
+      state.set(source, 'missing')
+    }
   }
 }
 

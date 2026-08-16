@@ -24,20 +24,7 @@ try {
   if (mode !== undefined && mode !== '--snapshot') throw new Error(`unsupported argument ${JSON.stringify(mode)}`)
   const document = read('docs/i18n/translation-prompt.md')
   const terminology = read('docs/i18n/terminology.md')
-  const examplePaths = [
-    ['README.md', 'README.zh.md'],
-    ['docs/development.md', 'docs/development.zh.md'],
-    ['docs/i18n/README.md', 'docs/i18n/README.zh.md'],
-    ['docs/i18n/translation-rules.md', 'docs/i18n/translation-rules.zh.md'],
-    [
-      '.agents/notes/implemented/process/2026-07-02-bilingual-docs-and-pairing-gate.md',
-      '.agents/notes/implemented/process/2026-07-02-bilingual-docs-and-pairing-gate.zh.md',
-    ],
-  ] as const
-  const examples: TranslationExample[] = examplePaths.map(([english, chinese]) => ({
-    english: read(english),
-    chinese: read(chinese),
-  }))
+  const examples: TranslationExample[] = []
   const sourceDocument = read('scripts/fixtures/translation-prompt/snapshot-note.md')
   const recordedResponse = read('scripts/fixtures/translation-prompt/response.txt')
   const documented = documentedTranslationPromptPlaceholders(document)
@@ -60,7 +47,7 @@ try {
   if (example === undefined) throw new Error('rendered prompt has no three-section response example')
   parseTranslationResponse(example)
 
-  const roundTrip = { translation: 'first pass\n\nwith **markdown**', review: '- 无修正', final: 'final text' }
+  const roundTrip = { translation: 'first pass\n\nwith **markdown**', review: '- No corrections', final: 'final text' }
   const parsed = parseTranslationResponse(renderTranslationResponse(roundTrip))
   if (JSON.stringify(parsed) !== JSON.stringify(roundTrip)) throw new Error('three-section response does not round-trip')
 
@@ -76,9 +63,9 @@ try {
     'layout: doc',
     '---',
     '',
-    '# 快照说明',
+    '# Snapshot note',
     '',
-    '[English](snapshot-note.md) | 中文',
+    '[English](snapshot-note.md) | Chinese',
     '',
   ].join('\n')
   if (!consumed.final.startsWith(expectedFinalPrefix)) {

@@ -3,8 +3,6 @@
 Status: implemented
 Archived: 2026-07-27
 
-English | [中文](2026-07-17-run-ci-examples-from-built-lib.zh.md)
-
 ## Problem
 
 CI boots examples and Cordis-backed test projects through `node --import tsx` and the root tsconfig `paths` map. This adds TypeScript transformation cost and changes package resolution: imports resolve to workspace source instead of following package `exports` into built `lib/`.
@@ -28,7 +26,7 @@ Every test Cordis config must resolve its bare modules by walking upward from th
 
 ### Launch policy
 
-The shared Loader test harness selects `src` or `lib` from `DSH_EXAMPLE_MODE`. CI builds first and selects `lib`; an unset mode keeps the fast local source loop.
+The shared Loader test harness selects `src` or `lib` from `CCH_EXAMPLE_MODE`. CI builds first and selects `lib`; an unset mode keeps the fast local source loop.
 
 ## Alternatives considered
 

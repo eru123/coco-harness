@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import SessionStore, { Session, SessionId } from '@deepseek-ai/dsh-session'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import { CompactionId, compactCheckpointSource } from '@deepseek-ai/dsh-compaction'
-import * as CompactionInvariant from '@deepseek-ai/dsh-compaction/invariant'
-import { CommandId } from '@deepseek-ai/dsh-commands/brand'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
+import { Context } from '@coco-harness/cordis'
+import SessionStore, { Session, SessionId } from '@coco-harness/cch-session'
+import { createUserMessage } from '@coco-harness/cch-llm'
+import { CompactionId, compactCheckpointSource } from '@coco-harness/cch-compaction'
+import * as CompactionInvariant from '@coco-harness/cch-compaction/invariant'
+import { CommandId } from '@coco-harness/cch-commands/brand'
+import InvariantRegistry from '@coco-harness/cch-invariants'
 
 async function setup(): Promise<Context> {
   const ctx = new Context()

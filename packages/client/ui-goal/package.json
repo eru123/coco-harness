@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-client-ui-goal",
+  "name": "@coco-harness/cch-client-ui-goal",
   "description": "Session goal surface: GoalBar docked above the composer, read from the goal session projection",
   "version": "0.1.0-rc.5",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/eru123/coco-harness.git",
     "directory": "packages/client/ui-goal"
   },
   "type": "module",
@@ -29,13 +29,13 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "cch": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-client-runtime",
-        "@deepseek-ai/dsh-api-remotes",
-        "@deepseek-ai/dsh-client-locale",
-        "@deepseek-ai/dsh-client-ui-conversation"
+        "@coco-harness/cch-client-runtime",
+        "@coco-harness/cch-api-remotes",
+        "@coco-harness/cch-client-locale",
+        "@coco-harness/cch-client-ui-conversation"
       ],
       "platform": "web"
     }
@@ -46,32 +46,32 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-client-locale": "workspace:^",
-    "@deepseek-ai/dsh-api-remotes": "workspace:^",
-    "@deepseek-ai/dsh-client-runtime": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-conversation": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-primitives": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-slots": "workspace:^",
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-goal": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^",
+    "@coco-harness/cch-client-locale": "workspace:^",
+    "@coco-harness/cch-api-remotes": "workspace:^",
+    "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-conversation": "workspace:^",
+    "@coco-harness/cch-client-ui-primitives": "workspace:^",
+    "@coco-harness/cch-client-ui-slots": "workspace:^",
+    "@coco-harness/cch-commands": "workspace:^",
+    "@coco-harness/cch-goal": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-client-locale": "workspace:^",
-    "@deepseek-ai/dsh-api-remotes": "workspace:^",
-    "@deepseek-ai/dsh-client-runtime": "workspace:^",
-    "@deepseek-ai/dsh-client-test-runtime": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-conversation": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-primitives": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-slots": "workspace:^",
-    "@deepseek-ai/dsh-commands": "workspace:^",
-    "@deepseek-ai/dsh-goal": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
+    "@coco-harness/cch-client-locale": "workspace:^",
+    "@coco-harness/cch-api-remotes": "workspace:^",
+    "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-test-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-conversation": "workspace:^",
+    "@coco-harness/cch-client-ui-primitives": "workspace:^",
+    "@coco-harness/cch-client-ui-slots": "workspace:^",
+    "@coco-harness/cch-commands": "workspace:^",
+    "@coco-harness/cch-goal": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
     "@testing-library/react": "^16.1.0",
     "@types/react": "~18.3.1",
-    "@deepseek-ai/cordis": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

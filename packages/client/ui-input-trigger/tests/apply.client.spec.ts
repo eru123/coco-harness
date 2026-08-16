@@ -4,18 +4,18 @@
  * registration follows the slot declaration, resolves the per-session controller from the slot's
  * sessionId, and unregisters on fiber teardown.
  */
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@coco-harness/cordis'
 import { describe, expect, it } from 'vitest'
-import { LocaleRuntime } from '@deepseek-ai/dsh-client-locale/client'
-import { usePinnedBrowserLanguages } from '@deepseek-ai/dsh-client-test-runtime'
-import { createScope, scopeOf, SlotRegistry } from '@deepseek-ai/dsh-client-runtime/client'
-import type { SessionId } from '@deepseek-ai/dsh-client-runtime/client'
-import { apply, inject, InputTriggerService } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
-import type { MenuViewInjected } from '@deepseek-ai/dsh-client-ui-input-trigger/client'
+import { LocaleRuntime } from '@coco-harness/cch-client-locale/client'
+import { usePinnedBrowserLanguages } from '@coco-harness/cch-client-test-runtime'
+import { createScope, scopeOf, SlotRegistry } from '@coco-harness/cch-client-runtime/client'
+import type { SessionId } from '@coco-harness/cch-client-runtime/client'
+import { apply, inject, InputTriggerService } from '@coco-harness/cch-client-ui-input-trigger/client'
+import type { MenuViewInjected } from '@coco-harness/cch-client-ui-input-trigger/client'
 
 // The service reads its initial locale from the browser; these specs assert
-// the shipped Chinese copy, so they state the browser they assume.
-usePinnedBrowserLanguages('zh-CN')
+// the shipped copy, so they state the browser they assume.
+usePinnedBrowserLanguages('en-US')
 
 const sid = (k: string): SessionId => k as SessionId
 
@@ -46,12 +46,11 @@ describe('apply', () => {
     expect(inject).toEqual(['sessions', 'locale'])
   })
 
-  it('registers the bilingual menu dictionaries (group titles by source name + the pending row)', async () => {
+  it('registers the menu dictionaries (group titles by source name + the pending row)', async () => {
     const { ctx, locale } = await bench()
     await ctx.plugin({ inject: [...inject], apply }).await()
     const t = locale.bind('slash.menu')
-    expect(t('command')).toBe('命令')
-    locale.setLocale('en')
+    expect(t('command')).toBe('Commands')
     expect(t('skill')).toBe('Skills')
     expect(t('subagent')).toBe('Subagents')
     expect(t('loading')).toBe('Loading…')

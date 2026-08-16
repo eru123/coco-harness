@@ -1,5 +1,5 @@
 {
-  "name": "@deepseek-ai/dsh-client-ui-workspace",
+  "name": "@coco-harness/cch-client-ui-workspace",
   "description": "Workspace picker plugin: one WorkspacePicker registered into the sidebar and empty-state workspace slots",
   "version": "0.1.0-rc.5",
   "publishConfig": {
@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/eru123/coco-harness.git",
     "directory": "packages/client/ui-workspace"
   },
   "type": "module",
@@ -29,13 +29,13 @@
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
-  "dsh": {
+  "cch": {
     "client": {
       "inject": [
-        "@deepseek-ai/dsh-client-locale",
-        "@deepseek-ai/dsh-client-runtime",
-        "@deepseek-ai/dsh-client-ui-conversation",
-        "@deepseek-ai/dsh-client-ui-sidebar"
+        "@coco-harness/cch-client-locale",
+        "@coco-harness/cch-client-runtime",
+        "@coco-harness/cch-client-ui-conversation",
+        "@coco-harness/cch-client-ui-sidebar"
       ],
       "platform": "web"
     }
@@ -49,25 +49,25 @@
     "clsx": "^2.0.0"
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-client-locale": "workspace:^",
-    "@deepseek-ai/dsh-client-runtime": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-primitives": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-slots": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^",
+    "@coco-harness/cch-client-locale": "workspace:^",
+    "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-primitives": "workspace:^",
+    "@coco-harness/cch-client-ui-slots": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-client-locale": "workspace:^",
-    "@deepseek-ai/dsh-client-runtime": "workspace:^",
-    "@deepseek-ai/dsh-client-test-runtime": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-conversation": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-primitives": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-sidebar": "workspace:^",
-    "@deepseek-ai/dsh-client-ui-slots": "workspace:^",
-    "@deepseek-ai/dsh-invariants": "workspace:^",
+    "@coco-harness/cch-client-locale": "workspace:^",
+    "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-test-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-conversation": "workspace:^",
+    "@coco-harness/cch-client-ui-primitives": "workspace:^",
+    "@coco-harness/cch-client-ui-sidebar": "workspace:^",
+    "@coco-harness/cch-client-ui-slots": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
     "@types/react": "~18.3.1",
-    "@deepseek-ai/cordis": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0"
   },
   "files": [

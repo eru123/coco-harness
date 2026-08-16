@@ -2,9 +2,9 @@ import { fileURLToPath } from 'node:url'
 import type { Browser, Page } from 'playwright'
 import { chromium } from 'playwright'
 import { afterAll, beforeAll, describe, expect, it, onTestFailed } from 'vitest'
-import { createMessage, createUserMessage } from '@deepseek-ai/dsh-llm'
-import { SESSION_FORMAT_VERSION, Session, SessionId } from '@deepseek-ai/dsh-session'
-import type {} from '@deepseek-ai/dsh-session-title'
+import { createMessage, createUserMessage } from '@coco-harness/cch-llm'
+import { SESSION_FORMAT_VERSION, Session, SessionId } from '@coco-harness/cch-session'
+import type {} from '@coco-harness/cch-session-title'
 import {
   assertFixtureInventory,
   captureStableAria,
@@ -23,17 +23,17 @@ const MODE = webSnapshotMode()
 const SEED_ID = 'markdown-cjk-strong-web-e2e'
 const DONE = 'CJK_STRONG_DONE'
 const CASES = [
-  ['**注意：**内容', '注意：', '注意：内容'],
-  ['**Notice:**内容', 'Notice:', 'Notice:内容'],
-  ['**事件中间件（waterfall）**实现', '事件中间件（waterfall）', '事件中间件（waterfall）实现'],
-  ['**事件中间件(waterfall)**实现', '事件中间件(waterfall)', '事件中间件(waterfall)实现'],
-  ['**句号。**后续', '句号。', '句号。后续'],
-  ['**Period.**后续', 'Period.', 'Period.后续'],
-  ['**提醒！**继续', '提醒！', '提醒！继续'],
-  ['**Warning!**继续', 'Warning!', 'Warning!继续'],
+  ['**Note：**content', 'Note：', 'Note：content'],
+  ['**Notice:**content', 'Notice:', 'Notice:content'],
+  ['**Middleware（waterfall）**implementation', 'Middleware（waterfall）', 'Middleware（waterfall）implementation'],
+  ['**Middleware(waterfall)**implementation', 'Middleware(waterfall)', 'Middleware(waterfall)implementation'],
+  ['**Period。**follow-up', 'Period。', 'Period。follow-up'],
+  ['**Period.**follow-up', 'Period.', 'Period.follow-up'],
+  ['**Reminder！**continue', 'Reminder！', 'Reminder！continue'],
+  ['**Warning!**continue', 'Warning!', 'Warning!continue'],
 ] as const
 
-/** Build one settled assistant reply covering CJK-adjacent strong punctuation boundaries. */
+/** Build one settled assistant reply covering strong-span boundaries at CJK punctuation. */
 function markdownFixture(): string {
   const session = Session.create(SessionId('markdown-cjk-strong-source'))
   const eventTimeOrigin = new Date().setHours(12, 0, 0, 0)
@@ -84,7 +84,7 @@ function markdownFixture(): string {
   ].join('\n')
 }
 
-describe('web e2e: CJK-adjacent Markdown strong emphasis', () => {
+describe('web e2e: Markdown strong emphasis at CJK punctuation', () => {
   let scaffold: WebScaffold
   let browser: Browser
   let page: Page
@@ -105,7 +105,7 @@ describe('web e2e: CJK-adjacent Markdown strong emphasis', () => {
     await scaffold?.close()
   })
 
-  it.skipIf(MODE === 'record')('renders punctuation-terminated strong spans before adjacent CJK text', async () => {
+  it.skipIf(MODE === 'record')('renders punctuation-terminated strong spans before adjacent text', async () => {
     onTestFailed(() => saveFailureShot(page, 'web-e2e-markdown-cjk-strong'))
     const groupRow = page.locator('[role="treeitem"]').first()
     await groupRow.waitFor({ timeout: 15_000 })

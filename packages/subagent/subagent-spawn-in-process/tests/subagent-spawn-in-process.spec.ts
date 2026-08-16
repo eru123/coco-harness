@@ -1,20 +1,20 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@coco-harness/cch-llm'
 import { describe, expect, it } from 'vitest'
-import { Context, symbols, type EffectMeta } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import * as SessionInvariant from '@deepseek-ai/dsh-session/invariant'
-import * as AgentInvariant from '@deepseek-ai/dsh-agent/invariant'
-import * as AgentLoopInvariant from '@deepseek-ai/dsh-agent-loop/invariant'
-import SubagentRuntime, { type SubagentStartRequest } from '@deepseek-ai/dsh-subagent'
+import { Context, symbols, type EffectMeta } from '@coco-harness/cordis'
+import Loader from '@coco-harness/cordis-plugin-loader'
+import AgentRegistry, { type Agent } from '@coco-harness/cch-agent'
+import { SessionId } from '@coco-harness/cch-session'
+import AgentLoop from '@coco-harness/cch-agent-loop'
+import { mountAgentLoopTestDependencies } from '@coco-harness/cch-agent-loop-testkit'
+import InvariantRegistry from '@coco-harness/cch-invariants'
+import * as SessionInvariant from '@coco-harness/cch-session/invariant'
+import * as AgentInvariant from '@coco-harness/cch-agent/invariant'
+import * as AgentLoopInvariant from '@coco-harness/cch-agent-loop/invariant'
+import SubagentRuntime, { type SubagentStartRequest } from '@coco-harness/cch-subagent'
 import { MockAdapter, maxTokensResponse, textResponse, toolCallResponse } from '../../../core/agent-loop/tests/mock-adapter.ts'
 import * as spawn from '../src/index.ts'
-import { STRUCTURED_OUTPUT_TOOL } from '@deepseek-ai/dsh-subagent-in-process-driver'
-import { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
+import { STRUCTURED_OUTPUT_TOOL } from '@coco-harness/cch-subagent-in-process-driver'
+import { defineContentToolFixture } from '@coco-harness/cch-tools'
 
 type Script = ConstructorParameters<typeof MockAdapter>[0]
 
@@ -64,7 +64,7 @@ function disposeChildLifecycle(parent: Agent): void {
   void lifecycle()
 }
 
-describe('dsh-subagent-spawn-in-process', () => {
+describe('cch-subagent-spawn-in-process', () => {
   it('runs a fresh child to completion and returns its final assistant output', async () => {
     // One model call for the child: a plain text answer.
     const { ctx, parent } = await setup([textResponse('child answer')])

@@ -12,29 +12,29 @@
   - img
 - heading "CJK strong emphasis" [level=2]
 - paragraph:
-  - strong: 注意：
-  - text: 内容
+  - strong: "Note："
+  - text: content
 - paragraph:
   - strong: "Notice:"
-  - text: 内容
+  - text: content
 - paragraph:
-  - strong: 事件中间件（waterfall）
-  - text: 实现
+  - strong: Middleware（waterfall）
+  - text: implementation
 - paragraph:
-  - strong: 事件中间件(waterfall)
-  - text: 实现
+  - strong: Middleware(waterfall)
+  - text: implementation
 - paragraph:
-  - strong: 句号。
-  - text: 后续
+  - strong: "Period。"
+  - text: follow-up
 - paragraph:
   - strong: Period.
-  - text: 后续
+  - text: follow-up
 - paragraph:
-  - strong: 提醒！
-  - text: 继续
+  - strong: "Reminder！"
+  - text: continue
 - paragraph:
   - strong: Warning!
-  - text: 继续
+  - text: continue
 - paragraph: CJK_STRONG_DONE
 - button "Copy":
   - img

@@ -3,15 +3,13 @@
 Status: implemented
 Archived: 2026-08-04
 
-English | [中文](2026-07-22-tui-interactive-extension-service.zh.md)
-
 ## Problem
 
 Cordis plugins can register human commands through `ctx.commands`, but a command that needs terminal interaction has no supported presentation boundary. It must either remain non-interactive or capture the TUI's private pi-tui tree, focus state, renderer, and shutdown lifecycle. That coupling makes the extension depend on one front door's internals, lets independently developed overlays compete for focus, and leaves plugin unload with no reliable way to remove queued or visible UI.
 
 ## Decision
 
-A mounted `@deepseek-ai/dsh-tui` provides `ctx.tui` after terminal startup succeeds. The service belongs to that exact terminal and agent, disappears before terminal teardown, and causes plugins that inject it to unload and reload with provider availability. Other front doors do not emulate it.
+A mounted `@coco-harness/cch-tui` provides `ctx.tui` after terminal startup succeeds. The service belongs to that exact terminal and agent, disappears before terminal teardown, and causes plugins that inject it to unload and reload with provider availability. Other front doors do not emulate it.
 
 `ctx.tui.openOverlay()` is the first and only interactive extension primitive. It accepts a component factory, constrained layout options, and an optional abort signal. The factory receives a frozen host with the current viewport, semantic theme functions, display-text escaping, redraw, close, and a lifetime signal. It does not receive the pi-tui `TUI`, overlay handle, editor, transcript tree, focus controller, or terminal object.
 

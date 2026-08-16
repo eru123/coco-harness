@@ -1,9 +1,9 @@
 /**
  * Bounded sharing and exclusive reservation of unpublished Sessions.
- * @module @deepseek-ai/dsh-session-persistence/preparations
+ * @module @coco-harness/cch-session-persistence/preparations
  */
 
-import type { Session, SessionId } from '@deepseek-ai/dsh-session'
+import type { Session, SessionId } from '@coco-harness/cch-session'
 
 interface PreparedSource {
   readonly session: Session

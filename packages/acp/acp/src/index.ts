@@ -6,15 +6,15 @@
  * permission decisions; presentation and human-interaction features stay with
  * the harness's UI modules.
  *
- * @module @deepseek-ai/dsh-acp
+ * @module @coco-harness/cch-acp
  */
 
-import type { Context } from '@deepseek-ai/cordis'
+import type { Context } from '@coco-harness/cordis'
 import { randomUUID } from 'node:crypto'
 import { isAbsolute } from 'node:path'
 import { Readable, Writable } from 'node:stream'
-import Schema from '@deepseek-ai/schemastery'
-import { createUserMessage, errorChain } from '@deepseek-ai/dsh-llm'
+import Schema from '@coco-harness/schemastery'
+import { createUserMessage, errorChain } from '@coco-harness/cch-llm'
 import {
   AgentSideConnection,
   ndJsonStream,
@@ -33,10 +33,10 @@ import {
   type StopReason,
   type Stream,
 } from '@agentclientprotocol/sdk'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { SessionId, type SessionEvent, type TurnEndReason } from '@deepseek-ai/dsh-session'
+import type { Agent } from '@coco-harness/cch-agent'
+import { SessionId, type SessionEvent, type TurnEndReason } from '@coco-harness/cch-session'
 // Side-effect type import: declaration-merges the approval waterfall answered below.
-import type {} from '@deepseek-ai/dsh-user-approval'
+import type {} from '@coco-harness/cch-user-approval'
 import { acpPromptToText, promptHasUnsupportedContent, turnEndToStopReason } from './codec.ts'
 
 export const name = 'acp'
@@ -210,7 +210,7 @@ export function apply(ctx: Context, config: AcpConfig): void {
   })
 
   // Permission requests are a machine policy channel for ACP clients such as
-  // dsh-subagent-acp. The bridge offers one-shot choices only and never infers a
+  // cch-subagent-acp. The bridge offers one-shot choices only and never infers a
   // durable grant from an unknown client response.
   ctx.on('approval/request', (request, next) => {
     const record = ownedRecord(request.agent)
@@ -236,7 +236,7 @@ export function apply(ctx: Context, config: AcpConfig): void {
         // the latest supported" both resolve to this server's one version.
         return Promise.resolve({
           protocolVersion: PROTOCOL_VERSION,
-          agentInfo: { name: 'deepseek-harness-acp', version: '0.0.1' },
+          agentInfo: { name: 'coco-harness-acp', version: '0.0.1' },
           agentCapabilities: {
             promptCapabilities: { image: false, audio: false, embeddedContext: false },
           },
@@ -255,7 +255,7 @@ export function apply(ctx: Context, config: AcpConfig): void {
         // No preset composition: the ACP bundle keeps the model-facing rows in
         // the host plane, so this agent reads them from the global layer. A
         // deployment that configures a roster has to join one here first
-        // (@deepseek-ai/dsh-agent-presets README, "Composing a child agent").
+        // (@coco-harness/cch-agent-presets README, "Composing a child agent").
         const handle = await agents.create({
           sessionId,
           meta: { cwd: params.cwd },

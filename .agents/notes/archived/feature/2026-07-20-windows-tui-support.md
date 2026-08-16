@@ -3,8 +3,6 @@
 Status: implemented
 Archived: 2026-08-04
 
-English | [中文](2026-07-20-windows-tui-support.zh.md)
-
 ## Problem
 
 The full-screen TUI delegates raw input, ANSI rendering, resize events, and terminal restoration to pi-tui's `ProcessTerminal`. That dependency contains a native Windows console path, but the repository's real-process smoke used Python's POSIX-only `pty` and `termios` modules. Skipping that smoke on Windows would leave the supported product path without coverage for startup, input, interaction, failure reporting, or restoration.
@@ -13,7 +11,7 @@ The TUI platform contract must follow the runtime shipped to users rather than t
 
 ## Decision
 
-[`@deepseek-ai/dsh-tui`](../../../../packages/ui/tui/README.md) supports interactive terminals on Windows as well as macOS and Linux. The product continues to use pi-tui's `ProcessTerminal`; on Windows it enables virtual-terminal input after raw mode and avoids the Unix-only `SIGWINCH` refresh. DeepSeek Harness adds no platform rejection or reduced Windows mode.
+[`@coco-harness/cch-tui`](../../../../packages/ui/tui/README.md) supports interactive terminals on Windows as well as macOS and Linux. The product continues to use pi-tui's `ProcessTerminal`; on Windows it enables virtual-terminal input after raw mode and avoids the Unix-only `SIGWINCH` refresh. Coco Harness adds no platform rejection or reduced Windows mode.
 
 The real Loader smoke selects a native pseudo-terminal boundary by host. macOS and Linux retain the Python POSIX PTY driver. Windows uses `node-pty` and ConPTY. Both drivers receive the same launch command, environment, terminal dimensions, marker-gated input actions, timeout, expected exit code, and output assertions, and all three smoke scenarios run on every supported platform.
 

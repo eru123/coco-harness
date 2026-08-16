@@ -1,11 +1,11 @@
 /**
  * Human-facing `/compact` command over the backend-independent compaction seam.
- * @module @deepseek-ai/dsh-command-compact
+ * @module @coco-harness/cch-command-compact
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import { ManualCompactionError } from '@deepseek-ai/dsh-compaction'
-import type { CommandInvocation, CommandResult } from '@deepseek-ai/dsh-commands'
+import type { Context } from '@coco-harness/cordis'
+import { ManualCompactionError } from '@coco-harness/cch-compaction'
+import type { CommandInvocation, CommandResult } from '@coco-harness/cch-commands'
 
 export const name = 'command-compact'
 export const inject = ['commands', 'compaction']

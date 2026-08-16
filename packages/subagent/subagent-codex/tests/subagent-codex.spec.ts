@@ -1,17 +1,17 @@
 import { PassThrough } from 'node:stream'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
+import { Context } from '@coco-harness/cordis'
+import Loader from '@coco-harness/cordis-plugin-loader'
 import { describe, expect, it, vi } from 'vitest'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import SubagentRuntime from '@deepseek-ai/dsh-subagent'
-import { MAX_TIMER_DELAY_MS } from '@deepseek-ai/dsh-timeout'
+import type { Agent } from '@coco-harness/cch-agent'
+import type { InvariantInstaller } from '@coco-harness/cch-invariants'
+import type { ContentBlock } from '@coco-harness/cch-llm'
+import SubagentRuntime from '@coco-harness/cch-subagent'
+import { MAX_TIMER_DELAY_MS } from '@coco-harness/cch-timeout'
 import type {
   SubprocessHandle,
   SubprocessOutcome,
-} from '@deepseek-ai/dsh-subprocess'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
+} from '@coco-harness/cch-subprocess'
+import LocalSubprocessRuntime from '@coco-harness/cch-subprocess-local'
 import * as codex from '../src/index.ts'
 import * as invariant from '../src/invariant.ts'
 import {
@@ -350,7 +350,7 @@ describe('task admission and package contracts', () => {
     const ctx = { invariants: { register } } as unknown as Context
     await expect(invariant.apply(ctx)).resolves.toBe(dispose)
     expect(register).toHaveBeenCalledWith(
-      '@deepseek-ai/dsh-subagent-codex',
+      '@coco-harness/cch-subagent-codex',
       expect.any(Function),
     )
     const install = register.mock.calls[0]![1]
@@ -371,8 +371,8 @@ describe('CodexAppServerWire', () => {
     const initialize = await child.peer.nextMethod('initialize')
     expect(initialize.params).toEqual({
       clientInfo: {
-        name: 'deepseek-harness',
-        title: 'DeepSeek Harness',
+        name: 'coco-harness',
+        title: 'Coco Harness',
         version: '0.0.1',
       },
       capabilities: {

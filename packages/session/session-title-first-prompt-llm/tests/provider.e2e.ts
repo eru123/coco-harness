@@ -1,11 +1,11 @@
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@coco-harness/cch-llm'
 import { afterEach, describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import * as LlmDeepSeek from '@deepseek-ai/dsh-llm-deepseek'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import SessionTitleService from '@deepseek-ai/dsh-session-title'
-import * as FirstMessageTitleProvider from '@deepseek-ai/dsh-session-title-first-prompt-llm'
+import { Context } from '@coco-harness/cordis'
+import LlmRuntime from '@coco-harness/cch-llm'
+import * as LlmDeepSeek from '@coco-harness/cch-llm-deepseek'
+import SessionStore, { SessionId } from '@coco-harness/cch-session'
+import SessionTitleService from '@coco-harness/cch-session-title'
+import * as FirstMessageTitleProvider from '@coco-harness/cch-session-title-first-prompt-llm'
 
 const contexts: Context[] = []
 

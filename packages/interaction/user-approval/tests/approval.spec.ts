@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { CallId } from '@deepseek-ai/dsh-llm'
-import { carrierKeyOf, createScope } from '@deepseek-ai/dsh-scope'
-import type { Scope } from '@deepseek-ai/dsh-scope'
-import SessionStore, { Session, SessionId } from '@deepseek-ai/dsh-session'
-import type { SessionEvent } from '@deepseek-ai/dsh-session'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ApprovalService, { ApprovalOutcome, ApprovalRequest, effectiveApprovalPolicy, setApprovalPolicy } from '@deepseek-ai/dsh-user-approval'
+import { Context } from '@coco-harness/cordis'
+import type { Agent } from '@coco-harness/cch-agent'
+import { CallId } from '@coco-harness/cch-llm'
+import { carrierKeyOf, createScope } from '@coco-harness/cch-scope'
+import type { Scope } from '@coco-harness/cch-scope'
+import SessionStore, { Session, SessionId } from '@coco-harness/cch-session'
+import type { SessionEvent } from '@coco-harness/cch-session'
+import SystemPrompt from '@coco-harness/cch-system-prompt'
+import ApprovalService, { ApprovalOutcome, ApprovalRequest, effectiveApprovalPolicy, setApprovalPolicy } from '@coco-harness/cch-user-approval'
 
 /**
  * A minimal Agent stand-in — the service only reaches `agent.session.append`

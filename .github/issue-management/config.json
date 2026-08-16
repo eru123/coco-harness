@@ -1,9 +1,9 @@
 {
-  "organization": "deepseek-harness",
-  "repository": "deepseek-harness",
+  "organization": "coco-harness",
+  "repository": "coco-harness",
   "projectNumber": 1,
   "projectTitle": "DSH Issue Management",
-  "lifecycleActor": "dsh-issue-management",
+  "lifecycleActor": "cch-issue-management",
   "priorityField": "Priority",
   "allowUnassignedOwner": true,
   "statuses": [

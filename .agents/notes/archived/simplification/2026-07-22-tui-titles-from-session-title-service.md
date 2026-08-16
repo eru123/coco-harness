@@ -3,8 +3,6 @@
 Status: implemented
 Archived: 2026-07-27
 
-English | [中文](2026-07-22-tui-titles-from-session-title-service.zh.md)
-
 ## Problem
 
 A per-session title makes terminal panes and tabs distinguishable, but a TUI-local model call would create a second title pipeline beside [log-backed session titles](../feature/2026-07-21-log-backed-session-titles.md). The local path needs its own prompt, cap, one-shot latch, resume derivation, cancellation, and failure fallback, while its process-local result remains invisible to session listings, forks, Web consumers, and replay. If both paths run, one session can also be titled twice by different strategies.
@@ -13,7 +11,7 @@ A per-session title makes terminal panes and tabs distinguishable, but a TUI-loc
 
 The session-title service is the one title source. The TUI contains no `autoTitle` config, title-model request, latch, abort controller, prompt, or output cap. It folds the latest logged title on mount (`foldSessionTitle`), renders it as the banner subtitle, and calls `runtime.terminal.setTitle` with `<session title> — <configured title>` on every accepted `session/title` event. The same terminal-safe OSC 0 path handles the configured fallback title, resumed sessions, and live revisions without renaming tmux windows or adding another terminal-control surface.
 
-Model-made titles are a composition choice: `examples/tui-agent/cordis.yml` (and the scripted PTY fixture) mount `@deepseek-ai/dsh-session-title-first-message-llm`, which inherits the main request's route and replaces the spine's deterministic fallback with a short model summary. Deployments without the provider keep the fallback title from `dsh-agent-spine-demo`'s bundled `SessionTitleService`.
+Model-made titles are a composition choice: `examples/tui-agent/cordis.yml` (and the scripted PTY fixture) mount `@coco-harness/cch-session-title-first-message-llm`, which inherits the main request's route and replaces the spine's deterministic fallback with a short model summary. Deployments without the provider keep the fallback title from `cch-agent-spine-demo`'s bundled `SessionTitleService`.
 
 ## Alternatives considered
 

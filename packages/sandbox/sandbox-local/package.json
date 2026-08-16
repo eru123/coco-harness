@@ -1,13 +1,13 @@
 {
-  "name": "@deepseek-ai/dsh-sandbox-local",
-  "description": "Local process-sandbox backends for the DeepSeek Harness sandbox seam: bwrap, the npm-distributed landlock-run launcher, macOS Seatbelt, or the Windows ACL restricted-token runner — functionally probed, fail-closed",
+  "name": "@coco-harness/cch-sandbox-local",
+  "description": "Local process-sandbox backends for the Coco Harness sandbox seam: bwrap, the npm-distributed landlock-run launcher, macOS Seatbelt, or the Windows ACL restricted-token runner — functionally probed, fail-closed",
   "version": "0.1.0-rc.5",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deepseek-ai/deepseek-harness.git",
+    "url": "git+https://github.com/eru123/coco-harness.git",
     "directory": "packages/sandbox/sandbox-local"
   },
   "type": "module",
@@ -32,22 +32,22 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-sandbox": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-llm": "workspace:^",
+    "@coco-harness/cch-sandbox": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@deepseek-ai/dsh-sandbox-windows-acl": "workspace:^",
-    "@deepseek-ai/node-addon-landlock-run": "workspace:^",
-    "@deepseek-ai/schemastery": "workspace:^"
+    "@coco-harness/cch-sandbox-windows-acl": "workspace:^",
+    "@coco-harness/node-addon-landlock-run": "workspace:^",
+    "@coco-harness/schemastery": "workspace:^"
   },
   "devDependencies": {
-    "@deepseek-ai/dsh-invariants": "workspace:^",
-    "@deepseek-ai/dsh-llm": "workspace:^",
-    "@deepseek-ai/dsh-sandbox": "workspace:^",
-    "@deepseek-ai/dsh-session": "workspace:^",
-    "@deepseek-ai/cordis": "workspace:^"
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-llm": "workspace:^",
+    "@coco-harness/cch-sandbox": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
   }
 }

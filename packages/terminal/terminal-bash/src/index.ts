@@ -1,17 +1,17 @@
 /**
  * Persistent shell PTY backend over the subprocess terminal primitive, shared
  * sandbox policy, bounded output, and provider-owned session cleanup.
- * @module @deepseek-ai/dsh-terminal-bash
+ * @module @coco-harness/cch-terminal-bash
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { Session, SessionEvent } from '@deepseek-ai/dsh-session'
-import { TerminalBackendCleanupError } from '@deepseek-ai/dsh-terminal'
-import type { TerminalBackend, TerminalBackendSpawnSpec } from '@deepseek-ai/dsh-terminal'
-import type { SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from '@deepseek-ai/dsh-subprocess'
-import type { SandboxExecutionPolicy } from '@deepseek-ai/dsh-sandbox'
-import { effectiveSandboxMode } from '@deepseek-ai/dsh-sandbox-policy'
+import { Context } from '@coco-harness/cordis'
+import type { Agent } from '@coco-harness/cch-agent'
+import type { Session, SessionEvent } from '@coco-harness/cch-session'
+import { TerminalBackendCleanupError } from '@coco-harness/cch-terminal'
+import type { TerminalBackend, TerminalBackendSpawnSpec } from '@coco-harness/cch-terminal'
+import type { SubprocessTerminalHandle, SubprocessTerminalSpawnSpec } from '@coco-harness/cch-subprocess'
+import type { SandboxExecutionPolicy } from '@coco-harness/cch-sandbox'
+import { effectiveSandboxMode } from '@coco-harness/cch-sandbox-policy'
 import { type Config, type ResolvedConfig, validateConfig } from './config.ts'
 import { LocalPtySession } from './session.ts'
 import { CONTROLLED_PROMPT } from './sanitize.ts'
@@ -62,9 +62,9 @@ function childEnvironment(spec: TerminalBackendSpawnSpec): Record<string, string
     PS1: CONTROLLED_PROMPT,
     PROMPT_COMMAND: 'printf "\\033]133;D;%s\\007" "$?"',
     BASH_SILENCE_DEPRECATION_WARNING: '1',
-    DSH_SHELL: '1',
-    DSH_SESSION_ID: spec.owner.id,
-    DSH_PTY_SESSION_ID: spec.sessionId,
+    CCH_SHELL: '1',
+    CCH_SESSION_ID: spec.owner.id,
+    CCH_PTY_SESSION_ID: spec.sessionId,
   }
 }
 

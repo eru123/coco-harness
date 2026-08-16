@@ -2,15 +2,13 @@
 
 Status: implemented
 
-English | [中文](2026-08-08-automatic-translation-pairing-merges.zh.md)
-
 ## Problem
 
 A bilingual consistency record contains the two owner files' exact blob hashes. Two branches that independently update different parts of the same confirmed pair therefore conflict on both hash lines even when Git cleanly composes both Markdown owners. Selecting either side leaves stale hashes, while regenerating the record by hand repeats a deterministic operation and prevents an otherwise automatic merge.
 
 ## Decision
 
-`*.i18n.yaml` uses the repository-owned `dsh-translation-pairing` merge driver. The worktree-local Git installer registers its command alongside Lefthook setup; Git configuration remains local because a tracked attribute can name a driver but cannot carry its executable command.
+`*.i18n.yaml` uses the repository-owned `cch-translation-pairing` merge driver. The worktree-local Git installer registers its command alongside Lefthook setup; Git configuration remains local because a tracked attribute can name a driver but cannot carry its executable command.
 
 The installer loads the exact Node/tsx entrypoint before publishing worktree integration. Git invokes a checked-in shell launcher that does not require Node and repeats this probe before every driver execution. When the runtime or entrypoint is unavailable, the launcher materializes Git's ordinary three-way text result in the sidecar but returns a conflict even when that text merge is clean, so Git retains the unmerged index stages and never accepts unverified metadata.
 
@@ -52,4 +50,4 @@ Script tests exercise clean composition through the installed launcher, missing-
 
 Installed worktrees automatically remove pairing-record-only conflicts while preserving human judgment for owner conflicts and translation quality. GitHub's hosted mergeability calculation does not run the worktree-local executable, so a contributor or agent must still merge the base and push the resulting commit before the remote conflict badge clears.
 
-The installer reserves `merge.dsh-translation-pairing.*` in worktree configuration and refuses a conflicting custom value. Automatic composition depends on the installed Node dependencies, like the repository's contributor hooks; runtime loss produces a visible unresolved text result rather than selecting stale metadata.
+The installer reserves `merge.cch-translation-pairing.*` in worktree configuration and refuses a conflicting custom value. Automatic composition depends on the installed Node dependencies, like the repository's contributor hooks; runtime loss produces a visible unresolved text result rather than selecting stale metadata.

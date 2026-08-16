@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import type { UserMessage } from '@deepseek-ai/dsh-llm'
+import { createUserMessage } from '@coco-harness/cch-llm'
+import type { UserMessage } from '@coco-harness/cch-llm'
 import {
   deriveBrowserTimeZoneContext,
   renderBrowserTimeZoneContext,

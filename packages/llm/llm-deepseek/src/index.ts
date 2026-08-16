@@ -8,18 +8,18 @@
  * anything, while an in-flight stream keeps the facts it started with. The
  * one registration-captured fact — the retry policy — re-registers the route
  * in place when it changes.
- * @module @deepseek-ai/dsh-llm-deepseek
+ * @module @coco-harness/cch-llm-deepseek
  */
 
-import type { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { assertUsableApiKey, LlmError, resolveRetryPolicy, RetryPolicySchema } from '@deepseek-ai/dsh-llm'
-import type { RetryPolicyConfig } from '@deepseek-ai/dsh-llm'
-import { credentialRef } from '@deepseek-ai/dsh-credentials'
-import { launchEnvironmentOf, type LaunchEnvironmentSnapshot } from '@deepseek-ai/dsh-launch-environment'
-import { deepEqualJson, installSettingsSection, settingsNamespace } from '@deepseek-ai/dsh-settings'
-import { MAX_TIMER_DELAY_MS } from '@deepseek-ai/dsh-timeout'
-import { getOrCreateAnonymousUserId, type AnonymousUserId } from '@deepseek-ai/dsh-anonymous-user-id'
+import type { Context } from '@coco-harness/cordis'
+import z from '@coco-harness/schemastery'
+import { assertUsableApiKey, LlmError, resolveRetryPolicy, RetryPolicySchema } from '@coco-harness/cch-llm'
+import type { RetryPolicyConfig } from '@coco-harness/cch-llm'
+import { credentialRef } from '@coco-harness/cch-credentials'
+import { launchEnvironmentOf, type LaunchEnvironmentSnapshot } from '@coco-harness/cch-launch-environment'
+import { deepEqualJson, installSettingsSection, settingsNamespace } from '@coco-harness/cch-settings'
+import { MAX_TIMER_DELAY_MS } from '@coco-harness/cch-timeout'
+import { getOrCreateAnonymousUserId, type AnonymousUserId } from '@coco-harness/cch-anonymous-user-id'
 import {
   DEFAULT_CONTEXT_WINDOW,
   DEFAULT_MAX_TOKENS,

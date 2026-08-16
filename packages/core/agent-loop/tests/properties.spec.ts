@@ -10,16 +10,16 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import { createUserMessage, LlmAdapter } from '@deepseek-ai/dsh-llm'
-import type { GenerateOptions, StreamChunk } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime from '@deepseek-ai/dsh-tools'
-import AgentRegistry, { type Agent } from '@deepseek-ai/dsh-agent'
+import { Context } from '@coco-harness/cordis'
+import LlmRuntime from '@coco-harness/cch-llm'
+import { createUserMessage, LlmAdapter } from '@coco-harness/cch-llm'
+import type { GenerateOptions, StreamChunk } from '@coco-harness/cch-llm'
+import SessionStore, { SessionId } from '@coco-harness/cch-session'
+import SystemPrompt from '@coco-harness/cch-system-prompt'
+import ToolRuntime from '@coco-harness/cch-tools'
+import AgentRegistry, { type Agent } from '@coco-harness/cch-agent'
 
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
+import AgentLoop from '@coco-harness/cch-agent-loop'
 import fc from 'fast-check'
 
 /** A never-exhausting adapter: every model call returns the same short reply. */

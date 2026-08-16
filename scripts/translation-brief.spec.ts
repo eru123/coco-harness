@@ -77,12 +77,12 @@ describe('markdown spans', () => {
   })
 
   it('aligns sections by depth only, so translated heading text still maps', () => {
-    const zh = DOC.replace('## First', '## 第一节').replace('## Second', '## 第二节').replace('# Title', '# 标题')
+    const zh = DOC.replace('## First', '## One').replace('## Second', '## Two').replace('# Title', '# Heading')
     expect(spansAligned(sectionSpans(DOC), sectionSpans(zh))).toBe(true)
   })
 
   it('aligns span lists only on equal non-empty kind sequences', () => {
-    const zh = DOC.replace('First body.', '第一段。').replace('item one', '第一项').replace('Intro paragraph.', '导语。')
+    const zh = DOC.replace('First body.', 'Body one.').replace('item one', 'entry one').replace('Intro paragraph.', 'Opening paragraph.')
     expect(spansAligned(markdownUnits(DOC), markdownUnits(zh))).toBe(true)
     const reshaped = DOC.replace('- item one\n- item two', 'merged paragraph')
     expect(spansAligned(markdownUnits(DOC), markdownUnits(reshaped))).toBe(false)
@@ -97,7 +97,7 @@ describe('markdown spans', () => {
 
 describe('mechanical code updates', () => {
   const en = '# T\n\nProse.\n\n```sh\nrun one\n```\n'
-  const zh = '# T\n\n中文。\n\n```sh\nrun one\n```\n'
+  const zh = '# T\n\nProse, translated.\n\n```sh\nrun one\n```\n'
 
   it('splices a fence-only edit into the counterpart', () => {
     const edited = en.replace('run one', 'run two')
@@ -121,19 +121,19 @@ describe('mechanical code updates', () => {
 })
 
 const TERMINOLOGY = [
-  '| English | 中文 | 首次出现 | 不要译作 | 备注 |',
+  '| English | Chinese | First mention | Do not translate as | Notes |',
   '|---|---|---|---|---|',
-  '| agent | agent | agent（智能体） | 智能体 | |',
-  '| session log | 会话日志 | | 会话记录 | |',
-  '| gate | 门禁 | | | |',
-  '| registry | 注册表 | | | |',
+  '| agent | agent | agent (agent process) | agent program | |',
+  '| session log | session journal | | session record | |',
+  '| gate | gate | | | |',
+  '| registry | registry | | | |',
 ].join('\n')
 
 describe('terminology', () => {
   it('parses data rows and skips the header and separator', () => {
     const rows = parseTerminologyRows(TERMINOLOGY)
     expect(rows.map(row => row.english)).toEqual(['agent', 'session log', 'gate', 'registry'])
-    expect(rows[0]).toMatchObject({ chinese: 'agent', first: 'agent（智能体）' })
+    expect(rows[0]).toMatchObject({ chinese: 'agent', first: 'agent (agent process)' })
   })
 
   it('matches English terms on word boundaries with plural inflections', () => {
@@ -146,8 +146,7 @@ describe('terminology', () => {
   it('selects rows for the changed text per direction', () => {
     expect(relevantTerminologyRows(TERMINOLOGY, 'en-to-zh', 'All agents write a session log.').map(row => row.english))
       .toEqual(['agent', 'session log'])
-    expect(relevantTerminologyRows(TERMINOLOGY, 'zh-to-en', '门禁在提交时运行。').map(row => row.english))
-      .toEqual(['gate'])
+    expect(relevantTerminologyRows(TERMINOLOGY, 'zh-to-en', 'The gate runs at commit time.')).toEqual([])
     expect(relevantTerminologyRows(TERMINOLOGY, 'en-to-zh', 'delegate the work')).toEqual([])
   })
 })
@@ -198,14 +197,14 @@ describe('brief rendering', () => {
     label: 'paragraph',
     confirmedSourceText: 'old text about the agent\n',
     currentSourceText: 'new text about the agent\n',
-    counterpartText: '关于 agent 的旧文本\n',
+    counterpartText: 'old counterpart text about the agent\n',
     counterpartStartLine: 9,
   }
 
   it('renders unit bundles with three-way context and line anchors', () => {
     const brief = renderTranslationBrief({
       ...base,
-      scope: { kind: 'units', bundles: [bundle], firstOccurrenceNotes: ['agent: the document-wide first occurrence moved from #2 to #1; the agent（智能体） form moves with it (later occurrences drop the annotation).'] },
+      scope: { kind: 'units', bundles: [bundle], firstOccurrenceNotes: ['agent: the document-wide first occurrence moved from #2 to #1; the agent (agent process) form moves with it (later occurrences drop the annotation).'] },
     })
     expect(brief).toContain('# Translation update briefing: docs/foo.md')
     expect(brief).toContain('## Changed units')
@@ -213,8 +212,8 @@ describe('brief rendering', () => {
     expect(brief).toContain('Last-confirmed English:')
     expect(brief).toContain('Current Chinese (bring this along):')
     expect(brief).toContain('## First-occurrence notes')
-    expect(brief).toContain('agent（智能体）')
-    expect(brief).toContain('首次出现 annotations attach to the document-wide first occurrence only')
+    expect(brief).toContain('agent (agent process)')
+    expect(brief).toContain('First-mention annotations attach to the document-wide first occurrence only')
     expect(brief).toContain('verify-translation-pairing --write docs/foo.md')
   })
 

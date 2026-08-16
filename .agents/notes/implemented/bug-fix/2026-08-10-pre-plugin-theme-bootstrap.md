@@ -2,13 +2,11 @@
 
 Status: implemented
 
-English | [中文](2026-08-10-pre-plugin-theme-bootstrap.zh.md)
-
 ## Problem
 
 The web shell renders `Loading plugins…` before the browser-side plugin tree activates. The theme tokens are already loaded with the shell styles, but `color-scheme` and `body[data-ds-dark-theme]` are not written until ui-theme's ThemeRuntime and ui-layout's ThemePresenter activate; with a persisted dark preference, the loading page therefore renders first with the light palette and then switches to dark.
 
-`dshClient.immediately` only includes the bundle in first-stage prefetching; it does not cause the plugin to execute before HTML parsing or the shell's initial render. Changing only the client plugin's loading tier cannot close this window.
+`cchClient.immediately` only includes the bundle in first-stage prefetching; it does not cause the plugin to execute before HTML parsing or the shell's initial render. Changing only the client plugin's loading tier cannot close this window.
 
 ## Decision
 

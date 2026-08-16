@@ -1,8 +1,8 @@
 /** Assistant block classifier (moved here with sessions/conversation.ts). */
 
 import { describe, expect, it } from 'vitest'
-import { AttachmentId } from '@deepseek-ai/dsh-attachment'
-import type { ContentBlock } from '@deepseek-ai/dsh-api-remotes/client'
+import { AttachmentId } from '@coco-harness/cch-attachment'
+import type { ContentBlock } from '@coco-harness/cch-api-remotes/client'
 import { toAssistantBlock, toAssistantBlocks } from '../src/client/sessions/conversation.ts'
 
 describe('toAssistantBlock', () => {
@@ -15,17 +15,17 @@ describe('toAssistantBlock', () => {
       height: 1,
     }
     const blocks: ContentBlock[] = [
-      { type: 'text', text: '正文' },
-      { type: 'reasoning', text: '思考' },
+      { type: 'text', text: 'body text' },
+      { type: 'reasoning', text: 'thinking' },
       { type: 'tool-call', id: 'c1', name: 'echo', arguments: '{}' } as ContentBlock,
       { type: 'image', attachment },
     ]
     expect(toAssistantBlocks(blocks)).toEqual([
-      { kind: 'text', text: '正文' },
-      { kind: 'reasoning', text: '思考' },
+      { kind: 'text', text: 'body text' },
+      { kind: 'reasoning', text: 'thinking' },
       { kind: 'tool-call', callId: 'c1', name: 'echo', argsRaw: '{}' },
       { kind: 'image', attachment },
     ])
-    expect(toAssistantBlock(blocks[0] as ContentBlock)).toEqual({ kind: 'text', text: '正文' })
+    expect(toAssistantBlock(blocks[0] as ContentBlock)).toEqual({ kind: 'text', text: 'body text' })
   })
 })

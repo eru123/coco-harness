@@ -1,21 +1,21 @@
 /**
  * Basic replay-aware compaction backend.
  *
- * @module @deepseek-ai/dsh-compaction-basic
+ * @module @coco-harness/cch-compaction-basic
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import z from '@deepseek-ai/schemastery'
-import { CompactionEngine, ManualCompactionError } from '@deepseek-ai/dsh-compaction'
-import type { CompactionResult, CompactionTrigger } from '@deepseek-ai/dsh-compaction'
-import type { TokenMeter } from '@deepseek-ai/dsh-token-meter'
-import type { Session } from '@deepseek-ai/dsh-session'
-import { CONTEXT_WINDOW_EXCEEDED_CODE, assertNever } from '@deepseek-ai/dsh-llm'
-import type { LlmCallConfig } from '@deepseek-ai/dsh-llm'
-import type { Agent, PreStepDecision } from '@deepseek-ai/dsh-agent'
-import type { CommandId } from '@deepseek-ai/dsh-commands/brand'
+import { Context } from '@coco-harness/cordis'
+import z from '@coco-harness/schemastery'
+import { CompactionEngine, ManualCompactionError } from '@coco-harness/cch-compaction'
+import type { CompactionResult, CompactionTrigger } from '@coco-harness/cch-compaction'
+import type { TokenMeter } from '@coco-harness/cch-token-meter'
+import type { Session } from '@coco-harness/cch-session'
+import { CONTEXT_WINDOW_EXCEEDED_CODE, assertNever } from '@coco-harness/cch-llm'
+import type { LlmCallConfig } from '@coco-harness/cch-llm'
+import type { Agent, PreStepDecision } from '@coco-harness/cch-agent'
+import type { CommandId } from '@coco-harness/cch-commands/brand'
 // Type-only: makes the optional sibling service available to `ctx.get()`.
-import type {} from '@deepseek-ai/dsh-compaction-tool-result-pruner'
+import type {} from '@coco-harness/cch-compaction-tool-result-pruner'
 import {
   resolveCompactSpec,
   resolveConfig,

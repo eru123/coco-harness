@@ -5,10 +5,10 @@
  * capacity. */
 
 import { useEffect, useRef, useState } from 'react'
-import type { UseProjection } from '@deepseek-ai/dsh-client-runtime/client'
+import type { UseProjection } from '@coco-harness/cch-client-runtime/client'
 // Type-only: the `contextPressure` / `contextBreakdown` projection key merges.
-import type {} from '@deepseek-ai/dsh-token-meter/client'
-import { Tooltip } from '@deepseek-ai/dsh-client-ui-primitives'
+import type {} from '@coco-harness/cch-token-meter/client'
+import { Tooltip } from '@coco-harness/cch-client-ui-primitives'
 import type { ComposerBarProps } from '../contract/slots.ts'
 import { contextOccupancy, formatTokens } from '../chat/StatsLine.tsx'
 import css from './ContextMeter.module.css'
@@ -19,8 +19,8 @@ const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 
 /**
  * Marker the localized occupancy sentence is split on, so the panel headline
- * keeps the reading in its own tone while each locale still owns the word
- * order (`45% of context used` / `上下文已用 45%`).
+ * keeps the reading in its own tone while the dictionary owns the word
+ * order (`45% of context used`).
  */
 const READING_SLOT = '\u0000'
 

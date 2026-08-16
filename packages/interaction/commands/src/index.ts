@@ -1,14 +1,14 @@
 /**
  * Plugin-owned human-command registry shared by interactive UI adapters.
- * @module @deepseek-ai/dsh-commands
+ * @module @coco-harness/cch-commands
  */
 
-import { Context } from '@deepseek-ai/cordis'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { NamedEntries, ScopedLayers } from '@deepseek-ai/dsh-scope'
-import type { ScopeKey, ScopeLayer } from '@deepseek-ai/dsh-scope'
-import type { Session, SessionEvent, SessionEventMap } from '@deepseek-ai/dsh-session'
-import { TypertRemoteService, Remote } from '@deepseek-ai/dsh-typert-protocol'
+import { Context } from '@coco-harness/cordis'
+import type { Agent } from '@coco-harness/cch-agent'
+import { NamedEntries, ScopedLayers } from '@coco-harness/cch-scope'
+import type { ScopeKey, ScopeLayer } from '@coco-harness/cch-scope'
+import type { Session, SessionEvent, SessionEventMap } from '@coco-harness/cch-session'
+import { TypertRemoteService, Remote } from '@coco-harness/cch-typert-protocol'
 import { CommandId } from './brand.ts'
 import type {
   CommandDescriptor,
@@ -87,7 +87,7 @@ class CommandLayer implements ScopeLayer {
   }
 }
 
-declare module '@deepseek-ai/cordis' {
+declare module '@coco-harness/cordis' {
   interface Context {
     commands: CommandRuntime
   }

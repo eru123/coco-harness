@@ -1,11 +1,11 @@
 /**
  * Load-time validation and routed-model policy resolution for compaction-basic.
  *
- * @module @deepseek-ai/dsh-compaction-basic/config
+ * @module @coco-harness/cch-compaction-basic/config
  */
 
-import { deepFreeze } from '@deepseek-ai/dsh-llm'
-import type { LlmCallConfig } from '@deepseek-ai/dsh-llm'
+import { deepFreeze } from '@coco-harness/cch-llm'
+import type { LlmCallConfig } from '@coco-harness/cch-llm'
 import type {
   BasicCompactionConfig,
   CompactionPolicyConfig,

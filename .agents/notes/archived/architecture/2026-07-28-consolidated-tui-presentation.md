@@ -3,8 +3,6 @@
 Status: implemented
 Archived: 2026-08-04
 
-English | [中文](2026-07-28-consolidated-tui-presentation.zh.md)
-
 ## Problem
 
 The terminal UI accumulated independent presentation rules that interacted poorly: palette roles aliased one another or inverted emphasis on light terminals; tool-card framing, output, and exit markers repeated or competed; injected context was parsed as XML and could not fold reliably; and `/resume` excluded sessions outside the current workspace even when the launcher could reach them. Each symptom appeared local, but the durable decision is one terminal-reading model: a small inspectable palette, status-led cards with recessed bodies, content-independent transcript folding, and workspace-aware navigation.
@@ -57,7 +55,7 @@ The transcript reads as colored status headers over recessed detail, context pre
 
 Cross-workspace resume can move every path-resolving tool to another directory. A missing or inaccessible cwd prevents handoff. The broader picker also makes concurrent access to a shared session store easier to reach; cross-process session locking remains separate work.
 
-The terminal presenter still treats a final output line exactly matching its exit-marker grammar as structured status, so a command that intentionally prints such a line can lose it from the card body. This residual is documented by `dsh-tool-bash`.
+The terminal presenter still treats a final output line exactly matching its exit-marker grammar as structured status, so a command that intentionally prints such a line can lose it from the card body. This residual is documented by `cch-tool-bash`.
 
 ## Testing
 

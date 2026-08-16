@@ -60,11 +60,11 @@ export interface TranslationResponse {
 }
 
 const PLACEHOLDER = /{{([a-z_]+)}}/g
-const TEMPLATE_OPEN = '## 模板正文\n\n````text\n'
+const TEMPLATE_OPEN = '## Template body\n\n````text\n'
 const TEMPLATE_CLOSE = '\n````'
 const RESPONSE_SECTIONS = ['translation', 'review', 'final'] as const
 const RESPONSE_DELIMITERS = new Set(RESPONSE_SECTIONS.flatMap(section => [`<${section}>`, `</${section}>`]))
-const LANGUAGE_SWITCHER = /^(?:English \| \[中文\]\(.+\)|\[English\]\(.+\) \| 中文)$/
+const LANGUAGE_SWITCHER = /^(?:English \| \[Chinese\]\(.+\)|\[English\]\(.+\) \| Chinese)$/
 
 interface TranslationFiles {
   targetFilename: string
@@ -83,19 +83,19 @@ function translationFiles(input: Pick<TranslationPromptInput, 'sourceFilename' |
   if (sourceIsChinese) {
     return {
       targetFilename: input.sourceFilename.replace(/\.zh\.md$/, '.md'),
-      targetSwitcher: `English | [中文](${input.sourceFilename})`,
+      targetSwitcher: `English | [Chinese](${input.sourceFilename})`,
     }
   }
   return {
     targetFilename: input.sourceFilename.replace(/\.md$/, '.zh.md'),
-    targetSwitcher: `[English](${input.sourceFilename}) | 中文`,
+    targetSwitcher: `[English](${input.sourceFilename}) | Chinese`,
   }
 }
 
 /** Extract the machine-consumed text fence from `translation-prompt.md`. */
 function extractTranslationPrompt(document: string): string {
   const start = document.indexOf(TEMPLATE_OPEN)
-  if (start === -1) throw new Error('translation prompt: missing `## 模板正文` text fence')
+  if (start === -1) throw new Error('translation prompt: missing `## Template body` text fence')
   const contentStart = start + TEMPLATE_OPEN.length
   const end = document.indexOf(TEMPLATE_CLOSE, contentStart)
   if (end === -1) throw new Error('translation prompt: missing closing four-backtick fence')

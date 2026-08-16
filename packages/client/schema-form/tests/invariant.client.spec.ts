@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import * as SchemaFormInvariant from '@deepseek-ai/dsh-client-schema-form/invariant'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
+import { Context } from '@coco-harness/cordis'
+import * as SchemaFormInvariant from '@coco-harness/cch-client-schema-form/invariant'
+import InvariantRegistry from '@coco-harness/cch-invariants'
 
 describe('invariant companion', () => {
   it('registers under the package name with an empty installer', async () => {

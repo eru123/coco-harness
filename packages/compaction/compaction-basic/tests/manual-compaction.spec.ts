@@ -1,37 +1,37 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import AgentLoop from '@deepseek-ai/dsh-agent-loop'
-import { mountAgentLoopTestDependencies } from '@deepseek-ai/dsh-agent-loop-testkit'
-import InvariantRegistry from '@deepseek-ai/dsh-invariants'
-import { CommandId } from '@deepseek-ai/dsh-commands/brand'
-import * as SessionInvariant from '@deepseek-ai/dsh-session/invariant'
-import * as AgentInvariant from '@deepseek-ai/dsh-agent/invariant'
-import * as AgentLoopInvariant from '@deepseek-ai/dsh-agent-loop/invariant'
-import * as CompactionInvariant from '@deepseek-ai/dsh-compaction/invariant'
-import * as CompactionBasicInvariant from '@deepseek-ai/dsh-compaction-basic/invariant'
-import { BasicCompactionEngine } from '@deepseek-ai/dsh-compaction-basic'
-import { CompactionId, isCompactCheckpointSource, ManualCompactionError } from '@deepseek-ai/dsh-compaction'
-import type { CompactionResult } from '@deepseek-ai/dsh-compaction'
+import { Context } from '@coco-harness/cordis'
+import AgentLoop from '@coco-harness/cch-agent-loop'
+import { mountAgentLoopTestDependencies } from '@coco-harness/cch-agent-loop-testkit'
+import InvariantRegistry from '@coco-harness/cch-invariants'
+import { CommandId } from '@coco-harness/cch-commands/brand'
+import * as SessionInvariant from '@coco-harness/cch-session/invariant'
+import * as AgentInvariant from '@coco-harness/cch-agent/invariant'
+import * as AgentLoopInvariant from '@coco-harness/cch-agent-loop/invariant'
+import * as CompactionInvariant from '@coco-harness/cch-compaction/invariant'
+import * as CompactionBasicInvariant from '@coco-harness/cch-compaction-basic/invariant'
+import { BasicCompactionEngine } from '@coco-harness/cch-compaction-basic'
+import { CompactionId, isCompactCheckpointSource, ManualCompactionError } from '@coco-harness/cch-compaction'
+import type { CompactionResult } from '@coco-harness/cch-compaction'
 import {
   createAssistantMessage,
   createUserMessage,
   LlmAdapter,
-} from '@deepseek-ai/dsh-llm'
+} from '@coco-harness/cch-llm'
 import type {
   ContentBlock,
   LlmResolvedModelInfo,
   Message,
   StreamChunk,
   TokenUsage,
-} from '@deepseek-ai/dsh-llm'
-import SessionStore, { Session, SessionId, type SessionEvent } from '@deepseek-ai/dsh-session'
-import LlmRuntime from '@deepseek-ai/dsh-llm'
-import TokenMeter from '@deepseek-ai/dsh-token-meter'
-import type { Agent } from '@deepseek-ai/dsh-agent'
+} from '@coco-harness/cch-llm'
+import SessionStore, { Session, SessionId, type SessionEvent } from '@coco-harness/cch-session'
+import LlmRuntime from '@coco-harness/cch-llm'
+import TokenMeter from '@coco-harness/cch-token-meter'
+import type { Agent } from '@coco-harness/cch-agent'
 import type {
   SummarizationInput,
   SummaryResult,
-} from '@deepseek-ai/dsh-compaction-basic/src/summarizer.ts'
+} from '@coco-harness/cch-compaction-basic/src/summarizer.ts'
 
 const MODEL = 'mock'
 const SIGNAL = new AbortController().signal

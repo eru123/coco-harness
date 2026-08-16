@@ -10,11 +10,11 @@
  */
 
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import type { Session } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import SessionTitleService from '@deepseek-ai/dsh-session-title'
+import { Context } from '@coco-harness/cordis'
+import SessionStore, { SessionId } from '@coco-harness/cch-session'
+import type { Session } from '@coco-harness/cch-session'
+import SessionProjectionRegistry from '@coco-harness/cch-session-projection'
+import SessionTitleService from '@coco-harness/cch-session-title'
 
 const CONFIG = { fallbackMaxWords: 8, fallbackMaxBytes: 64, maxTitleBytes: 256 }
 

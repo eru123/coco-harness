@@ -1,6 +1,4 @@
-# @deepseek-ai/dsh-tool-ask-user
-
-English | [中文](README.zh.md)
+# @coco-harness/cch-tool-ask-user
 
 Model-facing `ask_user_question` tool over `ctx.userQuestions`. It lets the model ask the human a concise question when it needs confirmation, a choice, or missing information before continuing.
 

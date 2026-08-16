@@ -8,22 +8,22 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
+import { Context } from '@coco-harness/cordis'
 import { z } from 'zod'
-import AgentRegistry, { Inbox } from '@deepseek-ai/dsh-agent'
-import { AttachmentStore } from '@deepseek-ai/dsh-attachment'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import { createUserMessage } from '@deepseek-ai/dsh-llm'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import type { Session } from '@deepseek-ai/dsh-session'
-import SessionProjectionRegistry from '@deepseek-ai/dsh-session-projection'
-import type { ProjectionDefinition } from '@deepseek-ai/dsh-session-projection'
-import UserQuestionService from '@deepseek-ai/dsh-user-questions'
-import type { MuxFrame, RpcRequest } from '@deepseek-ai/dsh-host-apiproxy/api'
-import { RpcId } from '@deepseek-ai/dsh-host-apiproxy/api/rpc'
-import { createApiProxy } from '@deepseek-ai/dsh-host-apiproxy'
+import AgentRegistry, { Inbox } from '@coco-harness/cch-agent'
+import { AttachmentStore } from '@coco-harness/cch-attachment'
+import type { Agent } from '@coco-harness/cch-agent'
+import { createUserMessage } from '@coco-harness/cch-llm'
+import SessionStore, { SessionId } from '@coco-harness/cch-session'
+import type { Session } from '@coco-harness/cch-session'
+import SessionProjectionRegistry from '@coco-harness/cch-session-projection'
+import type { ProjectionDefinition } from '@coco-harness/cch-session-projection'
+import UserQuestionService from '@coco-harness/cch-user-questions'
+import type { MuxFrame, RpcRequest } from '@coco-harness/cch-host-apiproxy/api'
+import { RpcId } from '@coco-harness/cch-host-apiproxy/api/rpc'
+import { createApiProxy } from '@coco-harness/cch-host-apiproxy'
 
-declare module '@deepseek-ai/dsh-session-projection/types' {
+declare module '@coco-harness/cch-session-projection/types' {
   interface SessionProjectionMap {
     'test/last-user': { text: string } | null
   }

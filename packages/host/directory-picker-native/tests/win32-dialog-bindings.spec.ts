@@ -1,6 +1,6 @@
 /**
  * The koffi-backed bindings against a mocked `koffi` module (the same
- * technique as dsh-session-persistence-jsonl's win32 suite): a small in-memory
+ * technique as cch-session-persistence-jsonl's win32 suite): a small in-memory
  * COM world stands in for ole32/user32/kernel32, keeping the vtable dispatch,
  * result extraction, memory hygiene, and the WM_CLOSE poster covered on every
  * host. The worker entry is exercised the same way with a mocked process
@@ -46,7 +46,7 @@ function comWorld(overrides: Partial<ComWorld> = {}): ComWorld {
   return {
     coInitHr: 0, coCreateHr: 0, showHr: 0, getResultHr: 0, getDisplayNameHr: 0,
     hasThreadDpi: true, supportedDpiContexts: [-4], enumThrows: false,
-    path: 'C:\\选中\\directory',
+    path: 'C:\\picked\\directory',
     titles: [], options: [], dpiContexts: [], freed: [], released: [], posted: [],
     registered: 0, unregistered: 0, uninitialized: 0,
     ...overrides,
@@ -170,9 +170,9 @@ describe('loadWin32DialogBindings over the fake COM world', () => {
     const bindings = await loadWin32DialogBindings()
     const showing = vi.fn()
 
-    expect(runFolderDialog(bindings, '选择工作区目录', showing)).toBe('C:\\选中\\directory')
+    expect(runFolderDialog(bindings, 'Choose a workspace directory', showing)).toBe('C:\\picked\\directory')
     expect(world.dpiContexts).toEqual([-4])
-    expect(world.titles).toEqual(['选择工作区目录'])
+    expect(world.titles).toEqual(['Choose a workspace directory'])
     expect(world.options).toHaveLength(1)
     expect(showing).toHaveBeenCalledWith(31337)
     expect(world.freed).toHaveLength(1)
@@ -194,7 +194,7 @@ describe('loadWin32DialogBindings over the fake COM world', () => {
     const world = comWorld({ supportedDpiContexts: [-3] })
     installFakeKoffi(world)
     const bindings = await (await loadBindingsModule()).loadWin32DialogBindings()
-    expect(runFolderDialog(bindings, 'Pick', vi.fn())).toBe('C:\\选中\\directory')
+    expect(runFolderDialog(bindings, 'Pick', vi.fn())).toBe('C:\\picked\\directory')
     expect(world.dpiContexts).toEqual([-4, -3])
   })
 
@@ -203,7 +203,7 @@ describe('loadWin32DialogBindings over the fake COM world', () => {
     const rejecting = comWorld({ supportedDpiContexts: [] })
     installFakeKoffi(rejecting)
     let bindings = await (await loadBindingsModule()).loadWin32DialogBindings()
-    expect(runFolderDialog(bindings, 'Pick', vi.fn())).toBe('C:\\选中\\directory')
+    expect(runFolderDialog(bindings, 'Pick', vi.fn())).toBe('C:\\picked\\directory')
     expect(rejecting.dpiContexts).toEqual([-4, -3, -2])
 
     vi.doUnmock('koffi')
@@ -211,7 +211,7 @@ describe('loadWin32DialogBindings over the fake COM world', () => {
     const preThreadDpi = comWorld({ hasThreadDpi: false })
     installFakeKoffi(preThreadDpi)
     bindings = await (await loadBindingsModule()).loadWin32DialogBindings()
-    expect(runFolderDialog(bindings, 'Pick', vi.fn())).toBe('C:\\选中\\directory')
+    expect(runFolderDialog(bindings, 'Pick', vi.fn())).toBe('C:\\picked\\directory')
     expect(preThreadDpi.dpiContexts).toEqual([])
   })
 
@@ -266,11 +266,11 @@ describe('closeThreadWindows over the fake COM world', () => {
 
 describe('the worker entry over a mocked process boundary', () => {
   const originalSend = process.send?.bind(process)
-  const originalTitle = process.env.DSH_DIALOG_TITLE
+  const originalTitle = process.env.CCH_DIALOG_TITLE
 
   const installBoundary = (): { posted: { kind: string; message?: string }[] } => {
     const posted: { kind: string; message?: string }[] = []
-    process.env.DSH_DIALOG_TITLE = 'Pick'
+    process.env.CCH_DIALOG_TITLE = 'Pick'
     // Never invoke the post callback: it runs the worker's disconnect(), and
     // this process is IPC-connected under the forks pool — severing vitest's
     // own channel would kill the test worker. The real close lifecycle
@@ -285,8 +285,8 @@ describe('the worker entry over a mocked process boundary', () => {
   afterEach(() => {
     delete (process as { send?: unknown }).send
     if (originalSend !== undefined) (process as { send?: unknown }).send = originalSend
-    if (originalTitle === undefined) delete process.env.DSH_DIALOG_TITLE
-    else process.env.DSH_DIALOG_TITLE = originalTitle
+    if (originalTitle === undefined) delete process.env.CCH_DIALOG_TITLE
+    else process.env.CCH_DIALOG_TITLE = originalTitle
     vi.doUnmock('../src/win32-dialog-bindings.ts')
     vi.resetModules()
   })
@@ -341,13 +341,13 @@ describe('the worker entry over a mocked process boundary', () => {
   })
 
   it('refuses to run without the dialog title', async () => {
-    delete process.env.DSH_DIALOG_TITLE
+    delete process.env.CCH_DIALOG_TITLE
     ;(process as { send?: unknown }).send = () => true
-    await expect(import('../src/win32-dialog-worker.ts')).rejects.toThrow('DSH_DIALOG_TITLE is required')
+    await expect(import('../src/win32-dialog-worker.ts')).rejects.toThrow('CCH_DIALOG_TITLE is required')
   })
 
   it('refuses to run outside a child process', async () => {
-    process.env.DSH_DIALOG_TITLE = 'Pick'
+    process.env.CCH_DIALOG_TITLE = 'Pick'
     delete (process as { send?: unknown }).send
     await expect(import('../src/win32-dialog-worker.ts')).rejects.toThrow('must run as a child process')
   })

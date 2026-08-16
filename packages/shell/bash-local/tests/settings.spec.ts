@@ -1,13 +1,13 @@
 /** The `bash` settings section layered over the executor's composition entry. */
 
 import { describe, expect, it } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import type { Fiber } from '@deepseek-ai/cordis'
-import { SettingsProvider } from '@deepseek-ai/dsh-settings'
-import type { SettingsNamespace } from '@deepseek-ai/dsh-settings'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import { SHELL_SETTINGS_NAMESPACE } from '@deepseek-ai/dsh-shell'
-import { LocalBashExecutor } from '@deepseek-ai/dsh-bash-local'
+import { Context } from '@coco-harness/cordis'
+import type { Fiber } from '@coco-harness/cordis'
+import { SettingsProvider } from '@coco-harness/cch-settings'
+import type { SettingsNamespace } from '@coco-harness/cch-settings'
+import LocalSubprocessRuntime from '@coco-harness/cch-subprocess-local'
+import { SHELL_SETTINGS_NAMESPACE } from '@coco-harness/cch-shell'
+import { LocalBashExecutor } from '@coco-harness/cch-bash-local'
 
 /** The smallest real provider: one in-memory document, always writable. */
 class MemorySettings extends SettingsProvider {

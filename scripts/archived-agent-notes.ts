@@ -94,7 +94,7 @@ function pairMeta(content: string): Map<string, string> | undefined {
   return entries
 }
 
-function validateHeader(path: string, content: Buffer, sourceBase: string, chinese: boolean): string[] {
+function validateHeader(path: string, content: Buffer, sourceBase: string): string[] {
   const errors: string[] = []
   const lines = content.toString('utf8').split('\n')
   if (!/^# Agent Note: \S/.test(lines[0] ?? '')) errors.push(`${path}: line 1 must be \`# Agent Note: <title>\``)
@@ -107,14 +107,13 @@ function validateHeader(path: string, content: Buffer, sourceBase: string, chine
     errors.push(`${path}: archive date ${archived} predates the note filename`)
   }
   if (lines[4] !== '') errors.push(`${path}: line 5 must be blank`)
-  const switcher = chinese
-    ? `[English](${sourceBase}.md) | 中文`
-    : `English | [中文](${sourceBase}.zh.md)`
-  if (lines[5] !== switcher) errors.push(`${path}: line 6 must be ${JSON.stringify(switcher)}`)
   return errors
 }
 
-/** Validate the closed kind tree, implemented/archive headers, and complete bilingual triplets. */
+/** Validate the closed kind tree, implemented/archive headers, and archived notes.
+ * A translation-free tree (this fork ships English only) requires only the
+ * `.md` source per note; a surviving `.zh.md` or `.i18n.yaml` remnant still
+ * demands the complete, hash-consistent triplet. */
 export function validateArchiveArtifacts(artifacts: ReadonlyMap<string, Buffer>): string[] {
   const errors: string[] = []
   const triplets = new Map<string, Triplet>()
@@ -141,24 +140,26 @@ export function validateArchiveArtifacts(artifacts: ReadonlyMap<string, Buffer>)
     const zhPath = `${key}.zh.md`
     const metaPath = `${key}.i18n.yaml`
     const { source, zh, meta } = triplet
-    const missing = [
-      source === undefined ? sourcePath : undefined,
-      zh === undefined ? zhPath : undefined,
-      meta === undefined ? metaPath : undefined,
-    ].filter((path): path is string => path !== undefined)
-    if (source === undefined || zh === undefined || meta === undefined) {
+    if (source === undefined) {
+      errors.push(`${key}: archived note is missing its ${sourcePath}`)
+      continue
+    }
+    errors.push(...validateHeader(sourcePath, source, basename(key)))
+    if (zh === undefined || meta === undefined) {
+      const missing = [
+        zh === undefined ? zhPath : undefined,
+        meta === undefined ? metaPath : undefined,
+      ].filter((path): path is string => path !== undefined)
       errors.push(`${key}: incomplete archived triplet; missing ${missing.join(', ')}`)
       continue
     }
-    const sourceBase = basename(key)
-    errors.push(...validateHeader(sourcePath, source, sourceBase, false))
-    errors.push(...validateHeader(zhPath, zh, sourceBase, true))
     const sourceDate = /^Archived: (\d{4}-\d{2}-\d{2})$/m.exec(source.toString('utf8'))?.[1]
     const zhDate = /^Archived: (\d{4}-\d{2}-\d{2})$/m.exec(zh.toString('utf8'))?.[1]
     if (sourceDate !== undefined && zhDate !== undefined && sourceDate !== zhDate) {
       errors.push(`${key}: English and Chinese archive dates differ (${sourceDate} vs ${zhDate})`)
     }
     const pair = pairMeta(meta.toString('utf8'))
+    const sourceBase = basename(key)
     if (pair === undefined || pair.size !== 2
       || pair.get(`${sourceBase}.md`) !== gitBlobHash(source)
       || pair.get(`${sourceBase}.zh.md`) !== gitBlobHash(zh)) {

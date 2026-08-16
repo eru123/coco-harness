@@ -51,9 +51,9 @@ function setup(options: {
 
 describe('maybeRecordPair', () => {
   const beforeEn = page('prose.', 'old region')
-  const beforeZh = page('散文。', 'old region')
+  const beforeZh = page('prose (Chinese).', 'old region')
   const currentEn = page('prose.', 'new region')
-  const currentZh = page('散文。', 'new region')
+  const currentZh = page('prose (Chinese).', 'new region')
 
   it('re-records a region-confined write over a consistent record', () => {
     const { root, before } = setup({ beforeEn, beforeZh, currentEn, currentZh })

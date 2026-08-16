@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
-import { JsonBlock, MarkdownText, MessageText } from '@deepseek-ai/dsh-client-ui-primitives'
+import { JsonBlock, MarkdownText, MessageText } from '@coco-harness/cch-client-ui-primitives'
 import { cjkFriendlyStrong } from '../src/markdown/cjkFriendlyStrong.ts'
 import { mathCompatibility } from '../src/markdown/mathCompatibility.ts'
 
@@ -62,7 +62,7 @@ describe('MarkdownText', () => {
     // The ts fence routed through the shared CodeBlock: shiki token spans + banner.
     expect(container.querySelector('pre.shiki')).not.toBeNull()
     expect(screen.getByText('ts')).toBeTruthy()
-    expect(screen.getByRole('button', { name: '复制' })).toBeTruthy()
+    expect(screen.getByRole('button', { name: 'Copy' })).toBeTruthy()
     expect(container.querySelector('br')).not.toBeNull()
     expect(screen.getByRole('link', { name: 'safe' }).getAttribute('target')).toBe('_blank')
     expect(screen.getByRole('link', { name: 'https://deepseek.com' })).toBeTruthy()
@@ -70,14 +70,14 @@ describe('MarkdownText', () => {
 
   it('closes punctuation-terminated strong emphasis before adjacent CJK text', () => {
     const cases = [
-      ['**注意：**内容', '注意：'],
-      ['**Notice:**内容', 'Notice:'],
-      ['**事件中间件（waterfall）**实现', '事件中间件（waterfall）'],
-      ['**事件中间件(waterfall)**实现', '事件中间件(waterfall)'],
-      ['**句号。**后续', '句号。'],
-      ['**Period.**后续', 'Period.'],
-      ['**提醒！**继续', '提醒！'],
-      ['**Warning!**继续', 'Warning!'],
+      ['**ちゅうい：**ないよう', 'ちゅうい：'],
+      ['**Notice:**ないよう', 'Notice:'],
+      ['**イベント（waterfall）**じっそう', 'イベント（waterfall）'],
+      ['**イベント(waterfall)**じっそう', 'イベント(waterfall)'],
+      ['**くてん。**ごけつ', 'くてん。'],
+      ['**Period.**ごけつ', 'Period.'],
+      ['**こくち！**つづき', 'こくち！'],
+      ['**Warning!**つづき', 'Warning!'],
     ] as const
     const source = cases.map(([markdown]) => markdown).join('\n\n')
 
@@ -91,27 +91,27 @@ describe('MarkdownText', () => {
 
   it('keeps the CJK strong extension out of escaped, code, math, and ASCII contexts', () => {
     const source = [
-      String.raw`\**注意：**内容`,
-      '`**注意：**内容`',
+      String.raw`\**ちゅうい：**ないよう`,
+      '`**ちゅうい：**ないよう`',
       '**Notice:**text',
-      '*提醒！*继续',
-      '$**注意：**内容$',
+      '*こくち！*つづき',
+      '$**ちゅうい：**ないよう$',
       '```md',
-      '**注意：**内容',
+      '**ちゅうい：**ないよう',
       '```',
-      '**普通**内容',
-      '*普通*内容',
+      '**ふつう**ないよう',
+      '*ふつう*ないよう',
     ].join('\n\n')
     const { container } = render(<MarkdownText text={source} />)
 
-    expect([...container.querySelectorAll('strong')].map(node => node.textContent)).toEqual(['普通'])
-    expect([...container.querySelectorAll('em')].map(node => node.textContent)).toEqual(['普通'])
-    expect(container.querySelector('code')?.textContent).toBe('**注意：**内容')
-    expect(container.querySelector('.katex annotation')?.textContent).toBe('**注意：**内容')
-    expect(container.querySelector('pre code')?.textContent).toContain('**注意：**内容')
+    expect([...container.querySelectorAll('strong')].map(node => node.textContent)).toEqual(['ふつう'])
+    expect([...container.querySelectorAll('em')].map(node => node.textContent)).toEqual(['ふつう'])
+    expect(container.querySelector('code')?.textContent).toBe('**ちゅうい：**ないよう')
+    expect(container.querySelector('.katex annotation')?.textContent).toBe('**ちゅうい：**ないよう')
+    expect(container.querySelector('pre code')?.textContent).toContain('**ちゅうい：**ないよう')
     expect(container.textContent).toContain('**Notice:**text')
-    expect(container.textContent).toContain('*提醒！*继续')
-    expect(container.textContent).toContain('**注意：**内容')
+    expect(container.textContent).toContain('*こくち！*つづき')
+    expect(container.textContent).toContain('**ちゅうい：**ないよう')
   })
 
   it('links complete HTTP(S) inline code without promoting commands, unsafe schemes, or fences', () => {
@@ -513,6 +513,6 @@ describe('JsonBlock', () => {
     const { container } = render(<JsonBlock label="x" payload={big} defaultOpen />)
     const body = container.querySelector('pre')!.textContent
     expect(body.length).toBeLessThan(30_000)
-    expect(body).toContain('截断')
+    expect(body).toContain('truncated')
   })
 })

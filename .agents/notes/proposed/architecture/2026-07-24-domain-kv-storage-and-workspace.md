@@ -2,8 +2,6 @@
 
 Status: proposed
 
-English | [中文](2026-07-24-domain-kv-storage-and-workspace.zh.md)
-
 ## Problem
 
 The host's only persistence surface is the session event log (`packages/session/session-persistence`: append-only, one file per session). Anything that does not belong to a single session has nowhere to live, and two real needs exist today:
@@ -21,23 +19,23 @@ Create the `packages/storage/` group — the `ctx.storage` hub (backend registry
 
 | Package | Path | ctx surface | This phase |
 | --- | --- | --- | --- |
-| `@deepseek-ai/dsh-storage` | `packages/storage/storage/` | `ctx.storage` (the hub) | ✓ |
-| `@deepseek-ai/dsh-storage-json` | `packages/storage/storage-json/` | registers backend `json` | ✓ |
-| `@deepseek-ai/dsh-storage-sqlite` | `packages/storage/storage-sqlite/` | registers backend `sqlite` | ✓ |
-| `@deepseek-ai/dsh-storage-domain` | `packages/storage/storage-domain/` | mounts `ctx.storage.domain` | ✓ |
-| `@deepseek-ai/dsh-workspace` | `packages/workspace/workspace/` | `ctx.workspaceRegistry` | ✓ |
+| `@coco-harness/cch-storage` | `packages/storage/storage/` | `ctx.storage` (the hub) | ✓ |
+| `@coco-harness/cch-storage-json` | `packages/storage/storage-json/` | registers backend `json` | ✓ |
+| `@coco-harness/cch-storage-sqlite` | `packages/storage/storage-sqlite/` | registers backend `sqlite` | ✓ |
+| `@coco-harness/cch-storage-domain` | `packages/storage/storage-domain/` | mounts `ctx.storage.domain` | ✓ |
+| `@coco-harness/cch-workspace` | `packages/workspace/workspace/` | `ctx.workspaceRegistry` | ✓ |
 | `SessionPersistence.delete` extension + cascade orchestration | `packages/session/session-persistence*` | new method on the existing seam | ✗ future work (session side untouched this phase) |
 | `workspace.*` / `session.delete` RPC, GUI wiring, boot assembly | — | — | ✗ next phase |
 
-(workspace lives in its own group rather than `packages/host/`: the host group's naming rule requires the `dsh-host-*` prefix while this package is named `dsh-workspace`; and the workspace entity is a domain concept, not bound to the host assembly tier. Unrelated to the existing `agent-instructions` package — that is an AGENTS.md instruction loader.)
+(workspace lives in its own group rather than `packages/host/`: the host group's naming rule requires the `cch-host-*` prefix while this package is named `cch-workspace`; and the workspace entity is a domain concept, not bound to the host assembly tier. Unrelated to the existing `agent-instructions` package — that is an AGENTS.md instruction loader.)
 
-Dependency direction: `dsh-workspace` → `dsh-domain` → `dsh-storage` ← the two backends. `dsh-workspace` additionally depends on the read-only face of `ctx.sessionPersistence` (attach's cwd check reads the session header; when the service is absent, attach rejects outright — no verification, no bookkeeping). The `ctx.sessions` running-check for session deletion moves into future work together with the cascade.
+Dependency direction: `cch-workspace` → `cch-domain` → `cch-storage` ← the two backends. `cch-workspace` additionally depends on the read-only face of `ctx.sessionPersistence` (attach's cwd check reads the session header; when the service is absent, attach rejects outright — no verification, no bookkeeping). The `ctx.sessions` running-check for session deletion moves into future work together with the cascade.
 
-### `dsh-storage`: the storage hub
+### `cch-storage`: the storage hub
 
-A pure registration hub, no IO of its own, no Config. The `Storage` service mounts at `ctx.storage` with two faces: `backend` (a `BackendRegistry`: `register(name, backend)` returns the disposer, duplicate names throw; `get(name)` throws `backend-not-found` for unknown names) and data-form mounting (`mount(form, facility)` over the merge-extensible `StorageForms` map, into which `dsh-domain` merges the `domain` key; unmounted access throws `form-not-mounted`). The signature text lives in `packages/storage/storage/src/index.ts` and `src/registry.ts`.
+A pure registration hub, no IO of its own, no Config. The `Storage` service mounts at `ctx.storage` with two faces: `backend` (a `BackendRegistry`: `register(name, backend)` returns the disposer, duplicate names throw; `get(name)` throws `backend-not-found` for unknown names) and data-form mounting (`mount(form, facility)` over the merge-extensible `StorageForms` map, into which `cch-domain` merges the `domain` key; unmounted access throws `form-not-mounted`). The signature text lives in `packages/storage/storage/src/index.ts` and `src/registry.ts`.
 
-**Multiple backends stay mounted side by side**; which backend serves a domain is `dsh-domain`'s configuration (below), never a global either-or. Disposer semantics = remove the name from the table; closing the backend itself belongs to the backend package's effect closure, unregister first then close.
+**Multiple backends stay mounted side by side**; which backend serves a domain is `cch-domain`'s configuration (below), never a global either-or. Disposer semantics = remove the name from the table; closing the backend itself belongs to the backend package's effect closure, unregister first then close.
 
 A backend is one **medium owner** (a file-tree root / one db file) exposing primitives through **data-shape facets** — only `kv` this phase; the session migration adds `log` (see the migration section). A facet is an optional member: absence means the backend cannot serve that shape, and resolution fails loud. The `kv` facet's primitive surface: `open(descriptor)` (descriptor = name/version/table list/global flag, with names and table names restricted to `^[a-z][a-z0-9_]*$` doubling as file-name and SQL-identifier segments) returns a unit exposing `loadAll` / `putRecord` / `deleteRecord` (missing key is a no-op) / `setGlobal` / `close` (idempotent); values are opaque JSON to the backend. The normative text (with per-method JSDoc) is `packages/storage/storage/src/backend.ts`.
 
@@ -53,7 +51,7 @@ The backend contract (asserted clause by clause by the shared conformance suite,
 
 The error vocabulary is `StorageError` with a code discriminant: `backend-not-found` / `form-not-mounted` / `duplicate-backend` / `duplicate-mount` / `version-mismatch` / `malformed-medium` / `closed` (`packages/storage/storage/src/error.ts`).
 
-### `dsh-storage-json`
+### `cch-storage-json`
 
 Config is `root` only (required, no default, schemastery); apply registers backend `json` inside `ctx.effect()`, and the disposer unregisters the name before `backend.close()`.
 
@@ -71,7 +69,7 @@ Config is `root` only (required, no default, schemastery); apply registers backe
 - Writes: every write primitive = full serialization of the in-memory state → temp write + fsync → atomic rename publish (the Windows variant follows session-persistence-jsonl's win32 path). Memory is authoritative, disk is its projection.
 - `loadAll`: parse the whole file at open; a missing `unit` header, non-object tables, etc. → `malformed-medium`. A missing file = an empty unit, materialized on first write.
 
-### `dsh-storage-sqlite`
+### `cch-storage-sqlite`
 
 Config is `path` (required, `':memory:'` allowed) plus `journalMode` (enum, default `wal`); apply mirrors json, registering backend `sqlite`.
 
@@ -83,22 +81,22 @@ Config is `path` (required, `':memory:'` allowed) plus `journalMode` (enum, defa
 CREATE TABLE IF NOT EXISTS units (name TEXT PRIMARY KEY, version INTEGER NOT NULL) STRICT;
 CREATE TABLE IF NOT EXISTS unit_globals (
   unit TEXT PRIMARY KEY REFERENCES units(name), value TEXT NOT NULL) STRICT;
--- 每 unit 每表：
+-- one table per (unit, table):
 CREATE TABLE IF NOT EXISTS "u_<unit>_<table>" (
-  key TEXT PRIMARY KEY, value TEXT NOT NULL) STRICT;             -- value = 记录 JSON 文档
+  key TEXT PRIMARY KEY, value TEXT NOT NULL) STRICT;             -- value = the record's JSON document
 ```
 
 - Unit versions live in `units` rows; a descriptor mismatch → `version-mismatch`. Row granularity is document-per-row, preserving precise per-key durable updates (the path left open for high-frequency point-update tables like the session sidecar); when query needs appear, JSON1 reads the value column directly.
 - Write primitives are single statements and thus atomic; no cross-statement transactions needed (the domain layer has no cross-table transactions, see the out-of-scope list).
 
-### `dsh-domain`: the domain data form
+### `cch-domain`: the domain data form
 
 A single implementation, not abstracted; consumers depend on this layer only and never touch backends directly.
 
 ```ts ignore-check
 export const Config = z.object({
-  backend: z.string().required(),                // 默认后端名，必填
-  routes: z.dict(z.string()).default({}),        // per-domain 覆盖：{ workspace: 'sqlite' }
+  backend: z.string().required(),                // default backend name, required
+  routes: z.dict(z.string()).default({}),        // per-domain override: { workspace: 'sqlite' }
 })
 
 export function apply(ctx: Context, config: Config) {
@@ -135,21 +133,21 @@ export function domainTable<K extends string, V>(schema: ZodType<V>): DomainTabl
 6. Construct the `Domain` and register `ctx.effect()`: the disposer drains the write chain → `unit.close()`.
 
 ```ts ignore-check
-export interface Domain</* 由 spec 推导 */> {
+export interface Domain</* derived from spec */> {
   readonly name: string
-  readonly global: { get(): G; set(value: G): Promise<void> }   // 仅当 spec.global 声明
+  readonly global: { get(): G; set(value: G): Promise<void> }   // only when declared by spec.global
   table<N extends keyof S['tables']>(name: N): KvTable<KeyOf<N>, ValueOf<N>>
 }
 
 export interface KvTable<K extends string, V> {
-  get(key: K): V | undefined                     // 内存快照，同步
+  get(key: K): V | undefined                     // in-memory snapshot, synchronous
   entries(): IterableIterator<[K, V]>
   keys(): IterableIterator<K>
   readonly size: number
   put(key: K, value: V): Promise<void>
-  delete(key: K): Promise<boolean>               // false = 本就不存在
+  delete(key: K): Promise<boolean>               // false = never existed
   /** Atomic read-modify-write on the domain's single write chain; fn is sync-pure. */
-  update(key: K, fn: (current: V) => V): Promise<V>   // 缺 key → DomainError('missing-key')
+  update(key: K, fn: (current: V) => V): Promise<V>   // missing key → DomainError('missing-key')
 }
 ```
 
@@ -190,7 +188,7 @@ Orchestration rules (implemented together with the cascade; the `session.delete`
 | Recursive order is bottom-up (leaves → root) | — a mid-way crash leaves only "half the subtree deleted, ancestors intact"; re-running the same delete converges, and no dangling parent exists at any moment |
 | Some id in the cascade is already gone from disk | skip (idempotent resumption); any other error aborts |
 
-### `dsh-workspace`
+### `cch-workspace`
 
 The package owns the `WorkspaceId` brand and exposes `ctx.workspaceRegistry`. The record key is a generated uuid — path is not the key: normalization rewrites it, and reference anchors must be stable.
 
@@ -199,7 +197,7 @@ export type WorkspaceId = Branded<'WorkspaceId'>
 export function WorkspaceId(id: string): WorkspaceId
 
 const workspaceRecord = z.object({
-  path: z.string(),                              // realpath，见下
+  path: z.string(),                              // realpath, see below
   title: z.string(),
   sessionIds: z.array(z.string().transform(SessionId)),
   createdAt: z.string(),                         // ISO
@@ -218,7 +216,7 @@ export interface Workspace {
   readonly id: WorkspaceId
   readonly path: string
   readonly title: string
-  readonly sessionIds: readonly SessionId[]      // 唯一真相且有序：数组序即展示序
+  readonly sessionIds: readonly SessionId[]      // source of truth and ordered: array order is display order
   setTitle(title: string): Promise<void>
   /** Record a session under this workspace (idempotent). Rejects when the session
    *  header's cwd (realpath) differs from this workspace's path. */
@@ -231,12 +229,12 @@ export interface Workspace {
 export class WorkspaceRegistry extends Service {
   constructor(ctx: Context)                      // super(ctx, 'workspaceRegistry')
   // start(): this.domain = await ctx.storage.domain.open(workspaceDomainSpec)
-  //          实体缓存 Map<WorkspaceId, WorkspaceEntity> 重建
-  create(path: string, title?: string): Promise<Workspace>   // realpath 后撞已有 → reject
+  //          entity cache Map<WorkspaceId, WorkspaceEntity> rebuilt
+  create(path: string, title?: string): Promise<Workspace>   // realpath collides with existing → reject
   get(id: WorkspaceId): Workspace | undefined
   list(): Workspace[]
-  resolveByPath(path: string): Promise<Workspace | undefined> // 同 realpath 口径，故 async
-  delete(id: WorkspaceId): Promise<boolean>      // 只删注册记录；目录与 session 日志保留
+  resolveByPath(path: string): Promise<Workspace | undefined> // same realpath semantics, hence async
+  delete(id: WorkspaceId): Promise<boolean>      // deletes only the registration record; directory and session logs are kept
 }
 ```
 
@@ -256,15 +254,15 @@ Consistency doctrine (the ledger = the only ownership authority; the implementat
 
 ### Reuse and the session-backend migration outlook
 
-**Long-term direction**: the pure medium operations inside session-persistence's JSONL/SQLite backends sink into `dsh-storage` backends (the session packages stay; the `SessionPersistence` seam and coordinator semantics do not move — only the file/db operation layer beneath them does). The motive for reuse: the medium layer is all filesystem operations, database calls, and cross-platform grit (Windows permission and atomic-publish variants, fsync semantics, exclusive file creation…), which should be written once; business semantics (how a session appends, when, and what) stay above — while "did this append complete correctly underneath" (durability/atomicity/platform correctness) is the lower layer's responsibility, and the responsibility boundary is the facet primitive contract. The backend interface is therefore designed as **medium owner + data-shape facets**: a session log is an append-only stream, a different shape from KV — forcing them into one set of primitives would deform both, so facets split them (`kv` this phase, `log` at migration) while sharing the medium and its lifecycle.
+**Long-term direction**: the pure medium operations inside session-persistence's JSONL/SQLite backends sink into `cch-storage` backends (the session packages stay; the `SessionPersistence` seam and coordinator semantics do not move — only the file/db operation layer beneath them does). The motive for reuse: the medium layer is all filesystem operations, database calls, and cross-platform grit (Windows permission and atomic-publish variants, fsync semantics, exclusive file creation…), which should be written once; business semantics (how a session appends, when, and what) stay above — while "did this append complete correctly underneath" (durability/atomicity/platform correctness) is the lower layer's responsibility, and the responsibility boundary is the facet primitive contract. The backend interface is therefore designed as **medium owner + data-shape facets**: a session log is an append-only stream, a different shape from KV — forcing them into one set of primitives would deform both, so facets split them (`kv` this phase, `log` at migration) while sharing the medium and its lifecycle.
 
 The current reuse audit (an account already legible before the migration):
 
 | Existing session-persistence logic | Nature | Disposition |
 | --- | --- | --- |
-| JSONL: temp write + fsync + link/unlink atomic publish, 0o700/0o600 permissions, Windows variant (win32.ts) | pure medium | copied by `dsh-storage-json` this phase (whole-file atomic rewrite is the same protocol); becomes the shared implementation at migration |
+| JSONL: temp write + fsync + link/unlink atomic publish, 0o700/0o600 permissions, Windows variant (win32.ts) | pure medium | copied by `cch-storage-json` this phase (whole-file atomic rewrite is the same protocol); becomes the shared implementation at migration |
 | JSONL: line-append, first-line header fast read, zstd per-frame compression | log shape | stays put; moves into the `log` facet at migration |
-| SQLite: openDatabase (mkdir/exclusive create/PRAGMA sequence/user_version check) | pure medium | copied by `dsh-storage-sqlite` this phase — the two openDatabase copies are already near line-identical and this group is the third user; copy now, extract at migration |
+| SQLite: openDatabase (mkdir/exclusive create/PRAGMA sequence/user_version check) | pure medium | copied by `cch-storage-sqlite` this phase — the two openDatabase copies are already near line-identical and this group is the third user; copy now, extract at migration |
 | SQLite: events/sessions schema, same-transaction materialization | log shape | stays put; moves into the `log` facet at migration |
 | coordinator (per-id write chain, lazy materialization, crash repair, flush barrier) | session semantics | never sinks — event-log domain logic whose counterpart here is the domain layer's write chain; each owns its own |
 | encodeSegment (id-to-path escaping) | medium utility | unused on the domain side (keys never reach paths); sinks together with the `log` facet (one file per session) at migration |

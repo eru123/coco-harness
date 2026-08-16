@@ -2,8 +2,6 @@
 
 Status: implemented
 
-English | [中文](2026-07-08-self-referential-cordis-toolset.zh.md)
-
 ## Problem
 
 Everything in this harness is a cordis plugin, but the agent running inside that plugin runtime cannot see or touch it: it cannot enumerate the services and events around it, cannot extend itself with a new tool mid-session, and cannot compose capabilities it invents. Handing the model that power is worth exploring — a self-referential agent that inspects and modifies its own runtime — but it raises three correctness problems at once, and the design is about answering them rather than the raw "let the model run code" mechanic.
@@ -12,7 +10,7 @@ First, model-written registration must be validated where it happens: a malforme
 
 ## Decision
 
-The toolset ships as [`@deepseek-ai/dsh-tool-cordis`](../../../../packages/extensions/tool-cordis/README.md) and is demoed by `examples/web-cordis`. It gives the model three tools over the live Cordis runtime in the current DSH process: inspect it, mount an in-memory temporary Plugin, and unmount that Plugin to quiescence.
+The toolset ships as [`@coco-harness/cch-tool-cordis`](../../../../packages/extensions/tool-cordis/README.md) and is demoed by `examples/web-cordis`. It gives the model three tools over the live Cordis runtime in the current DSH process: inspect it, mount an in-memory temporary Plugin, and unmount that Plugin to quiescence.
 
 The vm isolates accidental global pollution, and the context façade hides framework internals. Neither restricts the authority of exposed services: a temporary Plugin can call `ctx.shell` with the host executor's privileges and reach the real filesystem and web services. It runs in the shared DSH runtime and may affect other sessions in that process. This is an opt-in development tool with bash-equivalent trust, not a security boundary or product default.
 

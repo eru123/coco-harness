@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import type { SessionEvent } from '@deepseek-ai/dsh-session'
+import type { SessionEvent } from '@coco-harness/cch-session'
 import {
   ScheduleId,
   ScheduleInputError,

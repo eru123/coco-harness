@@ -2,8 +2,6 @@
 
 Status: implemented
 
-English | [中文](2026-08-10-product-subagent-providers-in-shared-host.zh.md)
-
 ## Problem
 
 The [Codex and Claude Code provider contracts](../feature/2026-08-04-claude-code-and-codex-subagent-backends.md) were first shipped as independently installable packages that a deployment loaded beside the common subagent tool. Agent Presets later became the ordinary owner of one agent's model-visible tools, but a preset cannot safely own these product providers: `ctx.subagents` is a process registry, provider names are unique, and host consumers resolve the same registry across sessions. Requiring a person to edit both a Profile and a Preset would also make a generic preset row incomplete by itself.
@@ -12,7 +10,7 @@ The placement decision must preserve two independent facts. Loading a provider m
 
 ## Decision
 
-Every shipped Profile loads the fixed `codex` and `claude-code` providers once through the base bundle's host plane. Loading either plugin only registers a dormant backend; the corresponding Codex or Claude process starts on the first actual delegation call. Agent Presets independently contribute ordinary `dsh-tool-subagent` rows for `subagent_codex` and `subagent_claude_code`, so a preset can expose neither tool, either one, or both without changing the provider registry.
+Every shipped Profile loads the fixed `codex` and `claude-code` providers once through the base bundle's host plane. Loading either plugin only registers a dormant backend; the corresponding Codex or Claude process starts on the first actual delegation call. Agent Presets independently contribute ordinary `cch-tool-subagent` rows for `subagent_codex` and `subagent_claude_code`, so a preset can expose neither tool, either one, or both without changing the provider registry.
 
 This decision supersedes only the opt-in composition placement recorded by the provider-contract note. That note continues to own each product protocol, result mapping, cancellation, process-tree lifecycle, and evidence tiers. The [Agent Preset architecture](2026-08-03-per-session-agent-presets.md) continues to own the Host/Agent split, preset authoring, and the rule that edits affect only newly composed sessions.
 

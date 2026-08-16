@@ -1,0 +1,60 @@
+{
+  "name": "@coco-harness/cch-subagent-cch-sdk",
+  "description": "Out-of-process SDK subagent backend: drives a child Coco Harness runtime subprocess over stdio JSON-RPC through the TypeScript SDK client",
+  "version": "0.1.0-rc.5",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eru123/coco-harness.git",
+    "directory": "packages/subagent/subagent-cch-sdk"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./invariant": {
+      "types": "./lib/types/invariant.d.ts",
+      "default": "./lib/invariant.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/invariant.js",
+    "lib/types/**/*.d.ts"
+  ],
+  "license": "MIT",
+  "peerDependencies": {
+    "@coco-harness/cch-agent": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-llm": "workspace:^",
+    "@coco-harness/cch-sdk-client": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-subagent": "workspace:^",
+    "@coco-harness/cch-subprocess": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
+  },
+  "dependencies": {
+    "@coco-harness/schemastery": "workspace:^"
+  },
+  "devDependencies": {
+    "@coco-harness/cordis-plugin-loader": "workspace:^",
+    "@coco-harness/cch-agent": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-llm": "workspace:^",
+    "@coco-harness/cch-loader-smoke": "workspace:^",
+    "@coco-harness/cch-sdk-client": "workspace:^",
+    "@coco-harness/cch-sdk-protocol": "workspace:^",
+    "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-subagent": "workspace:^",
+    "@coco-harness/cch-subprocess": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
+  }
+}

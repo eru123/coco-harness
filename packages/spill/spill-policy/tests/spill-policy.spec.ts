@@ -9,19 +9,19 @@
  */
 
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
-import { createUserMessage, CallId } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import { SessionId } from '@deepseek-ai/dsh-session'
-import SystemPrompt from '@deepseek-ai/dsh-system-prompt'
-import ToolRuntime, { defineContentToolFixture } from '@deepseek-ai/dsh-tools'
-import type { ToolDefinition } from '@deepseek-ai/dsh-tools'
-import type { PostToolDecision, ToolExecution, ToolExecutionToken } from '@deepseek-ai/dsh-tools'
-import { SpillLocator, SpillStore } from '@deepseek-ai/dsh-spill'
-import type { SaveTextSpill, SpillRef } from '@deepseek-ai/dsh-spill'
-import * as SpillPolicy from '@deepseek-ai/dsh-spill-policy'
-import { WorkerThreadCodeRuntime } from '@deepseek-ai/dsh-code-runtime-worker-thread'
+import { Context } from '@coco-harness/cordis'
+import Loader from '@coco-harness/cordis-plugin-loader'
+import { createUserMessage, CallId } from '@coco-harness/cch-llm'
+import type { ContentBlock } from '@coco-harness/cch-llm'
+import { SessionId } from '@coco-harness/cch-session'
+import SystemPrompt from '@coco-harness/cch-system-prompt'
+import ToolRuntime, { defineContentToolFixture } from '@coco-harness/cch-tools'
+import type { ToolDefinition } from '@coco-harness/cch-tools'
+import type { PostToolDecision, ToolExecution, ToolExecutionToken } from '@coco-harness/cch-tools'
+import { SpillLocator, SpillStore } from '@coco-harness/cch-spill'
+import type { SaveTextSpill, SpillRef } from '@coco-harness/cch-spill'
+import * as SpillPolicy from '@coco-harness/cch-spill-policy'
+import { WorkerThreadCodeRuntime } from '@coco-harness/cch-code-runtime-worker-thread'
 
 const testToolSignal = new AbortController().signal
 

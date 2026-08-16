@@ -7,7 +7,7 @@
  * the binding update rules. The unit mapping, mechanical code splice, and
  * first-occurrence tracking follow the incremental-pipeline planner mechanics.
  * The CLI wrapper is `scripts/gen-translation-brief.ts`; the workflow that
- * consumes the briefing is `.agents/skills/dsh-translate-docs/SKILL.md`.
+ * consumes the briefing is `.agents/skills/cch-translate-docs/SKILL.md`.
  */
 
 import type { Nodes } from 'mdast'
@@ -175,7 +175,7 @@ function replaceSpanTexts(markdown: string, spans: MarkdownSpan[], replacements:
 }
 
 function maskCodeSpans(markdown: string, spans: MarkdownSpan[]): string {
-  return replaceSpanTexts(markdown, spans, new Map(spans.map(span => [span.index, `DSH_TRANSLATION_CODE_${span.index}\n`])))
+  return replaceSpanTexts(markdown, spans, new Map(spans.map(span => [span.index, `CCH_TRANSLATION_CODE_${span.index}\n`])))
 }
 
 /**
@@ -206,7 +206,7 @@ export function computeMechanicalUpdate(confirmedSource: string, currentSource: 
 export interface TerminologyRow {
   english: string
   chinese: string
-  /** The 首次出现 cell (first-occurrence rendering), possibly empty. */
+  /** The first-mention cell (first-occurrence rendering), possibly empty. */
   first: string
   /** The verbatim table row. */
   line: string
@@ -264,7 +264,7 @@ export type BriefDirection = 'en-to-zh' | 'zh-to-en'
 
 /** Whether a row's source-language term occurs in the given text. */
 function rowOccurs(row: TerminologyRow, direction: BriefDirection, text: string): boolean {
-  const terms = direction === 'en-to-zh' ? [row.english] : [row.first, row.chinese].filter(term => /[一-鿿]/.test(term))
+  const terms = direction === 'en-to-zh' ? [row.english] : [row.first, row.chinese].filter(term => /[\u4e00-\u9fff]/.test(term))
   return terms.some(term => termOffsets(text, term, direction === 'en-to-zh').length > 0)
 }
 
@@ -301,7 +301,7 @@ export interface FirstOccurrenceContext {
 
 /**
  * Track document-wide first occurrences of the relevant English terms. The
- * 首次出现 rendering attaches to a term's first occurrence, so when an edit
+ * first-mention rendering attaches to a term's first occurrence, so when an edit
  * moves that occurrence across spans, both the old and new spans need
  * counterpart edits even when only one of them changed.
  *
@@ -388,8 +388,8 @@ const ZH_TARGET_DIGEST = [
   '- Code fences byte-identical to the English side, comments included; inline code spans verbatim.',
   '- Relative links keep the `.md` target; only the switcher line links `.zh.md`.',
   '- Structure mirrors the counterpart: heading depths and order, list kinds and item counts, table rows and columns.',
-  '- 首次出现 annotations attach to the document-wide first occurrence only; later occurrences use the bare form, and an empty 首次出现 cell means never gloss.',
-  '- Typography: one half-width space between Chinese and Latin or digits; full-width punctuation in Chinese prose; 顿号 for enumerations; second person is 你.',
+  '- First-mention annotations attach to the document-wide first occurrence only; later occurrences use the bare form, and an empty first-mention cell means never gloss.',
+  '- Typography: one half-width space between Chinese and Latin or digits; full-width punctuation in Chinese prose; the ideographic enumeration comma for enumerations; second person is informal.',
   '- One physical line per paragraph; exactly one trailing newline.',
 ]
 
@@ -491,7 +491,7 @@ export function renderTranslationBrief(input: TranslationBriefInput): string {
     out.push('')
     out.push('## Binding terminology rows matching this change (docs/i18n/terminology.md)')
     out.push('')
-    out.push('| English | 中文 | 首次出现 | 不要译作 | 备注 |')
+    out.push('| English | Chinese | First mention | Do not translate as | Notes |')
     out.push('|---|---|---|---|---|')
     for (const row of input.terminology) out.push(row.line)
     out.push('')

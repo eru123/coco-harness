@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { AttachmentId } from '@deepseek-ai/dsh-attachment'
-import { createUserMessage, CallId, ReasoningEffortId, createMessage } from '@deepseek-ai/dsh-llm'
-import type { ContentBlock, GenerateOptions, Message } from '@deepseek-ai/dsh-llm'
+import { AttachmentId } from '@coco-harness/cch-attachment'
+import { createUserMessage, CallId, ReasoningEffortId, createMessage } from '@coco-harness/cch-llm'
+import type { ContentBlock, GenerateOptions, Message } from '@coco-harness/cch-llm'
 import { serializeMessages, serializeRequest } from '../src/serialize.ts'
 
 function request(overrides: Partial<GenerateOptions> = {}): GenerateOptions {
@@ -288,7 +288,7 @@ describe('review fixes: assistant content shapes', () => {
     // plain turns, and content must still be SET — a null here poisoned the
     // session log and bricked every later turn of that session.
     const wire = serializeMessages([createMessage({
-      role: 'assistant', content: [{ type: 'reasoning', text: '你好！有什么我可以帮你的吗？' }],
+      role: 'assistant', content: [{ type: 'reasoning', text: 'Hello! How can I help you?' }],
       source: { kind: 'plugin', plugin: 'test' },
     })])
     expect(wire).toEqual([{ role: 'assistant', content: '' }])

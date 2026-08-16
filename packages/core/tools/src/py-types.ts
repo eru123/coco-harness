@@ -2,7 +2,7 @@
  * Code Mode codegen — Python flavor. The pure projection from registered tool schemas to the
  * Python SDK text the model programs against under `runtime.language === 'python'`. Sibling of
  * {@link ./ts-types.ts | ts-types.ts}; the two files are two projections of the same registry
- * store, keyed by the loaded {@link @deepseek-ai/dsh-code-runtime#CodeRuntime.language | code
+ * store, keyed by the loaded {@link @coco-harness/cch-code-runtime#CodeRuntime.language | code
  * runtime's language}.
  *
  * Under `mode: 'code'` the native tool schemas are omitted from the request, so this generated
@@ -11,7 +11,7 @@
  * alongside it and it is one of two. Object-shaped arguments and outputs therefore render as one
  * named `TypedDict` per tool (and per nested object), not an opaque `dict[str, Any]`, so the
  * shape survives into the program under the mode that has nothing else to carry it.
- * @module @deepseek-ai/dsh-tools/src/py-types
+ * @module @coco-harness/cch-tools/src/py-types
  */
 
 import { assertSupportedJsonSchema } from './json-schema.ts'
@@ -29,7 +29,7 @@ const IDENTIFIER = /^[\p{XID_Start}_]\p{XID_Continue}*$/u
  * Whether a name can be emitted as a bare Python identifier rather than
  * routed to the subscript/`dict[str, Any]` path.
  *
- * Python identifiers are not ASCII: `路径` is as legal a field name as `path`,
+ * Python identifiers are not ASCII: `café` is as legal a field name as `path`,
  * and rejecting it would degrade the whole enclosing object, dropping every
  * field's name, requiredness, and type — information whose only source under
  * `mode: 'code'` is this generated text.
@@ -249,7 +249,7 @@ function docLines(description: unknown, indent: number): string[] {
  * CamelCase a name into a Python type identifier: non-identifier characters
  * split words, `_` splits too (it is `XID_Continue`, so the split set names it
  * explicitly), and a head that cannot start an identifier takes a `Tool`
- * prefix. Unicode survives, so a `路径` field yields `路径`-based class names
+ * prefix. Unicode survives, so a `café` field yields `Café`-based class names
  * instead of collapsing to the bare prefix. A character that is not
  * `XID_Continue` splits even when it is a letter, so a name whose NFKC folding
  * would leave the identifier set is not carried through — the split set is the

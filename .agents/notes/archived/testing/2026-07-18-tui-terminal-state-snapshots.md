@@ -3,8 +3,6 @@
 Status: implemented
 Archived: 2026-08-04
 
-English | [中文](2026-07-18-tui-terminal-state-snapshots.zh.md)
-
 ## Problem
 
 The TUI is a stateful renderer. Its user-visible result depends on ANSI parsing, differential frames, wrapping, scrollback, viewport position, terminal width, focus, cursor state, and each tool's presentation intent. Unit tests that collect `Terminal.write()` fragments can prove event handling, but they cannot prove the final screen a terminal displays. The same screen may also be emitted through different write fragments, so pinning those fragments creates false regressions.
@@ -20,15 +18,15 @@ Reusable TUI coverage has two complementary package layers:
 1. `packages/ui/tui/tests/tui.spec.ts` tests event mapping, input routing, disposal, and error behavior directly.
 2. `packages/ui/tui/tests/tui.snapshot.ts` mounts the production TUI against a headless terminal emulator for transient states that a completed session log cannot retain: in-flight streaming, pending tool calls, overlays, expansion, compaction reflow, errors, and shutdown.
 
-The [explicit-config entrypoint decision](../simplification/2026-08-03-explicit-config-dsh-entrypoint.md) removed the product TUI composition, recorded application journeys, and PTY suite. A deployment shipping a terminal front door owns those assembled-application layers; package tests do not claim that product coverage.
+The [explicit-config entrypoint decision](../simplification/2026-08-03-explicit-config-cch-entrypoint.md) removed the product TUI composition, recorded application journeys, and PTY suite. A deployment shipping a terminal front door owns those assembled-application layers; package tests do not claim that product coverage.
 
 ### Removed application replay
 
-The deleted application suite gave each scenario `session.jsonl`, optional child logs `session.<n>.jsonl`, and `terminal.expected.txt`. The primary log supplied user-authored `user/message` prompts and the recorded `assistant/chunk` sequence. `dsh-llm-replay` derived one model-call script per session and was the only mocked boundary; the agent loop, tools, workers, presenters, and TUI were production implementations.
+The deleted application suite gave each scenario `session.jsonl`, optional child logs `session.<n>.jsonl`, and `terminal.expected.txt`. The primary log supplied user-authored `user/message` prompts and the recorded `assistant/chunk` sequence. `cch-llm-replay` derived one model-call script per session and was the only mocked boundary; the agent loop, tools, workers, presenters, and TUI were production implementations.
 
 That suite rejected a journey when its tool-call sequence differed, an expected event count was missing, a tool result was an error, a turn ended in error, a workflow lifecycle was incomplete, or the live child-session count differed from the fixture set. These checks remain the acceptance pattern for any future terminal deployment; they are no longer shipped fixtures.
 
-The removed recording workflow used `DSH_SNAPSHOT=record` for model journeys and `DSH_SNAPSHOT=refresh` for derived terminal output. Removing the product entrypoint also removed those modes from the repository snapshot lane; reusable TUI snapshots are authored directly from package scenarios.
+The removed recording workflow used `CCH_SNAPSHOT=record` for model journeys and `CCH_SNAPSHOT=refresh` for derived terminal output. Removing the product entrypoint also removed those modes from the repository snapshot lane; reusable TUI snapshots are authored directly from package scenarios.
 
 ### Semantic terminal projection
 

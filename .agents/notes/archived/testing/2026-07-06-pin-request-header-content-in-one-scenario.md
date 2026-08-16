@@ -3,15 +3,13 @@
 Status: implemented
 Archived: 2026-07-26
 
-English | [中文](2026-07-06-pin-request-header-content-in-one-scenario.zh.md)
-
 ## Problem
 
 An ACP snapshot suite needs to prove the exact composed system prompt and tool-schema list sent in each `request/header`, but duplicating that content inside every `session.jsonl` makes a prompt or schema edit rewrite dozens of giant one-line JSON records. Keeping one raw header avoids the duplication but still makes prompt review poor: prose is JSON-escaped onto one line and mixed with thousands of characters of tool schemas.
 
 ## Decision
 
-Exactly one scenario per header-composition class is flagged `pinsHeader`. Its directory splits the pin by review format: `system-prompt.expected.md` contains the normalized full prompt sequence as ordinary Markdown, `tool-schemas.expected.json` contains the corresponding complete schema sequence as structured JSON, and `session.jsonl` retains config, reason, and any model-visible prefix while storing `header.system` and `header.tools` as `"{{system}}"` / `"{{tools}}"`. Every other JSONL uses the same prompt and tool tokens and also tokenizes session-prefix content. The pin mechanics live in [`dsh-acp-snapshot`](../../../../packages/support/acp-snapshot/README.md), whose suite factory enforces one pin per class.
+Exactly one scenario per header-composition class is flagged `pinsHeader`. Its directory splits the pin by review format: `system-prompt.expected.md` contains the normalized full prompt sequence as ordinary Markdown, `tool-schemas.expected.json` contains the corresponding complete schema sequence as structured JSON, and `session.jsonl` retains config, reason, and any model-visible prefix while storing `header.system` and `header.tools` as `"{{system}}"` / `"{{tools}}"`. Every other JSONL uses the same prompt and tool tokens and also tokenizes session-prefix content. The pin mechanics live in [`cch-acp-snapshot`](../../../../packages/support/acp-snapshot/README.md), whose suite factory enforces one pin per class.
 
 The pure `scrubSystemPrompts` and `scrubToolSchemas` normalizers independently tokenize every stored full header. `scrubRequestHeaders` also tokenizes session-prefix content for non-pinning scenarios while retaining header count, field presence, config, reason, and prefix message count. Record and refresh write-back apply the appropriate scrub before writing JSONL and regenerate both sidecars from the normalized live full-header sequence, so neither path can reintroduce prompt/schema bulk into JSONL or leave a review artifact stale.
 

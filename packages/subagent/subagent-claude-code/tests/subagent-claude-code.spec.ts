@@ -6,8 +6,8 @@ import type {
   SDKResultMessage,
   SpawnOptions,
 } from '@anthropic-ai/claude-agent-sdk'
-import { Context } from '@deepseek-ai/cordis'
-import Loader from '@deepseek-ai/cordis-plugin-loader'
+import { Context } from '@coco-harness/cordis'
+import Loader from '@coco-harness/cordis-plugin-loader'
 import {
   afterEach,
   beforeEach,
@@ -17,17 +17,17 @@ import {
   type Mock,
   vi,
 } from 'vitest'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
-import type { ContentBlock } from '@deepseek-ai/dsh-llm'
-import SubagentRuntime from '@deepseek-ai/dsh-subagent'
+import type { Agent } from '@coco-harness/cch-agent'
+import type { InvariantInstaller } from '@coco-harness/cch-invariants'
+import type { ContentBlock } from '@coco-harness/cch-llm'
+import SubagentRuntime from '@coco-harness/cch-subagent'
 import type {
   SubprocessHandle,
   SubprocessOutcome,
   SubprocessSpawnSpec,
-} from '@deepseek-ai/dsh-subprocess'
-import LocalSubprocessRuntime from '@deepseek-ai/dsh-subprocess-local'
-import { MAX_TIMER_DELAY_MS } from '@deepseek-ai/dsh-timeout'
+} from '@coco-harness/cch-subprocess'
+import LocalSubprocessRuntime from '@coco-harness/cch-subprocess-local'
+import { MAX_TIMER_DELAY_MS } from '@coco-harness/cch-timeout'
 import * as claudeCode from '../src/index.ts'
 import * as invariant from '../src/invariant.ts'
 import {
@@ -338,8 +338,8 @@ describe('task admission and package contracts', () => {
     await ctx.plugin(claudeCode, {
       env: {
         ANTHROPIC_API_KEY: 'provider-fake-key',
-        CLAUDE_CONFIG_DIR: '/private/tmp/dsh-claude-code-unit-config',
-        HOME: '/private/tmp/dsh-claude-code-unit-home',
+        CLAUDE_CONFIG_DIR: '/private/tmp/cch-claude-code-unit-config',
+        HOME: '/private/tmp/cch-claude-code-unit-home',
       },
       disposeGraceMs: 29,
     })
@@ -403,7 +403,7 @@ describe('task admission and package contracts', () => {
     const ctx = { invariants: { register } } as unknown as Context
     await expect(invariant.apply(ctx)).resolves.toBe(dispose)
     expect(register).toHaveBeenCalledWith(
-      '@deepseek-ai/dsh-subagent-claude-code',
+      '@coco-harness/cch-subagent-claude-code',
       expect.any(Function),
     )
     const install = register.mock.calls[0]![1]
@@ -464,11 +464,11 @@ describe('official spawn projection', () => {
     }), 7, 'win32')
 
     expect(spec.argv).toEqual([
-      'cmd.exe', '/d', '/v:off', '/s', '/c', '%DSH_CLAUDE_CODE_EXECUTABLE%',
+      'cmd.exe', '/d', '/v:off', '/s', '/c', '%CCH_CLAUDE_CODE_EXECUTABLE%',
       '--output-format', 'stream-json',
     ])
     expect(spec.env).toEqual(expect.objectContaining({
-      DSH_CLAUDE_CODE_EXECUTABLE: `"${command}"`,
+      CCH_CLAUDE_CODE_EXECUTABLE: `"${command}"`,
     }))
   })
 
@@ -533,7 +533,7 @@ describe('query options and result mapping', () => {
   it('builds the fixed unattended options over the scrubbed environment', () => {
     vi.stubEnv('HOST_VISIBLE', 'visible')
     vi.stubEnv('HOST_SECRET_TOKEN', 'must-not-leak')
-    vi.stubEnv('DSH_INTERNAL', 'must-not-leak')
+    vi.stubEnv('CCH_INTERNAL', 'must-not-leak')
     const child = fakeChild()
     const spawn = vi.fn(() => child.handle)
     const captured: SubprocessHandle[] = []
@@ -564,7 +564,7 @@ describe('query options and result mapping', () => {
       ANTHROPIC_API_KEY: 'explicit-fake-key',
     })
     expect(options.env).not.toHaveProperty('HOST_SECRET_TOKEN')
-    expect(options.env).not.toHaveProperty('DSH_INTERNAL')
+    expect(options.env).not.toHaveProperty('CCH_INTERNAL')
     for (const omitted of [
       'settingSources',
       'canUseTool',

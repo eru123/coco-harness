@@ -3,15 +3,13 @@
 Status: implemented
 Archived: 2026-08-04
 
-English | [中文](2026-07-30-tui-details-command.zh.md)
-
 ## Problem
 
 The TUI's transcript detail state — tool-card visibility (`collapsed`/`expanded`/`hidden`, per the [consolidated TUI presentation](../architecture/2026-07-28-consolidated-tui-presentation.md)) and reasoning-block display — was reachable only through the Ctrl+O cycle and the Ctrl+R toggle. A user who wants a specific mode must cycle through the others, cannot set both dimensions in one action, and has no way to query the current state; a terminal that swallows those control keys has no fallback at all.
 
 ## Decision
 
-`dsh-tui` registers `/details` beside its other agent-scoped commands. Bare `/details` opens `DetailsDialog`, a centered keyboard toggle with one entry per dimension — `Tool cards` and `Reasoning` — showing the live values: Tab cycles the highlighted entry and applies the change immediately, so the transcript behind the dialog is the preview, and Enter, Esc, or Ctrl+C closes; its width is the `detailsDialogWidth` config key and a second `/details` replaces an open selector, mirroring the `/model` overlay. Arguments name target states directly: `collapsed|expanded|hidden` jumps tool cards to that phase, `reasoning on|off` sets reasoning display, bare `reasoning` toggles it, and directives combine in one invocation. An unknown token returns a command error carrying the usage line. Every entry mutates the same closure state as the shortcuts, refactored so the cycle and toggle are thin wrappers over `setToolsVisibility`/`setReasoning`; the shortcuts and their notices are unchanged.
+`cch-tui` registers `/details` beside its other agent-scoped commands. Bare `/details` opens `DetailsDialog`, a centered keyboard toggle with one entry per dimension — `Tool cards` and `Reasoning` — showing the live values: Tab cycles the highlighted entry and applies the change immediately, so the transcript behind the dialog is the preview, and Enter, Esc, or Ctrl+C closes; its width is the `detailsDialogWidth` config key and a second `/details` replaces an open selector, mirroring the `/model` overlay. Arguments name target states directly: `collapsed|expanded|hidden` jumps tool cards to that phase, `reasoning on|off` sets reasoning display, bare `reasoning` toggles it, and directives combine in one invocation. An unknown token returns a command error carrying the usage line. Every entry mutates the same closure state as the shortcuts, refactored so the cycle and toggle are thin wrappers over `setToolsVisibility`/`setReasoning`; the shortcuts and their notices are unchanged.
 
 A combined invocation applies reasoning before visibility because `setReasoning` rebuilds the transcript from session events, which drops non-durable notice components; applying it last would erase the just-appended visibility notice.
 

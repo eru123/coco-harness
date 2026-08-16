@@ -1,13 +1,13 @@
 /**
- * Package-owned invariant companion for `@deepseek-ai/dsh-tool-terminal`.
- * @module @deepseek-ai/dsh-tool-terminal/invariant
+ * Package-owned invariant companion for `@coco-harness/cch-tool-terminal`.
+ * @module @coco-harness/cch-tool-terminal/invariant
  */
 
 /* jscpd:ignore-start */
-import type { Context } from '@deepseek-ai/cordis'
-import type { InvariantInstaller } from '@deepseek-ai/dsh-invariants'
+import type { Context } from '@coco-harness/cordis'
+import type { InvariantInstaller } from '@coco-harness/cch-invariants'
 
-const PACKAGE_NAME = '@deepseek-ai/dsh-tool-terminal'
+const PACKAGE_NAME = '@coco-harness/cch-tool-terminal'
 
 /** Cordis companion plugin name. */
 export const name = 'tool-terminal-invariant'

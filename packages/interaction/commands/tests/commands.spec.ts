@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest'
-import { Context } from '@deepseek-ai/cordis'
-import { createScope } from '@deepseek-ai/dsh-scope'
-import type { Scope } from '@deepseek-ai/dsh-scope'
-import type { Agent } from '@deepseek-ai/dsh-agent'
-import SessionStore, { SessionId } from '@deepseek-ai/dsh-session'
-import CommandRuntime, { parseCommand, type CommandDefinition } from '@deepseek-ai/dsh-commands'
+import { Context } from '@coco-harness/cordis'
+import { createScope } from '@coco-harness/cch-scope'
+import type { Scope } from '@coco-harness/cch-scope'
+import type { Agent } from '@coco-harness/cch-agent'
+import SessionStore, { SessionId } from '@coco-harness/cch-session'
+import CommandRuntime, { parseCommand, type CommandDefinition } from '@coco-harness/cch-commands'
 
 function command(name: string, text = `ran:${name}`): CommandDefinition {
   return {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { LlmError } from '@deepseek-ai/dsh-llm'
+import { LlmError } from '@coco-harness/cch-llm'
 import { DONE, parseSse } from '../src/sse.ts'
 
 /**
