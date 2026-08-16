@@ -129,7 +129,7 @@ describe('ShellEnvRegistry', () => {
     })).toThrow(/name must be non-empty/)
     expect(() => registry.register({
       name: 'invalid-key',
-      variables: { dsh_invalid: { description: 'Invalid key.' } } as unknown as Record<'CCH_INVALID', { description: string }>,
+      variables: { cch_invalid: { description: 'Invalid key.' } } as unknown as Record<'CCH_INVALID', { description: string }>,
       resolve: () => ({}),
     })).toThrow(/invalid key/)
     expect(() => registry.register({

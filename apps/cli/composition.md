@@ -8,162 +8,162 @@ The cch-base bundle patch every profile applies first; mode bundles (cch-web-app
 ```mermaid
 flowchart LR
   cfg["packages/bundle/base/cordis.patch.yml<br/>cordis.yml"]
-  plugin_dsh_base_timer["timer<br/>@coco-harness/cordis-plugin-timer"]
-  cfg --> plugin_dsh_base_timer
-  plugin_dsh_base_hmr["hmr<br/>@coco-harness/cordis-plugin-hmr"]
-  cfg --> plugin_dsh_base_hmr
-  plugin_dsh_base_llm["llm<br/>@coco-harness/cch-llm"]
-  cfg --> plugin_dsh_base_llm
-  plugin_dsh_base_session["session<br/>@coco-harness/cch-session"]
-  cfg --> plugin_dsh_base_session
-  plugin_dsh_base_typert["typert<br/>@coco-harness/cch-typert-registry"]
-  cfg --> plugin_dsh_base_typert
-  plugin_dsh_base_typert_loader["typert-loader<br/>@coco-harness/cch-typert-loader"]
-  cfg --> plugin_dsh_base_typert_loader
-  plugin_dsh_base_typert_gateway["typert-gateway<br/>@coco-harness/cch-api-gateway"]
-  cfg --> plugin_dsh_base_typert_gateway
-  plugin_dsh_base_session_title["session-title<br/>@coco-harness/cch-session-title"]
-  cfg --> plugin_dsh_base_session_title
-  plugin_dsh_base_session_title_llm["session-title-llm<br/>@coco-harness/cch-session-title-first-prompt-llm"]
-  cfg --> plugin_dsh_base_session_title_llm
-  plugin_dsh_base_user_questions["user-questions<br/>@coco-harness/cch-user-questions"]
-  cfg --> plugin_dsh_base_user_questions
-  plugin_dsh_base_agent["agent<br/>@coco-harness/cch-agent"]
-  cfg --> plugin_dsh_base_agent
-  plugin_dsh_base_agent_default_model["agent-default-model<br/>@coco-harness/cch-agent-default-model"]
-  cfg --> plugin_dsh_base_agent_default_model
-  plugin_dsh_base_jobs["jobs<br/>@coco-harness/cch-jobs-local"]
-  cfg --> plugin_dsh_base_jobs
-  plugin_dsh_base_llm_retry["llm-retry<br/>@coco-harness/cch-llm-retry"]
-  cfg --> plugin_dsh_base_llm_retry
-  plugin_dsh_base_settings["settings<br/>@coco-harness/cch-settings-file"]
-  cfg --> plugin_dsh_base_settings
-  plugin_dsh_base_credentials["credentials<br/>@coco-harness/cch-credentials-local"]
-  cfg --> plugin_dsh_base_credentials
-  plugin_dsh_base_llm_pi_ai["llm-pi-ai<br/>@coco-harness/cch-llm-pi-ai"]
-  cfg --> plugin_dsh_base_llm_pi_ai
-  plugin_dsh_base_session_persistence_jsonl["session-persistence-jsonl<br/>@coco-harness/cch-session-persistence-jsonl"]
-  cfg --> plugin_dsh_base_session_persistence_jsonl
-  plugin_dsh_base_attachment_local["attachment-local<br/>@coco-harness/cch-attachment-local"]
-  cfg --> plugin_dsh_base_attachment_local
-  plugin_dsh_base_session_query_sqlite["session-query-sqlite<br/>@coco-harness/cch-session-query-sqlite"]
-  cfg --> plugin_dsh_base_session_query_sqlite
-  plugin_dsh_base_session_projection["session-projection<br/>@coco-harness/cch-session-projection"]
-  cfg --> plugin_dsh_base_session_projection
-  plugin_dsh_base_session_telemetry_otel["session-telemetry-otel<br/>@coco-harness/cch-session-telemetry-otel"]
-  cfg --> plugin_dsh_base_session_telemetry_otel
-  plugin_dsh_base_subprocess["subprocess<br/>@coco-harness/cch-subprocess-local"]
-  cfg --> plugin_dsh_base_subprocess
-  plugin_dsh_base_sandbox["sandbox<br/>@coco-harness/cch-sandbox-local"]
-  cfg --> plugin_dsh_base_sandbox
-  plugin_dsh_base_sandbox_policy["sandbox-policy<br/>@coco-harness/cch-sandbox-policy"]
-  cfg --> plugin_dsh_base_sandbox_policy
-  plugin_dsh_base_bash_sandbox["bash-sandbox<br/>@coco-harness/cch-bash-sandbox"]
-  cfg --> plugin_dsh_base_bash_sandbox
-  plugin_dsh_base_pwsh_sandbox["pwsh-sandbox<br/>@coco-harness/cch-pwsh-sandbox"]
-  cfg --> plugin_dsh_base_pwsh_sandbox
-  plugin_dsh_base_approval["approval<br/>@coco-harness/cch-user-approval"]
-  cfg --> plugin_dsh_base_approval
-  plugin_dsh_base_permission["permission<br/>@coco-harness/cch-permission-presets"]
-  cfg --> plugin_dsh_base_permission
-  plugin_dsh_base_shell_env["shell-env<br/>@coco-harness/cch-shell-env"]
-  cfg --> plugin_dsh_base_shell_env
-  plugin_dsh_base_tool_bash["tool-bash<br/>@coco-harness/cch-tool-bash"]
-  cfg --> plugin_dsh_base_tool_bash
-  plugin_dsh_base_tool_pwsh["tool-pwsh<br/>@coco-harness/cch-tool-pwsh"]
-  cfg --> plugin_dsh_base_tool_pwsh
-  plugin_dsh_base_tool_jobs["tool-jobs<br/>@coco-harness/cch-tool-jobs"]
-  cfg --> plugin_dsh_base_tool_jobs
-  plugin_dsh_base_fs_observation_policy["fs-observation-policy<br/>@coco-harness/cch-fs-observation-policy"]
-  cfg --> plugin_dsh_base_fs_observation_policy
-  plugin_dsh_base_tool_fs["tool-fs<br/>@coco-harness/cch-tool-fs"]
-  cfg --> plugin_dsh_base_tool_fs
-  plugin_dsh_base_tool_fs_search["tool-fs-search<br/>@coco-harness/cch-tool-fs-search"]
-  cfg --> plugin_dsh_base_tool_fs_search
-  plugin_dsh_base_agent_instructions["agent-instructions<br/>@coco-harness/cch-agent-instructions"]
-  cfg --> plugin_dsh_base_agent_instructions
-  plugin_dsh_base_skill["skill<br/>@coco-harness/cch-skill"]
-  cfg --> plugin_dsh_base_skill
-  plugin_dsh_base_skill_filesystem["skill-filesystem<br/>@coco-harness/cch-skill-filesystem"]
-  cfg --> plugin_dsh_base_skill_filesystem
-  plugin_dsh_base_skill_badge["skill-badge<br/>@coco-harness/cch-skill-badge"]
-  cfg --> plugin_dsh_base_skill_badge
-  plugin_dsh_base_tool_skill["tool-skill<br/>@coco-harness/cch-tool-skill"]
-  cfg --> plugin_dsh_base_tool_skill
-  plugin_dsh_base_commands["commands<br/>@coco-harness/cch-commands"]
-  cfg --> plugin_dsh_base_commands
-  plugin_dsh_base_command_feedback["command-feedback<br/>@coco-harness/cch-command-feedback"]
-  cfg --> plugin_dsh_base_command_feedback
-  plugin_dsh_base_goal["goal<br/>@coco-harness/cch-goal"]
-  cfg --> plugin_dsh_base_goal
-  plugin_dsh_base_goal_round_driver["goal-round-driver<br/>@coco-harness/cch-goal-round-driver"]
-  cfg --> plugin_dsh_base_goal_round_driver
-  plugin_dsh_base_command_goal["command-goal<br/>@coco-harness/cch-command-goal"]
-  cfg --> plugin_dsh_base_command_goal
-  plugin_dsh_base_plan_mode["plan-mode<br/>@coco-harness/cch-plan-mode"]
-  cfg --> plugin_dsh_base_plan_mode
-  plugin_dsh_base_token_meter["token-meter<br/>@coco-harness/cch-token-meter"]
-  cfg --> plugin_dsh_base_token_meter
-  plugin_dsh_base_compaction_basic["compaction-basic<br/>@coco-harness/cch-compaction-basic"]
-  cfg --> plugin_dsh_base_compaction_basic
-  plugin_dsh_base_command_compact["command-compact<br/>@coco-harness/cch-command-compact"]
-  cfg --> plugin_dsh_base_command_compact
-  plugin_dsh_base_subagent["subagent<br/>@coco-harness/cch-subagent"]
-  cfg --> plugin_dsh_base_subagent
-  plugin_dsh_base_subagent_spawn_in_process["subagent-spawn-in-process<br/>@coco-harness/cch-subagent-spawn-in-process"]
-  cfg --> plugin_dsh_base_subagent_spawn_in_process
-  plugin_dsh_base_subagent_fork_in_process["subagent-fork-in-process<br/>@coco-harness/cch-subagent-fork-in-process"]
-  cfg --> plugin_dsh_base_subagent_fork_in_process
-  plugin_dsh_base_tool_subagent_control["tool-subagent-control<br/>@coco-harness/cch-tool-subagent-control"]
-  cfg --> plugin_dsh_base_tool_subagent_control
-  plugin_dsh_base_tool_subagent_list_agents["tool-subagent-list-agents<br/>@coco-harness/cch-tool-subagent-control/list-agents"]
-  cfg --> plugin_dsh_base_tool_subagent_list_agents
-  plugin_dsh_base_tool_subagent["tool-subagent<br/>@coco-harness/cch-tool-subagent"]
-  cfg --> plugin_dsh_base_tool_subagent
-  plugin_dsh_base_tool_subagent_fork["tool-subagent-fork<br/>@coco-harness/cch-tool-subagent"]
-  cfg --> plugin_dsh_base_tool_subagent_fork
-  plugin_dsh_base_tool_subagent_report["tool-subagent-report<br/>@coco-harness/cch-tool-subagent-report"]
-  cfg --> plugin_dsh_base_tool_subagent_report
-  plugin_dsh_base_workflow_worker_thread["workflow-worker-thread<br/>@coco-harness/cch-workflow-worker-thread"]
-  cfg --> plugin_dsh_base_workflow_worker_thread
-  plugin_dsh_base_tool_workflow["tool-workflow<br/>@coco-harness/cch-tool-workflow"]
-  cfg --> plugin_dsh_base_tool_workflow
-  plugin_dsh_base_timeout_policy["timeout-policy<br/>@coco-harness/cch-tool-call-timeout-policy"]
-  cfg --> plugin_dsh_base_timeout_policy
-  plugin_dsh_base_spill_local["spill-local<br/>@coco-harness/cch-spill-local"]
-  cfg --> plugin_dsh_base_spill_local
-  plugin_dsh_base_spill_policy["spill-policy<br/>@coco-harness/cch-spill-policy"]
-  cfg --> plugin_dsh_base_spill_policy
-  plugin_dsh_base_session_checkpoint_policy["session-checkpoint-policy<br/>@coco-harness/cch-session-checkpoint-policy"]
-  cfg --> plugin_dsh_base_session_checkpoint_policy
-  plugin_dsh_base_tool_result_pruner["tool-result-pruner<br/>@coco-harness/cch-compaction-tool-result-pruner"]
-  cfg --> plugin_dsh_base_tool_result_pruner
-  plugin_dsh_base_tool_todo["tool-todo<br/>@coco-harness/cch-tool-todo"]
-  cfg --> plugin_dsh_base_tool_todo
-  plugin_dsh_base_tool_goal["tool-goal<br/>@coco-harness/cch-tool-goal"]
-  cfg --> plugin_dsh_base_tool_goal
-  plugin_dsh_base_tool_ralph["tool-ralph<br/>@coco-harness/cch-tool-ralph"]
-  cfg --> plugin_dsh_base_tool_ralph
-  plugin_dsh_base_tool_str_replace_editor["tool-str-replace-editor<br/>@coco-harness/cch-tool-str-replace-editor"]
-  cfg --> plugin_dsh_base_tool_str_replace_editor
-  plugin_dsh_base_repeat_tool_reminder["repeat-tool-reminder<br/>@coco-harness/cch-repeat-tool-reminder"]
-  cfg --> plugin_dsh_base_repeat_tool_reminder
-  plugin_dsh_base_web["web<br/>@coco-harness/cch-web"]
-  cfg --> plugin_dsh_base_web
-  plugin_dsh_base_web_search_deepseek["web-search-deepseek<br/>@coco-harness/cch-web-search-deepseek"]
-  cfg --> plugin_dsh_base_web_search_deepseek
-  plugin_dsh_base_tool_web["tool-web<br/>@coco-harness/cch-tool-web"]
-  cfg --> plugin_dsh_base_tool_web
-  plugin_dsh_base_tools["tools<br/>@coco-harness/cch-tools"]
-  cfg --> plugin_dsh_base_tools
-  plugin_dsh_base_system_prompt["system-prompt<br/>@coco-harness/cch-system-prompt"]
-  cfg --> plugin_dsh_base_system_prompt
-  plugin_dsh_base_agent_loop["agent-loop<br/>@coco-harness/cch-agent-loop"]
-  cfg --> plugin_dsh_base_agent_loop
-  plugin_dsh_base_fs_sandbox["fs-sandbox<br/>@coco-harness/cch-fs-sandbox"]
-  cfg --> plugin_dsh_base_fs_sandbox
-  plugin_dsh_base_llm_deepseek["llm-deepseek<br/>@coco-harness/cch-llm-deepseek"]
-  cfg --> plugin_dsh_base_llm_deepseek
+  plugin_cch_base_timer["timer<br/>@coco-harness/cordis-plugin-timer"]
+  cfg --> plugin_cch_base_timer
+  plugin_cch_base_hmr["hmr<br/>@coco-harness/cordis-plugin-hmr"]
+  cfg --> plugin_cch_base_hmr
+  plugin_cch_base_llm["llm<br/>@coco-harness/cch-llm"]
+  cfg --> plugin_cch_base_llm
+  plugin_cch_base_session["session<br/>@coco-harness/cch-session"]
+  cfg --> plugin_cch_base_session
+  plugin_cch_base_typert["typert<br/>@coco-harness/cch-typert-registry"]
+  cfg --> plugin_cch_base_typert
+  plugin_cch_base_typert_loader["typert-loader<br/>@coco-harness/cch-typert-loader"]
+  cfg --> plugin_cch_base_typert_loader
+  plugin_cch_base_typert_gateway["typert-gateway<br/>@coco-harness/cch-api-gateway"]
+  cfg --> plugin_cch_base_typert_gateway
+  plugin_cch_base_session_title["session-title<br/>@coco-harness/cch-session-title"]
+  cfg --> plugin_cch_base_session_title
+  plugin_cch_base_session_title_llm["session-title-llm<br/>@coco-harness/cch-session-title-first-prompt-llm"]
+  cfg --> plugin_cch_base_session_title_llm
+  plugin_cch_base_user_questions["user-questions<br/>@coco-harness/cch-user-questions"]
+  cfg --> plugin_cch_base_user_questions
+  plugin_cch_base_agent["agent<br/>@coco-harness/cch-agent"]
+  cfg --> plugin_cch_base_agent
+  plugin_cch_base_agent_default_model["agent-default-model<br/>@coco-harness/cch-agent-default-model"]
+  cfg --> plugin_cch_base_agent_default_model
+  plugin_cch_base_jobs["jobs<br/>@coco-harness/cch-jobs-local"]
+  cfg --> plugin_cch_base_jobs
+  plugin_cch_base_llm_retry["llm-retry<br/>@coco-harness/cch-llm-retry"]
+  cfg --> plugin_cch_base_llm_retry
+  plugin_cch_base_settings["settings<br/>@coco-harness/cch-settings-file"]
+  cfg --> plugin_cch_base_settings
+  plugin_cch_base_credentials["credentials<br/>@coco-harness/cch-credentials-local"]
+  cfg --> plugin_cch_base_credentials
+  plugin_cch_base_llm_pi_ai["llm-pi-ai<br/>@coco-harness/cch-llm-pi-ai"]
+  cfg --> plugin_cch_base_llm_pi_ai
+  plugin_cch_base_session_persistence_jsonl["session-persistence-jsonl<br/>@coco-harness/cch-session-persistence-jsonl"]
+  cfg --> plugin_cch_base_session_persistence_jsonl
+  plugin_cch_base_attachment_local["attachment-local<br/>@coco-harness/cch-attachment-local"]
+  cfg --> plugin_cch_base_attachment_local
+  plugin_cch_base_session_query_sqlite["session-query-sqlite<br/>@coco-harness/cch-session-query-sqlite"]
+  cfg --> plugin_cch_base_session_query_sqlite
+  plugin_cch_base_session_projection["session-projection<br/>@coco-harness/cch-session-projection"]
+  cfg --> plugin_cch_base_session_projection
+  plugin_cch_base_session_telemetry_otel["session-telemetry-otel<br/>@coco-harness/cch-session-telemetry-otel"]
+  cfg --> plugin_cch_base_session_telemetry_otel
+  plugin_cch_base_subprocess["subprocess<br/>@coco-harness/cch-subprocess-local"]
+  cfg --> plugin_cch_base_subprocess
+  plugin_cch_base_sandbox["sandbox<br/>@coco-harness/cch-sandbox-local"]
+  cfg --> plugin_cch_base_sandbox
+  plugin_cch_base_sandbox_policy["sandbox-policy<br/>@coco-harness/cch-sandbox-policy"]
+  cfg --> plugin_cch_base_sandbox_policy
+  plugin_cch_base_bash_sandbox["bash-sandbox<br/>@coco-harness/cch-bash-sandbox"]
+  cfg --> plugin_cch_base_bash_sandbox
+  plugin_cch_base_pwsh_sandbox["pwsh-sandbox<br/>@coco-harness/cch-pwsh-sandbox"]
+  cfg --> plugin_cch_base_pwsh_sandbox
+  plugin_cch_base_approval["approval<br/>@coco-harness/cch-user-approval"]
+  cfg --> plugin_cch_base_approval
+  plugin_cch_base_permission["permission<br/>@coco-harness/cch-permission-presets"]
+  cfg --> plugin_cch_base_permission
+  plugin_cch_base_shell_env["shell-env<br/>@coco-harness/cch-shell-env"]
+  cfg --> plugin_cch_base_shell_env
+  plugin_cch_base_tool_bash["tool-bash<br/>@coco-harness/cch-tool-bash"]
+  cfg --> plugin_cch_base_tool_bash
+  plugin_cch_base_tool_pwsh["tool-pwsh<br/>@coco-harness/cch-tool-pwsh"]
+  cfg --> plugin_cch_base_tool_pwsh
+  plugin_cch_base_tool_jobs["tool-jobs<br/>@coco-harness/cch-tool-jobs"]
+  cfg --> plugin_cch_base_tool_jobs
+  plugin_cch_base_fs_observation_policy["fs-observation-policy<br/>@coco-harness/cch-fs-observation-policy"]
+  cfg --> plugin_cch_base_fs_observation_policy
+  plugin_cch_base_tool_fs["tool-fs<br/>@coco-harness/cch-tool-fs"]
+  cfg --> plugin_cch_base_tool_fs
+  plugin_cch_base_tool_fs_search["tool-fs-search<br/>@coco-harness/cch-tool-fs-search"]
+  cfg --> plugin_cch_base_tool_fs_search
+  plugin_cch_base_agent_instructions["agent-instructions<br/>@coco-harness/cch-agent-instructions"]
+  cfg --> plugin_cch_base_agent_instructions
+  plugin_cch_base_skill["skill<br/>@coco-harness/cch-skill"]
+  cfg --> plugin_cch_base_skill
+  plugin_cch_base_skill_filesystem["skill-filesystem<br/>@coco-harness/cch-skill-filesystem"]
+  cfg --> plugin_cch_base_skill_filesystem
+  plugin_cch_base_skill_badge["skill-badge<br/>@coco-harness/cch-skill-badge"]
+  cfg --> plugin_cch_base_skill_badge
+  plugin_cch_base_tool_skill["tool-skill<br/>@coco-harness/cch-tool-skill"]
+  cfg --> plugin_cch_base_tool_skill
+  plugin_cch_base_commands["commands<br/>@coco-harness/cch-commands"]
+  cfg --> plugin_cch_base_commands
+  plugin_cch_base_command_feedback["command-feedback<br/>@coco-harness/cch-command-feedback"]
+  cfg --> plugin_cch_base_command_feedback
+  plugin_cch_base_goal["goal<br/>@coco-harness/cch-goal"]
+  cfg --> plugin_cch_base_goal
+  plugin_cch_base_goal_round_driver["goal-round-driver<br/>@coco-harness/cch-goal-round-driver"]
+  cfg --> plugin_cch_base_goal_round_driver
+  plugin_cch_base_command_goal["command-goal<br/>@coco-harness/cch-command-goal"]
+  cfg --> plugin_cch_base_command_goal
+  plugin_cch_base_plan_mode["plan-mode<br/>@coco-harness/cch-plan-mode"]
+  cfg --> plugin_cch_base_plan_mode
+  plugin_cch_base_token_meter["token-meter<br/>@coco-harness/cch-token-meter"]
+  cfg --> plugin_cch_base_token_meter
+  plugin_cch_base_compaction_basic["compaction-basic<br/>@coco-harness/cch-compaction-basic"]
+  cfg --> plugin_cch_base_compaction_basic
+  plugin_cch_base_command_compact["command-compact<br/>@coco-harness/cch-command-compact"]
+  cfg --> plugin_cch_base_command_compact
+  plugin_cch_base_subagent["subagent<br/>@coco-harness/cch-subagent"]
+  cfg --> plugin_cch_base_subagent
+  plugin_cch_base_subagent_spawn_in_process["subagent-spawn-in-process<br/>@coco-harness/cch-subagent-spawn-in-process"]
+  cfg --> plugin_cch_base_subagent_spawn_in_process
+  plugin_cch_base_subagent_fork_in_process["subagent-fork-in-process<br/>@coco-harness/cch-subagent-fork-in-process"]
+  cfg --> plugin_cch_base_subagent_fork_in_process
+  plugin_cch_base_tool_subagent_control["tool-subagent-control<br/>@coco-harness/cch-tool-subagent-control"]
+  cfg --> plugin_cch_base_tool_subagent_control
+  plugin_cch_base_tool_subagent_list_agents["tool-subagent-list-agents<br/>@coco-harness/cch-tool-subagent-control/list-agents"]
+  cfg --> plugin_cch_base_tool_subagent_list_agents
+  plugin_cch_base_tool_subagent["tool-subagent<br/>@coco-harness/cch-tool-subagent"]
+  cfg --> plugin_cch_base_tool_subagent
+  plugin_cch_base_tool_subagent_fork["tool-subagent-fork<br/>@coco-harness/cch-tool-subagent"]
+  cfg --> plugin_cch_base_tool_subagent_fork
+  plugin_cch_base_tool_subagent_report["tool-subagent-report<br/>@coco-harness/cch-tool-subagent-report"]
+  cfg --> plugin_cch_base_tool_subagent_report
+  plugin_cch_base_workflow_worker_thread["workflow-worker-thread<br/>@coco-harness/cch-workflow-worker-thread"]
+  cfg --> plugin_cch_base_workflow_worker_thread
+  plugin_cch_base_tool_workflow["tool-workflow<br/>@coco-harness/cch-tool-workflow"]
+  cfg --> plugin_cch_base_tool_workflow
+  plugin_cch_base_timeout_policy["timeout-policy<br/>@coco-harness/cch-tool-call-timeout-policy"]
+  cfg --> plugin_cch_base_timeout_policy
+  plugin_cch_base_spill_local["spill-local<br/>@coco-harness/cch-spill-local"]
+  cfg --> plugin_cch_base_spill_local
+  plugin_cch_base_spill_policy["spill-policy<br/>@coco-harness/cch-spill-policy"]
+  cfg --> plugin_cch_base_spill_policy
+  plugin_cch_base_session_checkpoint_policy["session-checkpoint-policy<br/>@coco-harness/cch-session-checkpoint-policy"]
+  cfg --> plugin_cch_base_session_checkpoint_policy
+  plugin_cch_base_tool_result_pruner["tool-result-pruner<br/>@coco-harness/cch-compaction-tool-result-pruner"]
+  cfg --> plugin_cch_base_tool_result_pruner
+  plugin_cch_base_tool_todo["tool-todo<br/>@coco-harness/cch-tool-todo"]
+  cfg --> plugin_cch_base_tool_todo
+  plugin_cch_base_tool_goal["tool-goal<br/>@coco-harness/cch-tool-goal"]
+  cfg --> plugin_cch_base_tool_goal
+  plugin_cch_base_tool_ralph["tool-ralph<br/>@coco-harness/cch-tool-ralph"]
+  cfg --> plugin_cch_base_tool_ralph
+  plugin_cch_base_tool_str_replace_editor["tool-str-replace-editor<br/>@coco-harness/cch-tool-str-replace-editor"]
+  cfg --> plugin_cch_base_tool_str_replace_editor
+  plugin_cch_base_repeat_tool_reminder["repeat-tool-reminder<br/>@coco-harness/cch-repeat-tool-reminder"]
+  cfg --> plugin_cch_base_repeat_tool_reminder
+  plugin_cch_base_web["web<br/>@coco-harness/cch-web"]
+  cfg --> plugin_cch_base_web
+  plugin_cch_base_web_search_deepseek["web-search-deepseek<br/>@coco-harness/cch-web-search-deepseek"]
+  cfg --> plugin_cch_base_web_search_deepseek
+  plugin_cch_base_tool_web["tool-web<br/>@coco-harness/cch-tool-web"]
+  cfg --> plugin_cch_base_tool_web
+  plugin_cch_base_tools["tools<br/>@coco-harness/cch-tools"]
+  cfg --> plugin_cch_base_tools
+  plugin_cch_base_system_prompt["system-prompt<br/>@coco-harness/cch-system-prompt"]
+  cfg --> plugin_cch_base_system_prompt
+  plugin_cch_base_agent_loop["agent-loop<br/>@coco-harness/cch-agent-loop"]
+  cfg --> plugin_cch_base_agent_loop
+  plugin_cch_base_fs_sandbox["fs-sandbox<br/>@coco-harness/cch-fs-sandbox"]
+  cfg --> plugin_cch_base_fs_sandbox
+  plugin_cch_base_llm_deepseek["llm-deepseek<br/>@coco-harness/cch-llm-deepseek"]
+  cfg --> plugin_cch_base_llm_deepseek
 ```
 
 | Plugin id | Package / module |

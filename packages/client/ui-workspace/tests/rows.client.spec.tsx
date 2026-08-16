@@ -121,7 +121,7 @@ describe('workspace browser rows', () => {
     render(<ProjectRowItem group={group} onToggle={onToggle} onCreate={onCreate} t={t} />)
 
     expect(screen.getByRole('treeitem').getAttribute('aria-expanded')).toBe('true')
-    fireEvent.click(screen.getByRole('button', { name: 'New session in “Project”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'New session in Project' }))
     expect(onCreate).toHaveBeenCalledOnce()
     expect(onToggle).not.toHaveBeenCalled()
     fireEvent.click(screen.getByText('Project'))
@@ -261,20 +261,20 @@ describe('workspace browser rows', () => {
       group={group} onToggle={onToggle} onCreate={vi.fn()}
       actions={{ rename: onRename, delete: onDelete }} t={t}
     />)
-    fireEvent.click(screen.getByRole('button', { name: 'Workspace actions for “Project”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Workspace actions for Project' }))
     // Opening the menu neither toggles the group nor renames yet.
     expect(onToggle).not.toHaveBeenCalled()
     expect(screen.getByRole('menuitem', { name: 'Delete workspace' }).className).toMatch(/danger/)
     fireEvent.click(screen.getByRole('menuitem', { name: 'Rename' }))
     expect(onRename).toHaveBeenCalledOnce()
     expect(screen.queryByRole('menu')).toBeNull()
-    fireEvent.click(screen.getByRole('button', { name: 'Workspace actions for “Project”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Workspace actions for Project' }))
     fireEvent.click(screen.getByRole('menuitem', { name: 'Delete workspace' }))
     expect(screen.queryByRole('menu')).toBeNull()
     expect(onRename).toHaveBeenCalledOnce()
     expect(onDelete).toHaveBeenCalledOnce()
     // Escape closes without selecting (Menu onClose path).
-    fireEvent.click(screen.getByRole('button', { name: 'Workspace actions for “Project”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Workspace actions for Project' }))
     fireEvent.keyDown(document, { key: 'Escape' })
     expect(screen.queryByRole('menu')).toBeNull()
   })
@@ -349,7 +349,7 @@ describe('workspace browser rows', () => {
     }
     render(<SessionNodeItem node={node} currentId={undefined} now={0} onOpen={onOpen}
       onRename={onRename} onFork={onFork} onArchive={onArchive} t={t} />)
-    fireEvent.click(screen.getByRole('button', { name: 'Session actions for “One”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Session actions for One' }))
     expect(onOpen).not.toHaveBeenCalled()
     // Archive is not destructive (log and accounting slot remain): no danger styling.
     expect(screen.getByRole('menuitem', { name: 'Archive session' }).className).not.toMatch(/danger/)
@@ -358,17 +358,17 @@ describe('workspace browser rows', () => {
     expect(screen.queryByRole('menu')).toBeNull()
     expect(onRename).toHaveBeenCalledWith(node.id, 'One')
     expect(onOpen).not.toHaveBeenCalled()
-    fireEvent.click(screen.getByRole('button', { name: 'Session actions for “One”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Session actions for One' }))
     fireEvent.click(screen.getByRole('menuitem', { name: 'Fork session' }))
     expect(onFork).toHaveBeenCalledWith(node.id)
     // Archive dispatches without opening the session.
-    fireEvent.click(screen.getByRole('button', { name: 'Session actions for “One”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Session actions for One' }))
     fireEvent.click(screen.getByRole('menuitem', { name: 'Archive session' }))
     expect(onArchive).toHaveBeenCalledWith(node.id)
     expect(onRename).toHaveBeenCalledOnce()
     expect(onOpen).not.toHaveBeenCalled()
     // Escape closes without selecting (Menu onClose path).
-    fireEvent.click(screen.getByRole('button', { name: 'Session actions for “One”' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Session actions for One' }))
     fireEvent.keyDown(document, { key: 'Escape' })
     expect(screen.queryByRole('menu')).toBeNull()
   })
@@ -392,7 +392,7 @@ describe('workspace browser rows', () => {
       expect(screen.getAllByText('Running')).toHaveLength(2)
       fireEvent.pointerLeave(wrapper)
       // Menu open (disabled=true) suppresses the card for the same hover.
-      fireEvent.click(screen.getByRole('button', { name: 'Session actions for “Hovered”' }))
+      fireEvent.click(screen.getByRole('button', { name: 'Session actions for Hovered' }))
       fireEvent.pointerEnter(wrapper)
       act(() => { vi.advanceTimersByTime(1000) })
       expect(screen.queryByText('1min ago')).toBeNull()

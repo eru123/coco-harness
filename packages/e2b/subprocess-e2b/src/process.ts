@@ -91,49 +91,49 @@ function withinMs(settlement: Promise<CommandSettlement>, timeoutMs: number): Pr
 }
 
 function commandText(spec: SubprocessSpawnSpec, paths: RemotePaths): string {
-  const encoder = `"$dsh_e2b_env_bin" -i "$dsh_e2b_node" -e ${quoteE2BShellArg(OUTPUT_ENCODER_SOURCE)}`
+  const encoder = `"$cch_e2b_env_bin" -i "$cch_e2b_node" -e ${quoteE2BShellArg(OUTPUT_ENCODER_SOURCE)}`
   const stdoutRedirect = hasSpill(spec.stdio.stdout)
-    ? `> >("$dsh_e2b_tee" --output-error=warn-nopipe >("$dsh_e2b_head" -c ${spec.stdio.stdout.spill.maxBytes} > ${quoteE2BShellArg(paths.stdout)}) | ${encoder} 2>/dev/null)`
+    ? `> >("$cch_e2b_tee" --output-error=warn-nopipe >("$cch_e2b_head" -c ${spec.stdio.stdout.spill.maxBytes} > ${quoteE2BShellArg(paths.stdout)}) | ${encoder} 2>/dev/null)`
     : `> >(${encoder} 2>/dev/null)`
   const stderrRedirect = hasSpill(spec.stdio.stderr)
-    ? `2> >("$dsh_e2b_tee" --output-error=warn-nopipe >("$dsh_e2b_head" -c ${spec.stdio.stderr.spill.maxBytes} > ${quoteE2BShellArg(paths.stderr)}) | ${encoder} >&2 2>/dev/null)`
+    ? `2> >("$cch_e2b_tee" --output-error=warn-nopipe >("$cch_e2b_head" -c ${spec.stdio.stderr.spill.maxBytes} > ${quoteE2BShellArg(paths.stderr)}) | ${encoder} >&2 2>/dev/null)`
     : `2> >(${encoder} >&2 2>/dev/null)`
   const inner = [
     'set +e',
-    'dsh_e2b_env_bin=$1',
-    'dsh_e2b_node=$2',
-    'dsh_e2b_ps=$3',
-    'dsh_e2b_tr=$4',
-    'dsh_e2b_tee=$5',
-    'dsh_e2b_head=$6',
-    'dsh_e2b_rm=$7',
+    'cch_e2b_env_bin=$1',
+    'cch_e2b_node=$2',
+    'cch_e2b_ps=$3',
+    'cch_e2b_tr=$4',
+    'cch_e2b_tee=$5',
+    'cch_e2b_head=$6',
+    'cch_e2b_rm=$7',
     'shift 7',
-    'dsh_e2b_pgid="$("$dsh_e2b_ps" -o pgid= -p "$$" | "$dsh_e2b_tr" -d " ")"',
-    `printf '%s\\n' "$dsh_e2b_pgid" > ${quoteE2BShellArg(paths.pid)}`,
-    `mapfile -d '' -t dsh_e2b_env < ${quoteE2BShellArg(paths.environment)}`,
-    `"$dsh_e2b_rm" -f -- ${quoteE2BShellArg(paths.environment)}`,
-    `"$dsh_e2b_env_bin" -i -- "\${dsh_e2b_env[@]}" "$@" ${stdoutRedirect} ${stderrRedirect}`.trimEnd(),
-    'dsh_e2b_status=$?',
-    `printf '%s\\n' "$dsh_e2b_status" > ${quoteE2BShellArg(paths.status)}`,
+    'cch_e2b_pgid="$("$cch_e2b_ps" -o pgid= -p "$$" | "$cch_e2b_tr" -d " ")"',
+    `printf '%s\\n' "$cch_e2b_pgid" > ${quoteE2BShellArg(paths.pid)}`,
+    `mapfile -d '' -t cch_e2b_env < ${quoteE2BShellArg(paths.environment)}`,
+    `"$cch_e2b_rm" -f -- ${quoteE2BShellArg(paths.environment)}`,
+    `"$cch_e2b_env_bin" -i -- "\${cch_e2b_env[@]}" "$@" ${stdoutRedirect} ${stderrRedirect}`.trimEnd(),
+    'cch_e2b_status=$?',
+    `printf '%s\\n' "$cch_e2b_status" > ${quoteE2BShellArg(paths.status)}`,
     'wait',
-    'exit "$dsh_e2b_status"',
+    'exit "$cch_e2b_status"',
   ].join('\n')
   const argv = spec.argv.map(quoteE2BShellArg).join(' ')
   const bootstrap = [
-    `mapfile -d '' -t dsh_e2b_env < ${quoteE2BShellArg(paths.environment)}`,
-    'dsh_e2b_env_bin="$(command -v env)"',
-    'dsh_e2b_setsid="$(command -v setsid)"',
-    'dsh_e2b_bash="$(command -v bash)"',
-    'dsh_e2b_node="$(command -v node)"',
-    'dsh_e2b_ps="$(command -v ps)"',
-    'dsh_e2b_tr="$(command -v tr)"',
-    'dsh_e2b_tee="$(command -v tee)"',
-    'dsh_e2b_head="$(command -v head)"',
-    'dsh_e2b_rm="$(command -v rm)"',
-    'for dsh_e2b_tool in "$dsh_e2b_env_bin" "$dsh_e2b_setsid" "$dsh_e2b_bash" "$dsh_e2b_node" "$dsh_e2b_ps" "$dsh_e2b_tr" "$dsh_e2b_tee" "$dsh_e2b_head" "$dsh_e2b_rm"; do',
-    '  [[ "$dsh_e2b_tool" == /* && -x "$dsh_e2b_tool" ]] || exit 125',
+    `mapfile -d '' -t cch_e2b_env < ${quoteE2BShellArg(paths.environment)}`,
+    'cch_e2b_env_bin="$(command -v env)"',
+    'cch_e2b_setsid="$(command -v setsid)"',
+    'cch_e2b_bash="$(command -v bash)"',
+    'cch_e2b_node="$(command -v node)"',
+    'cch_e2b_ps="$(command -v ps)"',
+    'cch_e2b_tr="$(command -v tr)"',
+    'cch_e2b_tee="$(command -v tee)"',
+    'cch_e2b_head="$(command -v head)"',
+    'cch_e2b_rm="$(command -v rm)"',
+    'for cch_e2b_tool in "$cch_e2b_env_bin" "$cch_e2b_setsid" "$cch_e2b_bash" "$cch_e2b_node" "$cch_e2b_ps" "$cch_e2b_tr" "$cch_e2b_tee" "$cch_e2b_head" "$cch_e2b_rm"; do',
+    '  [[ "$cch_e2b_tool" == /* && -x "$cch_e2b_tool" ]] || exit 125',
     'done',
-    `exec "$dsh_e2b_env_bin" -i -- "\${dsh_e2b_env[@]}" "$dsh_e2b_setsid" --wait -- "$dsh_e2b_bash" -c ${quoteE2BShellArg(inner)} cch-e2b "$dsh_e2b_env_bin" "$dsh_e2b_node" "$dsh_e2b_ps" "$dsh_e2b_tr" "$dsh_e2b_tee" "$dsh_e2b_head" "$dsh_e2b_rm" ${argv}`,
+    `exec "$cch_e2b_env_bin" -i -- "\${cch_e2b_env[@]}" "$cch_e2b_setsid" --wait -- "$cch_e2b_bash" -c ${quoteE2BShellArg(inner)} cch-e2b "$cch_e2b_env_bin" "$cch_e2b_node" "$cch_e2b_ps" "$cch_e2b_tr" "$cch_e2b_tee" "$cch_e2b_head" "$cch_e2b_rm" ${argv}`,
   ].join('\n')
   return bootstrap
 }

@@ -1073,7 +1073,7 @@ describe('decorations', () => {
       shell.setDraft('refer to @w1 content')
       shell.insertReference(
         { source: 'subagent', ref: 'w1', label: '@w1', clipboardText: '@w1' },
-        { start: 3, end: 6, draftRev: shell.snapshot.draftRev },
+        { start: 9, end: 12, draftRev: shell.snapshot.draftRev },
       )
     })
     const chip = view.container.querySelector('[data-decoration="chip"]')

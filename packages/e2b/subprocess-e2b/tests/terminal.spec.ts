@@ -89,7 +89,7 @@ class FakeTerminalSandbox {
   readonly directories: string[] = []
   readonly writes = new Map<string, string>()
   createOptions: Parameters<Sandbox['pty']['create']>[0] | undefined
-  ambient = 'KEEP=visible\0UNICODE=你好\0NPM_TOKEN=secret\0DSH_STALE=old\0BROKEN\0=bad\0'
+  ambient = 'KEEP=visible\0UNICODE=你好\0NPM_TOKEN=secret\0CCH_STALE=old\0BROKEN\0=bad\0'
   sessionId = '123\n'
   foreground = '456\n'
   groups = [123]
@@ -300,9 +300,9 @@ describe('E2B terminal allocation', () => {
     expect(marker).toMatch(/^cch-e2b-bootstrap:/)
     expect(fake.inputs[0]?.data.toString()).not.toContain(marker)
     const runner = fake.writes.get('/runtime/terminal-one/runner.bash') ?? ''
-    expect(runner).toContain('if (( ${#dsh_argv[@]} == 0 )); then')
-    expect(runner).toContain('printf \'%s\' "$dsh_output_marker"')
-    expect(runner).toContain('exec env -i -- "${dsh_env[@]}" "${dsh_argv[@]}"')
+    expect(runner).toContain('if (( ${#cch_argv[@]} == 0 )); then')
+    expect(runner).toContain('printf \'%s\' "$cch_output_marker"')
+    expect(runner).toContain('exec env -i -- "${cch_env[@]}" "${cch_argv[@]}"')
     expect(runner).not.toContain('\u007f')
     terminal.output.destroy()
     await fake.createOptions?.onData(Buffer.from('late bootstrap callback'))

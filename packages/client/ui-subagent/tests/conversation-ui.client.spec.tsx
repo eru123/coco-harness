@@ -398,7 +398,7 @@ describe('SubagentCatalogAction', () => {
 
     expect(deferred.setCatalogOpen).toHaveBeenCalledWith(CHILD, true)
     expect(screen.getByRole('group').getAttribute('aria-busy')).toBe('true')
-    const loadingRows = screen.getAllByRole('treeitem', { name: 'Loading subagents…' })
+    const loadingRows = screen.getAllByRole('treeitem', { name: 'Loading subagents' })
     expect(loadingRows).toHaveLength(2)
     expect(loadingRows.every(row => row.getAttribute('aria-level') === '2')).toBe(true)
     expect(loadingRows[1]?.querySelector('[data-state="ongoing"]')).not.toBeNull()
@@ -407,7 +407,7 @@ describe('SubagentCatalogAction', () => {
       [CHILD]: catalog({ entries: [], state: 'loading' }),
     }, summaries)
     view.rerender(<SubagentCatalogAction {...loading} />)
-    expect(screen.getAllByRole('treeitem', { name: 'Loading subagents…' })).toHaveLength(2)
+    expect(screen.getAllByRole('treeitem', { name: 'Loading subagents' })).toHaveLength(2)
 
     const ready = props(catalog(), {
       [CHILD]: catalog({
@@ -427,7 +427,7 @@ describe('SubagentCatalogAction', () => {
     expect(screen.getByRole('group').getAttribute('aria-busy')).toBeNull()
     expect(screen.getByRole('treeitem', { name: /indexer/ })).toBeTruthy()
     expect(screen.getByRole('treeitem', { name: /critic/ })).toBeTruthy()
-    expect(screen.queryByRole('treeitem', { name: 'Loading subagents…' })).toBeNull()
+    expect(screen.queryByRole('treeitem', { name: 'Loading subagents' })).toBeNull()
   })
 
   it('uses ArrowRight and ArrowLeft for branch disclosure', async () => {
@@ -513,13 +513,13 @@ describe('SubagentCatalogAction', () => {
     expect(within(trigger).getByText('2 subagents')).toBeTruthy()
     fireEvent.click(trigger)
     expect(absent.setCatalogOpen).toHaveBeenCalledWith(PARENT, true)
-    expect(screen.getAllByRole('treeitem', { name: 'Loading subagents…' })).toHaveLength(2)
+    expect(screen.getAllByRole('treeitem', { name: 'Loading subagents' })).toHaveLength(2)
     expect(absent.openChild).not.toHaveBeenCalled()
 
     const staleEmpty = props(catalog({ entries: [] }), {}, summaries)
     view.rerender(<SubagentCatalogAction {...staleEmpty} />)
     expect(screen.getByRole('button', { name: '1 subagent running' })).toBeTruthy()
-    expect(screen.getAllByRole('treeitem', { name: 'Loading subagents…' })).toHaveLength(2)
+    expect(screen.getAllByRole('treeitem', { name: 'Loading subagents' })).toHaveLength(2)
     expect(staleEmpty.openChild).not.toHaveBeenCalled()
   })
 
