@@ -171,11 +171,6 @@ function sourceMap(pages: DocsPage[]): Map<string, Map<DocsLocale, DocsPage>> {
   return map
 }
 
-function counterpartSource(source: string): string {
-  return source.endsWith('.zh.md')
-    ? source.replace(/\.zh\.md$/, '.md')
-    : source.replace(/\.md$/, '.zh.md')
-}
 
 function resolveRepositoryTarget(sourceAbs: string, rawPath: string, repoRoot: string): { absPath: string; line?: number } {
   const decoded = decodePath(rawPath)
@@ -234,10 +229,7 @@ export function rewriteMarkdown(source: string, options: RewriteMarkdownOptions)
     if (path === '') return
     const { absPath, line } = resolveRepositoryTarget(sourceAbs, path, options.repoRoot)
     const targetPath = repoPath(absPath, options.repoRoot)
-    const isLanguageSwitcher = targetPath === counterpartSource(options.sourcePath)
-    const targetLocale: DocsLocale = isLanguageSwitcher
-      ? options.locale === 'root' ? 'en' : 'root'
-      : options.locale
+    const targetLocale: DocsLocale = options.locale
     const page = published.get(targetPath)?.get(targetLocale)
     const nextUrl = page !== undefined
       ? routeTarget(options.route, page.route, suffix)

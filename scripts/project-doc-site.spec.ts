@@ -213,29 +213,6 @@ describe('rewriteMarkdown', () => {
     )
   })
 
-  it('routes a pair switcher across locales while ordinary links stay in locale', () => {
-    const { root, pages } = fixture()
-    writeFileSync(join(root, 'docs/a.zh.md'), '# A\n')
-    const paired = pages.filter(page => page.source !== 'docs/a.md')
-    paired.push(
-      {
-        locale: 'root', contentLocale: 'zh-CN', source: 'docs/a.zh.md', sourceAliases: ['docs/a.md'],
-        route: 'guide/a.md', label: 'A', sidebar: 'zh-guide', section: 'Test', order: 1,
-      },
-      {
-        locale: 'en', contentLocale: 'en-US', source: 'docs/a.md', sourceAliases: ['docs/a.zh.md'],
-        route: 'en/guide/a.md', label: 'A', sidebar: 'en-guide', section: 'Test', order: 1,
-      },
-    )
-    expect(rewriteMarkdown('[English](a.md) [B](b.md)\n', {
-      locale: 'root',
-      sourcePath: 'docs/a.zh.md',
-      route: 'guide/a.md',
-      pages: paired,
-      repoRoot: root,
-      repositoryRef: 'abc123',
-    })).toBe('[English](../en/guide/a.md) [B](../reference-root/b.md)\n')
-  })
 
   it('fails loud when a relative target is missing', () => {
     const { root, pages } = fixture()
@@ -272,18 +249,13 @@ describe('docsPages locale routes', () => {
       expect(counterpart?.locale).toBe('en')
       expect(counterpart?.source).toBe(page.source)
       expect(counterpart?.contentLocale).toBe(page.contentLocale)
-      const chineseSource = page.source.replace(/\.md$/, '.zh.md')
-      expect(
-        existsSync(resolve(repositoryRoot, chineseSource)),
-        `${page.route} has a Chinese counterpart but projects English`,
-      ).toBe(false)
     }
   })
 
   it('indexes every subsystem page in the folder README', () => {
     const pages = globSync(join(repositoryRoot, 'docs/subsystems/*.md'))
       .map(page => basename(page))
-      .filter(page => !page.endsWith('.zh.md') && page !== 'README.md')
+      .filter(page => page !== 'README.md')
       .sort()
     expect(pages.length).toBeGreaterThan(0)
     for (const readme of ['README.md']) {

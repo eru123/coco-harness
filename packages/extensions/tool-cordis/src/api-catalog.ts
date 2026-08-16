@@ -2738,6 +2738,14 @@ export const TYPE_API: readonly TypeApiEntry[] = [
     declaration: 'export interface CancelOptions {\n    keepInbox?: boolean | undefined;\n}',
   },
   {
+    name: 'CchEnvironment',
+    declaration: 'export type CchEnvironment = Readonly<Record<CchEnvironmentKey, string>>;',
+  },
+  {
+    name: 'CchEnvironmentKey',
+    declaration: 'export type CchEnvironmentKey = `${typeof CCH_ENV_PREFIX}${string}`;',
+  },
+  {
     name: 'ClientResponse',
     declaration: 'export interface ClientResponse {\n    type: \'client-response\';\n    rpcId: RpcId;\n    result: RpcResult<unknown>;\n}',
   },
@@ -2996,14 +3004,6 @@ export const TYPE_API: readonly TypeApiEntry[] = [
   {
     name: 'DownloadsApi',
     declaration: 'export interface DownloadsApi {\n    sessionLog(request: {\n        sessionId: SessionId;\n        includeDescendants?: boolean;\n    }, signal: AbortSignal): Promise<Response>;\n}',
-  },
-  {
-    name: 'CchEnvironment',
-    declaration: 'export type CchEnvironment = Readonly<Record<CchEnvironmentKey, string>>;',
-  },
-  {
-    name: 'CchEnvironmentKey',
-    declaration: 'export type CchEnvironmentKey = `${typeof CCH_ENV_PREFIX}${string}`;',
   },
   {
     name: 'DynamicCordisPackage',
