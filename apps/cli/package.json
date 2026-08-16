@@ -79,7 +79,7 @@
     "@coco-harness/cch-agent-instructions": "workspace:^",
     "commander": "^15.0.0",
     "@coco-harness/cordis": "workspace:^",
-    "js-yaml": "^4.2.0",
+    "js-yaml": "^5.2.1",
     "node-addon-require-builtin": "^0.1.4"
   },
   "devDependencies": {
