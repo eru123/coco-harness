@@ -246,7 +246,7 @@ function ciSharedStaticGates(): Gate[] {
   return [
     pnpmScript('runtime-closure', 'verify-runtime-closure', { label: 'runtime closure' }),
     pnpmScript('constraints', 'constraints'),
-    pnpmScript('cch-package-licenses', 'verify-cch-package-licenses', { label: 'DSH package licenses' }),
+    pnpmScript('cch-package-licenses', 'verify-cch-package-licenses', { label: 'CCH package licenses' }),
     pnpmScript('package-invariants', 'verify-package-invariants', { label: 'package invariants' }),
     pnpmScript('cordis-config', 'verify-cordis-config', { label: 'Cordis config' }),
     pnpmScript('issue-management', 'test:issue-management', { label: 'Issue management policy' }),
@@ -558,7 +558,7 @@ function hygieneLeafGates(options: { artifactNeeds?: string[] } = {}): Gate[] {
     pnpmScript('knip', 'knip'),
     pnpmScript('publint', 'publint', artifactOptions),
     pnpmScript('constraints', 'constraints'),
-    pnpmScript('cch-package-licenses', 'verify-cch-package-licenses', { label: 'DSH package licenses' }),
+    pnpmScript('cch-package-licenses', 'verify-cch-package-licenses', { label: 'CCH package licenses' }),
     pnpmScript('package-invariants', 'verify-package-invariants', { label: 'package invariants' }),
     builtPackageInvariantsGate(options.artifactNeeds),
     pnpmScript('node-next-types', 'verify-node-next-types', {

@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
-import { inspectDshPackageLicenses } from './verify-cch-package-licenses.ts'
+import { inspectCchPackageLicenses } from './verify-cch-package-licenses.ts'
 
 const roots: string[] = []
 
@@ -27,7 +27,7 @@ function createWorkspace(): string {
   return root
 }
 
-describe('DSH package license gate', () => {
+describe('CCH package license gate', () => {
   it('checks root, unhyphenated CLI, and cch-prefixed package names while ignoring other families', () => {
     const root = createWorkspace()
     writeManifest(root, 'apps/cli/package.json', { name: '@coco-harness/cch', license: 'MIT' })
@@ -40,7 +40,7 @@ describe('DSH package license gate', () => {
       license: 'BSD-3-Clause',
     })
 
-    expect(inspectDshPackageLicenses(root)).toEqual({
+    expect(inspectCchPackageLicenses(root)).toEqual({
       packageCount: 3,
       failures: [
         'packages/core/agent/package.json: @coco-harness/cch-agent must declare "license": "MIT"; found "BSD-3-Clause".',
@@ -52,7 +52,7 @@ describe('DSH package license gate', () => {
     const root = createWorkspace()
     writeManifest(root, 'packages/core/agent/package.json', { name: '@coco-harness/cch-agent' })
 
-    expect(inspectDshPackageLicenses(root).failures).toEqual([
+    expect(inspectCchPackageLicenses(root).failures).toEqual([
       'packages/core/agent/package.json: @coco-harness/cch-agent must declare "license": "MIT"; found undefined.',
     ])
   })

@@ -44,7 +44,7 @@ interface PluginInvocation {
   args: string[]
 }
 
-/** The resolved `cch` invocation. Help, version, and errors exit inside {@link parseDshArgs}. */
+/** The resolved `cch` invocation. Help, version, and errors exit inside {@link parseCchArgs}. */
 export type CchInvocation = ProfileInvocation | DumpConfigInvocation | PluginInvocation
 
 /** Launcher flags shared by the default command and the `web` alias. */
@@ -109,7 +109,7 @@ function resolveBoot(program: Command, profile: string, options: BootOptions, ar
  * @param version - version string printed by `--version`.
  * @returns the resolved invocation.
  */
-export function parseDshArgs(argv: readonly string[], version: string): CchInvocation {
+export function parseCchArgs(argv: readonly string[], version: string): CchInvocation {
   let resolved: CchInvocation | undefined
   // Annotated, not inferred: the actions below call back into `program`, and an
   // inferred type would be circular through its own chain.

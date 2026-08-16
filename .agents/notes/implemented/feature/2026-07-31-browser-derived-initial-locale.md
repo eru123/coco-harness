@@ -14,7 +14,7 @@ The Settings Language row opened every first visit in Chinese: `LocaleRuntime` r
 
 **`window`, not `navigator`, is the browser test.** Node ≥ 21 exposes a global `navigator` reporting the machine's own language (`en-US` on the CI runners), so gating on `navigator` would have let a node boot of the client tree resolve to `en` instead of the documented fallback. Gating on `window` keeps every non-browser run on `FALLBACK_LOCALE`.
 
-**An explicit choice is durable.** `setLocale` writes through the Host settings API, so a user who picked a language keeps it across browser origins and system languages that share the same DSH home. Nothing writes the detected locale back: detection is re-derived every boot and stays invisible to the “has the user chosen?” question.
+**An explicit choice is durable.** `setLocale` writes through the Host settings API, so a user who picked a language keeps it across browser origins and system languages that share the same CCH home. Nothing writes the detected locale back: detection is re-derived every boot and stays invisible to the “has the user chosen?” question.
 
 **The browser e2e lane pins browser language.** Scenarios asserting Chinese copy (`access-confirmation`, `models-settings`, `onboarding-deepseek-config`, `settings-chrome`) open their page with `locale: ZH_BROWSER_LOCALE` from `apps/web/tests/support.ts`; `newEnglishPage` advertises `en-US`. `settings-chrome.e2e.ts` opens a fresh Host home with no explicit locale and asserts its English browser produces an English settings surface—the assembled-app proof of this feature.
 

@@ -6,7 +6,7 @@
 
 import { relative } from 'node:path'
 import z from '@coco-harness/schemastery'
-import { resolveDshHome } from '@coco-harness/cch-home-paths'
+import { resolveCchHome } from '@coco-harness/cch-home-paths'
 
 const DEFAULT_PROJECT_ROOT_MARKERS = ['.git'] as const
 const DEFAULT_INSTRUCTION_FILE_CANDIDATES = ['AGENTS.md', 'CLAUDE.md'] as const
@@ -103,7 +103,7 @@ export function resolveDiscoveryConfig(
   config: Pick<Config, 'cchHome' | 'projectRootMarkers' | 'instructionFileCandidates' | 'localInstructionFileCandidates'>,
 ): ResolvedDiscoveryConfig {
   return {
-    cchHome: resolveDshHome(config.cchHome),
+    cchHome: resolveCchHome(config.cchHome),
     projectRootMarkers: config.projectRootMarkers ?? [...DEFAULT_PROJECT_ROOT_MARKERS],
     instructionFileCandidates: resolveInstructionFileCandidates(
       config.instructionFileCandidates,

@@ -29,7 +29,7 @@ import {
   watchUserPatches,
   type Profile,
 } from '@coco-harness/cch-app-boot'
-import { resolveDshHome } from '@coco-harness/cch-home-paths'
+import { resolveCchHome } from '@coco-harness/cch-home-paths'
 
 /** Shipped agent-preset root: beside this app's own config, in both source and built layouts. */
 const SHIPPED_PRESET_ROOT = fileURLToPath(new URL('../config/agent-presets/', import.meta.url))
@@ -47,7 +47,7 @@ const NAME = 'cch'
  * @returns the absolute patch-file path.
  */
 export function homePatchPath(): string {
-  return join(resolveDshHome(), PROFILE_PATCH_FILENAME)
+  return join(resolveCchHome(), PROFILE_PATCH_FILENAME)
 }
 
 /** Absolute path of this cch installation's package.json (both anchors: src/ and lib/ sit one level under apps/cli). */

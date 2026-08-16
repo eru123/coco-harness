@@ -618,7 +618,7 @@ describe('workspace context instruction discovery', () => {
     }
   })
 
-  it('labels the default DSH home as ~/.cch when HOME points at the configured default', async () => {
+  it('labels the default CCH home as ~/.cch when HOME points at the configured default', async () => {
     const root = await tempRepo()
     const home = await tempRepo()
     try {

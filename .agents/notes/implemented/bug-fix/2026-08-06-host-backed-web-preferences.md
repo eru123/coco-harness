@@ -4,7 +4,7 @@ Status: implemented
 
 ## Problem
 
-The Web Appearance, Language, and busy-Enter preferences lived in browser `localStorage`. Browser storage is scoped to an origin, so reopening `cch web` on another port selected a different partition and lost choices even though both processes used the same DSH home. These are user-level product preferences; session selection, drafts, disclosure state, and other transient browser state remain page-local.
+The Web Appearance, Language, and busy-Enter preferences lived in browser `localStorage`. Browser storage is scoped to an origin, so reopening `cch web` on another port selected a different partition and lost choices even though both processes used the same CCH home. These are user-level product preferences; session selection, drafts, disclosure state, and other transient browser state remain page-local.
 
 The first theme implementation moved only Appearance to Host settings but awaited its initial RPC before providing `ThemeRuntime`. A slow or unavailable settings request therefore suspended the assembled page. It also subscribed after the read, could miss an invalidation in that window, did not carry namespace revisions on writes, and allowed queued writes from a disposed plugin to reach the Host.
 
@@ -34,8 +34,8 @@ Remote browsers cannot call the loopback-only configuration API, so their prefer
 
 ## Consequences
 
-Appearance, Language, and busy-Enter choices follow the DSH user home across reloads, ports, and loopback origins. Direct edits to `settings.yaml` converge through the existing invalidation stream, while legacy `cch.theme`, `cch.locale`, and `cch.conversation.busyEnter` entries are neither read nor written.
+Appearance, Language, and busy-Enter choices follow the CCH user home across reloads, ports, and loopback origins. Direct edits to `settings.yaml` converge through the existing invalidation stream, while legacy `cch.theme`, `cch.locale`, and `cch.conversation.busyEnter` entries are neither read nor written.
 
 Boot may briefly show the domain default before the background read settles. A transient read failure keeps that default or the last good in-process value; reconnect retries. A write rejection can visibly restore the durable preference after the immediate local change.
 
-Focused unit coverage pins schema registration, listener-before-read ordering, nonblocking activation, schema-validated section acceptance, revisioned ordered writes, stale-response containment, failure recovery, disposal quiescence, and remote memory mode. The namespace-granular scope also carries multi-field sections, so later configuration surfaces can ride the same lifecycle instead of hand-rolling describe/mutate synchronization. The keyless Web settings scenario writes all three preferences through the UI, verifies the YAML document and empty legacy storage, reloads, and boots another Host on a distinct port against the same DSH home.
+Focused unit coverage pins schema registration, listener-before-read ordering, nonblocking activation, schema-validated section acceptance, revisioned ordered writes, stale-response containment, failure recovery, disposal quiescence, and remote memory mode. The namespace-granular scope also carries multi-field sections, so later configuration surfaces can ride the same lifecycle instead of hand-rolling describe/mutate synchronization. The keyless Web settings scenario writes all three preferences through the UI, verifies the YAML document and empty legacy storage, reloads, and boots another Host on a distinct port against the same CCH home.

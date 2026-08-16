@@ -30,7 +30,7 @@ it('isolates replay skill discovery from every ambient host root', async () => {
     writeSkill(bundled, 'ambient-bundled'),
   ])
 
-  const originalDshHome = process.env.CCH_HOME
+  const originalCchHome = process.env.CCH_HOME
   const originalAgentsHome = process.env.CCH_AGENTS_HOME
   const originalBundled = process.env.CCH_BUNDLED_SKILL_DIR
   process.env.CCH_HOME = cchHome
@@ -62,8 +62,8 @@ it('isolates replay skill discovery from every ambient host root', async () => {
     try {
       await scaffold?.close()
     } finally {
-      if (originalDshHome === undefined) delete process.env.CCH_HOME
-      else process.env.CCH_HOME = originalDshHome
+      if (originalCchHome === undefined) delete process.env.CCH_HOME
+      else process.env.CCH_HOME = originalCchHome
       if (originalAgentsHome === undefined) delete process.env.CCH_AGENTS_HOME
       else process.env.CCH_AGENTS_HOME = originalAgentsHome
       if (originalBundled === undefined) delete process.env.CCH_BUNDLED_SKILL_DIR

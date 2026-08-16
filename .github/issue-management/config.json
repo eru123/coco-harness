@@ -2,7 +2,7 @@
   "organization": "coco-harness",
   "repository": "coco-harness",
   "projectNumber": 1,
-  "projectTitle": "DSH Issue Management",
+  "projectTitle": "CCH Issue Management",
   "lifecycleActor": "cch-issue-management",
   "priorityField": "Priority",
   "allowUnassignedOwner": true,

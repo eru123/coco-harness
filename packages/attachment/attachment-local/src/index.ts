@@ -5,7 +5,7 @@ import { Context } from '@coco-harness/cordis'
 import z from '@coco-harness/schemastery'
 import { AttachmentStore } from '@coco-harness/cch-attachment'
 import type { ImageAttachmentLimits, ImageAttachmentRef, SaveImageAttachment, StoredImageAttachment } from '@coco-harness/cch-attachment'
-import { resolveDshHome } from '@coco-harness/cch-home-paths'
+import { resolveCchHome } from '@coco-harness/cch-home-paths'
 import { readImageFile, saveImageFile, validateImageFile } from './store.ts'
 
 export { detectImage } from './image.ts'
@@ -50,7 +50,7 @@ export class LocalAttachmentStore extends AttachmentStore {
 
   constructor(ctx: Context, config: Config) {
     super(ctx)
-    this.root = resolve(join(resolveDshHome(config.cchHome), 'attachments', 'v1'))
+    this.root = resolve(join(resolveCchHome(config.cchHome), 'attachments', 'v1'))
     this.imageLimits = Object.freeze({
       maxImageBytes: config.maxImageBytes ?? DEFAULT_MAX_IMAGE_BYTES,
       maxImagesPerMessage: config.maxImagesPerMessage ?? DEFAULT_MAX_IMAGES_PER_MESSAGE,

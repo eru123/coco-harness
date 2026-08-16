@@ -701,7 +701,7 @@ const APP_EXAMPLES = [
   {
     id: 'cch_base',
     rel: 'apps/cli/composition.md',
-    title: 'DSH Base Composition',
+    title: 'CCH Base Composition',
     label: 'packages/bundle/base/cordis.patch.yml',
     config: 'packages/bundle/base/cordis.patch.yml',
     summary: 'The cch-base bundle patch every profile applies first; mode bundles (cch-web-app, cch-headless) and the user\'s profile layer patch over it.',

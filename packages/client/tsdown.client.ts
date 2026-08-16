@@ -21,7 +21,7 @@ import { PLATFORM_MODULES } from './web/src/platform.ts'
  * (which requires @tsdown/css). The suffix matters: tsdown's guard matches ids
  * ending in `.css`, so the virtual id must not.
  */
-const CSS_VIRTUAL_PREFIX = '\0dsh-css:'
+const CSS_VIRTUAL_PREFIX = '\0cch-css:'
 const CSS_VIRTUAL_SUFFIX = '.mjs'
 
 /**

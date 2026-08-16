@@ -187,18 +187,18 @@ describe('web e2e: workspace management (create / rename / flat view / hover aff
         slotConsoleErrors.push(message.text())
       }
     })
-    await page.exposeFunction('recordDshSlotError', (key: string) => {
+    await page.exposeFunction('recordCchSlotError', (key: string) => {
       if (!transientSlotErrors.includes(key)) transientSlotErrors.push(key)
     })
     await page.evaluate(() => {
-      const target = window as unknown as { recordDshSlotError(key: string): Promise<void> }
+      const target = window as unknown as { recordCchSlotError(key: string): Promise<void> }
       const seen = new Set<string>()
       const collect = (): void => {
         for (const node of document.querySelectorAll<HTMLElement>('[data-slot-error]')) {
           const key = node.dataset.slotError ?? ''
           if (!seen.has(key)) {
             seen.add(key)
-            void target.recordDshSlotError(key)
+            void target.recordCchSlotError(key)
           }
         }
       }
@@ -325,17 +325,17 @@ describe('web e2e: workspace management (create / rename / flat view / hover aff
     page.on('console', (message) => {
       if (message.type() === 'error') consoleErrors.push(message.text())
     })
-    await page.exposeFunction('recordDshTransientWorkspaceError', (message: string) => {
+    await page.exposeFunction('recordCchTransientWorkspaceError', (message: string) => {
       if (!transientErrors.includes(message)) transientErrors.push(message)
     })
     await page.evaluate(() => {
       const target = window as unknown as {
-        recordDshTransientWorkspaceError(message: string): Promise<void>
+        recordCchTransientWorkspaceError(message: string): Promise<void>
       }
       const collect = (): void => {
         for (const node of document.querySelectorAll<HTMLElement>('[data-slot-error], [role="alert"]')) {
           const message = node.dataset.slotError ?? node.textContent?.trim() ?? ''
-          if (message !== '') void target.recordDshTransientWorkspaceError(message)
+          if (message !== '') void target.recordCchTransientWorkspaceError(message)
         }
       }
       new MutationObserver(collect).observe(document.documentElement, { childList: true, subtree: true })

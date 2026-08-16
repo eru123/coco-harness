@@ -12,7 +12,7 @@ import { Service, type Context } from '@coco-harness/cordis'
 import z from '@coco-harness/schemastery'
 import { CCH_ENV_PREFIX } from '@coco-harness/cch-shell'
 import type { CchEnvironment, CchEnvironmentKey } from '@coco-harness/cch-shell'
-import { CCH_HOME_ENV, resolveDshHome } from '@coco-harness/cch-home-paths'
+import { CCH_HOME_ENV, resolveCchHome } from '@coco-harness/cch-home-paths'
 import type { ToolExecution } from '@coco-harness/cch-tools'
 import type {} from '@coco-harness/cch-session-persistence'
 
@@ -98,7 +98,7 @@ export class ShellEnvRegistry extends Service {
    */
   constructor(ctx: Context, config: Config = {}) {
     super(ctx, 'shellEnv')
-    this.cchHome = resolveDshHome(config.cchHome)
+    this.cchHome = resolveCchHome(config.cchHome)
   }
 
   /**

@@ -20,4 +20,4 @@ The provider uses the bundled rank after project, custom, and user filesystem so
 
 ## Consequences
 
-The badge instructions and source PNG are versioned with DSH and resolve through a packaged directory resource base. The provider has no configuration surface. Package tests pin provider lifecycle and the official PNG bytes, while a keyless assembled-application snapshot pins the enabled catalog and loaded skill body.
+The badge instructions and source PNG are versioned with CCH and resolve through a packaged directory resource base. The provider has no configuration surface. Package tests pin provider lifecycle and the official PNG bytes, while a keyless assembled-application snapshot pins the enabled catalog and loaded skill body.

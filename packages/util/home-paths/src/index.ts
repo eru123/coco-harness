@@ -58,7 +58,7 @@ export async function canonicalizeWatchPath(path: string): Promise<string> {
  * Resolve the default Coco Harness home using Node's platform path rules.
  * @returns the absolute default harness home path.
  */
-export function defaultDshHome(): string {
+export function defaultCchHome(): string {
   return join(homedir(), CCH_HOME_DIR_NAME)
 }
 
@@ -84,9 +84,9 @@ export function expandHomePath(path: string): string {
  * @param env - environment mapping used to read `CCH_HOME`.
  * @returns the normalized absolute harness home path.
  */
-export function resolveDshHome(configured?: string, env: Record<string, string | undefined> = process.env): string {
+export function resolveCchHome(configured?: string, env: Record<string, string | undefined> = process.env): string {
   const fromEnv = env[CCH_HOME_ENV]
-  const selected = configured ?? (fromEnv !== undefined && fromEnv.trim().length > 0 ? fromEnv : defaultDshHome())
+  const selected = configured ?? (fromEnv !== undefined && fromEnv.trim().length > 0 ? fromEnv : defaultCchHome())
   return resolve(expandHomePath(selected))
 }
 
@@ -96,7 +96,7 @@ export function resolveDshHome(configured?: string, env: Record<string, string |
  * @returns the normalized absolute joined path.
  */
 export function cchHomePath(...segments: string[]): string {
-  return join(resolveDshHome(), ...segments)
+  return join(resolveCchHome(), ...segments)
 }
 
 /**
@@ -104,9 +104,9 @@ export function cchHomePath(...segments: string[]): string {
  *
  * It never returns an absolute machine path: the default home is labelled
  * `~/.cch`, and any configured home is labelled `$CCH_HOME`.
- * @param resolvedHome - the absolute path returned by {@link resolveDshHome}.
+ * @param resolvedHome - the absolute path returned by {@link resolveCchHome}.
  * @returns `~/.cch` for the default home, otherwise `$CCH_HOME`.
  */
 export function cchHomeDisplay(resolvedHome: string): string {
-  return resolvedHome === resolve(defaultDshHome()) ? DEFAULT_CCH_HOME_DISPLAY : `$${CCH_HOME_ENV}`
+  return resolvedHome === resolve(defaultCchHome()) ? DEFAULT_CCH_HOME_DISPLAY : `$${CCH_HOME_ENV}`
 }

@@ -38,7 +38,7 @@ The data structures and catalog/tool contract are documented in [skills.md](../.
 
 **Use a system-prompt section.** Rejected because the rendered system prompt is a single string, while the catalog is a user-role `<system-reminder>` message. The [request-only session-prefix extension point](../../archived/feature/2026-07-07-session-prefix.md) (archived) was the original mechanism; after the unified sourced-message decision removed it, the catalog became a durable sourced injection with the same message shape.
 
-**Materialize built-in DSH authoring skills under `~/.cch/skills/.system`.** Rejected because bundled skills do not write user home on startup, and embedded or remote providers supply configured skills.
+**Materialize built-in CCH authoring skills under `~/.cch/skills/.system`.** Rejected because bundled skills do not write user home on startup, and embedded or remote providers supply configured skills.
 
 **Recursively discover nested `**/SKILL.md`.** Rejected. Flat files and one-level directory bundles cover the configured roots while keeping duplicate handling and catalog order easy to reason about.
 

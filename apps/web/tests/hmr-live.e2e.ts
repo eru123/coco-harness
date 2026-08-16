@@ -108,13 +108,13 @@ it('hot-reloads a real client-plugin source edit without refreshing the page', a
     await page.getByText(oldText, { exact: true }).waitFor({ timeout: 15_000 })
     const pageIdentity = await page.evaluate(() => {
       const identity = crypto.randomUUID()
-      Object.defineProperty(window, '__dshHmrPageIdentity', { value: identity })
+      Object.defineProperty(window, '__cchHmrPageIdentity', { value: identity })
       return identity
     })
 
     await writeFile(sourcePath, updatedSource)
     await page.getByText(newText, { exact: true }).waitFor({ timeout: 30_000 })
-    expect(await page.evaluate(() => (window as Window & { __dshHmrPageIdentity?: string }).__dshHmrPageIdentity))
+    expect(await page.evaluate(() => (window as Window & { __cchHmrPageIdentity?: string }).__cchHmrPageIdentity))
       .toBe(pageIdentity)
     expect(pageErrors).toEqual([])
   } catch (error) {

@@ -2,9 +2,9 @@
 
 Shared filesystem path helpers for Coco Harness user data.
 
-## DSH home
+## CCH home
 
-`resolveDshHome()` resolves the single-root Coco Harness home. Precedence, highest first: an explicit configured path, `$CCH_HOME`, then `~/.cch`. The harness keeps all user data under one root.
+`resolveCchHome()` resolves the single-root Coco Harness home. Precedence, highest first: an explicit configured path, `$CCH_HOME`, then `~/.cch`. The harness keeps all user data under one root.
 
 `cchHomePath(...segments)` joins child segments onto that resolved home with Node's platform path rules. With no segments it returns the home itself.
 
@@ -12,7 +12,7 @@ Shared filesystem path helpers for Coco Harness user data.
 
 `CCH_HOME_DIR_NAME` owns the default user-data directory name: `.cch`.
 
-`defaultDshHome()` returns the default Coco Harness home by joining the operating-system home directory with `.cch`, using Node's platform path rules.
+`defaultCchHome()` returns the default Coco Harness home by joining the operating-system home directory with `.cch`, using Node's platform path rules.
 
 `expandHomePath()` expands `~`, `~/...`, and Windows-style `~\...` prefixes against the operating-system home directory. It leaves non-tilde paths and `~user/...` untouched.
 

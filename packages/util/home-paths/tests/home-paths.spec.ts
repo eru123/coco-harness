@@ -6,11 +6,11 @@ import {
   DEFAULT_CCH_HOME_DISPLAY,
   CCH_HOME_DIR_NAME,
   canonicalizeWatchPath,
-  defaultDshHome,
+  defaultCchHome,
   cchHomeDisplay,
   cchHomePath,
   expandHomePath,
-  resolveDshHome,
+  resolveCchHome,
 } from '@coco-harness/cch-home-paths'
 
 afterEach(() => {
@@ -18,10 +18,10 @@ afterEach(() => {
 })
 
 describe('cch path helpers', () => {
-  it('owns the shared default DSH home directory name', () => {
+  it('owns the shared default CCH home directory name', () => {
     expect(CCH_HOME_DIR_NAME).toBe('.cch')
     expect(DEFAULT_CCH_HOME_DISPLAY).toBe('~/.cch')
-    expect(defaultDshHome()).toBe(join(homedir(), '.cch'))
+    expect(defaultCchHome()).toBe(join(homedir(), '.cch'))
   })
 
   it('expands tilde paths without changing non-tilde paths', () => {
@@ -35,14 +35,14 @@ describe('cch path helpers', () => {
   it('resolves explicit path before CCH_HOME and the default', () => {
     const envHome = join(homedir(), 'env-cch')
 
-    expect(resolveDshHome('/tmp/explicit-cch', { CCH_HOME: '~/env-cch' })).toBe(resolve('/tmp/explicit-cch'))
-    expect(resolveDshHome(undefined, { CCH_HOME: '~/env-cch' })).toBe(envHome)
-    expect(resolveDshHome(undefined, {})).toBe(defaultDshHome())
+    expect(resolveCchHome('/tmp/explicit-cch', { CCH_HOME: '~/env-cch' })).toBe(resolve('/tmp/explicit-cch'))
+    expect(resolveCchHome(undefined, { CCH_HOME: '~/env-cch' })).toBe(envHome)
+    expect(resolveCchHome(undefined, {})).toBe(defaultCchHome())
   })
 
   it('treats an empty or whitespace-only CCH_HOME as unset', () => {
-    expect(resolveDshHome(undefined, { CCH_HOME: '' })).toBe(defaultDshHome())
-    expect(resolveDshHome(undefined, { CCH_HOME: '   ' })).toBe(defaultDshHome())
+    expect(resolveCchHome(undefined, { CCH_HOME: '' })).toBe(defaultCchHome())
+    expect(resolveCchHome(undefined, { CCH_HOME: '   ' })).toBe(defaultCchHome())
   })
 
   it('joins child segments onto the resolved CCH_HOME', () => {
@@ -52,7 +52,7 @@ describe('cch path helpers', () => {
   })
 
   it('labels a resolved home by whether it is the default root', () => {
-    expect(cchHomeDisplay(resolve(defaultDshHome()))).toBe('~/.cch')
+    expect(cchHomeDisplay(resolve(defaultCchHome()))).toBe('~/.cch')
     expect(cchHomeDisplay('/some/other/root')).toBe('$CCH_HOME')
   })
 

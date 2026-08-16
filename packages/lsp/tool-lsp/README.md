@@ -44,7 +44,7 @@ Prefix-stable while the plugin scope and guidance text are unchanged; activation
 
 #### What the model sees
 
-The model sees the generated [`lsp` schema](../../../docs/tool-catalog.md#deepseek-aidsh-tool-lsp).
+The model sees the generated [`lsp` schema](../../../docs/tool-catalog.md#coco-harnesscch-tool-lsp).
 
 #### Token effect
 

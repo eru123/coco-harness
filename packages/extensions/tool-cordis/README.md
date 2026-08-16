@@ -1,6 +1,6 @@
 # @coco-harness/cch-tool-cordis
 
-The self-referential Cordis toolset: five model-facing tools over the live runtime in the current DSH process. The registry, the vm sandbox, and the browser broadcast belong to [`@coco-harness/cch-cordis-host-runner`](../cordis-host-runner/README.md) (`ctx.dynamic`), which this toolset injects — a composition with these tools but no runner never activates them. Design home — sandbox semantics, dynamic-package lifecycle and composition, standing decisions: [the toolset Agent Note](../../../.agents/notes/implemented/feature/2026-07-08-self-referential-cordis-toolset.md).
+The self-referential Cordis toolset: five model-facing tools over the live runtime in the current CCH process. The registry, the vm sandbox, and the browser broadcast belong to [`@coco-harness/cch-cordis-host-runner`](../cordis-host-runner/README.md) (`ctx.dynamic`), which this toolset injects — a composition with these tools but no runner never activates them. Design home — sandbox semantics, dynamic-package lifecycle and composition, standing decisions: [the toolset Agent Note](../../../.agents/notes/implemented/feature/2026-07-08-self-referential-cordis-toolset.md).
 
 ## What it does
 
@@ -14,7 +14,7 @@ Two paired verbs, plus the read-only report.
 
 Exact model-facing schemas: [the generated tool catalog](../../../docs/tool-catalog.md).
 
-Dynamic packages live only in the shared DSH process memory. They remain active across later turns and may affect other sessions in that process, but disappear after `cordis_stop`/`cordis_undefine`, toolset unload, or DSH restart. They create no Plugin file, install no package, change no `cordis.yml` or personal/project configuration, do not survive restart, and cannot be promoted automatically. To keep an experiment, ask the Agent to implement a normal local, project, or repository Plugin through the regular development workflow. Every verb is session-scoped: a package is visible and controllable only in the session that defined it.
+Dynamic packages live only in the shared CCH process memory. They remain active across later turns and may affect other sessions in that process, but disappear after `cordis_stop`/`cordis_undefine`, toolset unload, or CCH restart. They create no Plugin file, install no package, change no `cordis.yml` or personal/project configuration, do not survive restart, and cannot be promoted automatically. To keep an experiment, ask the Agent to implement a normal local, project, or repository Plugin through the regular development workflow. Every verb is session-scoped: a package is visible and controllable only in the session that defined it.
 
 ## Trust stance
 
@@ -57,7 +57,7 @@ Namespace plugin: named exports `name` / `inject` / `apply`, no default export (
 
 #### What the model sees
 
-The conversation model sees the generated [`cordis_inspect`, `cordis_define`, `cordis_run`, `cordis_stop`, and `cordis_undefine` schemas](../../../docs/tool-catalog.md#deepseek-aidsh-tool-cordis) whenever this plugin is visible.
+The conversation model sees the generated [`cordis_inspect`, `cordis_define`, `cordis_run`, `cordis_stop`, and `cordis_undefine` schemas](../../../docs/tool-catalog.md#coco-harnesscch-tool-cordis) whenever this plugin is visible.
 
 #### Token effect
 

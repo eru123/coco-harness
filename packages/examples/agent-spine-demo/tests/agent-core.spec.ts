@@ -63,7 +63,7 @@ async function composePrefix(ctx: Context, cwd: string): Promise<Message[]> {
  * bin smokes; here we assert the composition + config forwarding.
  */
 async function mount(config: agentCore.Config, withBash = false): Promise<Context> {
-  const oldDshHome = process.env.CCH_HOME
+  const oldCchHome = process.env.CCH_HOME
   const oldAgentsHome = process.env.CCH_AGENTS_HOME
   process.env.CCH_HOME = await mkdtemp(join(tmpdir(), 'cch-agent-spine-demo-home-'))
   process.env.CCH_AGENTS_HOME = await mkdtemp(join(tmpdir(), 'cch-agent-spine-demo-agents-'))
@@ -83,10 +83,10 @@ async function mount(config: agentCore.Config, withBash = false): Promise<Contex
     await new Promise(resolve => setTimeout(resolve, 50))
     return ctx
   } finally {
-    if (oldDshHome === undefined) {
+    if (oldCchHome === undefined) {
       delete process.env.CCH_HOME
     } else {
-      process.env.CCH_HOME = oldDshHome
+      process.env.CCH_HOME = oldCchHome
     }
     if (oldAgentsHome === undefined) {
       delete process.env.CCH_AGENTS_HOME
@@ -97,17 +97,17 @@ async function mount(config: agentCore.Config, withBash = false): Promise<Contex
 }
 
 async function withIsolatedSkillHomes<T>(run: () => Promise<T>): Promise<T> {
-  const oldDshHome = process.env.CCH_HOME
+  const oldCchHome = process.env.CCH_HOME
   const oldAgentsHome = process.env.CCH_AGENTS_HOME
   process.env.CCH_HOME = await mkdtemp(join(tmpdir(), 'cch-agent-spine-demo-home-'))
   process.env.CCH_AGENTS_HOME = await mkdtemp(join(tmpdir(), 'cch-agent-spine-demo-agents-'))
   try {
     return await run()
   } finally {
-    if (oldDshHome === undefined) {
+    if (oldCchHome === undefined) {
       delete process.env.CCH_HOME
     } else {
-      process.env.CCH_HOME = oldDshHome
+      process.env.CCH_HOME = oldCchHome
     }
     if (oldAgentsHome === undefined) {
       delete process.env.CCH_AGENTS_HOME
@@ -614,7 +614,7 @@ describe('cch-agent-spine-demo bundle', () => {
     await ctx.fiber.dispose()
   })
 
-  it('rejects conflicting global and nested DSH home directories', () => {
+  it('rejects conflicting global and nested CCH home directories', () => {
     expect(() => {
       agentCore.apply(new Context(), {
         cchHome: '/global-cch-home',

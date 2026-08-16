@@ -1,5 +1,5 @@
 /**
- * Enforce the MIT license declaration for repository-owned DSH npm packages.
+ * Enforce the MIT license declaration for repository-owned CCH npm packages.
  * @module scripts/verify-cch-package-licenses
  */
 
@@ -9,9 +9,9 @@ import { resolve, sep } from 'node:path'
 const ROOT = resolve(import.meta.dirname, '..')
 const CCH_PACKAGE_NAME = /^@coco-harness\/cch(?:-|$)/
 
-/** Result of checking every DSH package reachable through the root workspace list. */
+/** Result of checking every CCH package reachable through the root workspace list. */
 export interface CchPackageLicenseReport {
-  /** Number of DSH package manifests checked. */
+  /** Number of CCH package manifests checked. */
   packageCount: number
   /** Repository-relative diagnostics for non-MIT declarations. */
   failures: string[]
@@ -50,11 +50,11 @@ function printable(value: unknown): string {
 }
 
 /**
- * Check every DSH npm package declared by the repository workspace.
+ * Check every CCH npm package declared by the repository workspace.
  * @param root - absolute repository root containing the workspace package.json.
  * @returns the checked package count and every non-MIT declaration.
  */
-export function inspectDshPackageLicenses(root: string): CchPackageLicenseReport {
+export function inspectCchPackageLicenses(root: string): CchPackageLicenseReport {
   let packageCount = 0
   const failures: string[] = []
 
@@ -76,14 +76,14 @@ export function inspectDshPackageLicenses(root: string): CchPackageLicenseReport
 }
 
 if (process.argv[1] && import.meta.filename === resolve(process.argv[1])) {
-  const report = inspectDshPackageLicenses(ROOT)
+  const report = inspectCchPackageLicenses(ROOT)
   if (report.failures.length > 0) {
-    process.stderr.write('verify-cch-package-licenses: non-MIT DSH package declarations found:\n')
+    process.stderr.write('verify-cch-package-licenses: non-MIT CCH package declarations found:\n')
     for (const failure of report.failures) process.stderr.write(`  ${failure}\n`)
     process.exitCode = 1
   } else {
     process.stdout.write(
-      `verify-cch-package-licenses: ${String(report.packageCount)} DSH package(s) checked; all declare MIT.\n`,
+      `verify-cch-package-licenses: ${String(report.packageCount)} CCH package(s) checked; all declare MIT.\n`,
     )
   }
 }

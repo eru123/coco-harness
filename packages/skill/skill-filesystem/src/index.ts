@@ -19,7 +19,7 @@ import z from '@coco-harness/schemastery'
 import type Schema from '@coco-harness/schemastery'
 import { parse as parseYaml } from 'yaml'
 import type { FileSystem, FsDirEntry, FsTarget } from '@coco-harness/cch-fs'
-import { canonicalizeWatchPath, resolveDshHome } from '@coco-harness/cch-home-paths'
+import { canonicalizeWatchPath, resolveCchHome } from '@coco-harness/cch-home-paths'
 import {
   BUNDLED_SKILL_RANK,
   isSkillName,
@@ -160,7 +160,7 @@ export class FileSystemSkillProvider implements SkillProvider {
   ) {
     this.name = config.providerName ?? 'filesystem'
     this.includeDefaultRoots = config.includeDefaultRoots ?? true
-    this.cchHome = resolveDshHome(config.cchHome)
+    this.cchHome = resolveCchHome(config.cchHome)
     this.agentsHome = resolve(config.agentsHome ?? process.env.CCH_AGENTS_HOME ?? join(homedir(), '.agents'))
     this.customSkillDirs = (config.customSkillDirs ?? []).map(root => resolve(root))
     this.watchManager = new SkillWatchManager(ctx, control.invalidate, resolveWatchConfig(config))

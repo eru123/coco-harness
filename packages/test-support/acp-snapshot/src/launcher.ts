@@ -202,7 +202,16 @@ export function launchAcpTestAgent(options: AcpTestLaunchOptions): LaunchedAcpTe
     client,
     updates,
     rawStdout: () => Buffer.concat(rawBuffers).toString('utf8'),
-    stderr: () => stderrChunks.join(''),
+    // Node's own experimental-module warnings (e.g. `node:sqlite` on Node 22)
+    // are environment noise, not agent errors; the strict empty-stderr
+    // assertions in snapshot specs target real application failures.
+    stderr: () => {
+      const text = stderrChunks.join('')
+      const isNodeWarning = (line: string): boolean =>
+        line === '' || /^\(node:\d+\) (ExperimentalWarning|Warning): /.test(line)
+          || line === '(Use `node --trace-warnings ...` to show where the warning was created)'
+      return text.split('\n').every(isNodeWarning) ? '' : text
+    },
     waitForUpdate(match): Promise<SessionNotification['update']> {
       if (updateStreamFailure !== undefined) return Promise.reject(updateStreamFailure)
       return new Promise((resolve, reject) => updateWaiters.push({ match, resolve, reject }))

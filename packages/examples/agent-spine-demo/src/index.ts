@@ -35,7 +35,7 @@ import * as toolSkill from '@coco-harness/cch-tool-skill'
 import * as toolJobs from '@coco-harness/cch-tool-jobs'
 import AgentLoop, { type Config as AgentLoopConfig } from '@coco-harness/cch-agent-loop'
 import * as llmRetry from '@coco-harness/cch-llm-retry'
-import { resolveDshHome } from '@coco-harness/cch-home-paths'
+import { resolveCchHome } from '@coco-harness/cch-home-paths'
 
 export const name = 'agent-spine-demo'
 
@@ -210,12 +210,12 @@ export function pickSpineConfig(config: Omit<Config, 'agents'>): Omit<Config, 'a
  * seams, then the loop that drives them.
  */
 export function apply(ctx: Context, config: Config): void {
-  const nestedDshHome = config.skills?.filesystem?.cchHome
-  if (config.cchHome !== undefined && nestedDshHome !== undefined
-    && resolveDshHome(config.cchHome) !== resolveDshHome(nestedDshHome)) {
+  const nestedCchHome = config.skills?.filesystem?.cchHome
+  if (config.cchHome !== undefined && nestedCchHome !== undefined
+    && resolveCchHome(config.cchHome) !== resolveCchHome(nestedCchHome)) {
     throw new Error('agent-spine-demo: cchHome and skills.filesystem.cchHome must resolve to the same directory')
   }
-  const cchHome = resolveDshHome(config.cchHome ?? nestedDshHome)
+  const cchHome = resolveCchHome(config.cchHome ?? nestedCchHome)
 
   ctx.plugin(Timer)
   ctx.plugin(LlmRuntime)

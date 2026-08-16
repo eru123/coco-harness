@@ -816,7 +816,7 @@ describe('FileSystemSkillProvider', () => {
   })
 
   it('uses default home root resolution without exposing builtin skills', async () => {
-    const previousDshHome = process.env.CCH_HOME
+    const previousCchHome = process.env.CCH_HOME
     const previousAgentsHome = process.env.CCH_AGENTS_HOME
     const previousBundledSkillDir = process.env.CCH_BUNDLED_SKILL_DIR
     const envHome = await tempDir('skill-env-home')
@@ -862,10 +862,10 @@ describe('FileSystemSkillProvider', () => {
         invalidate() {},
       }, { cchHome: join(envHome, 'empty-cch') }).name).toBe('filesystem')
     } finally {
-      if (previousDshHome === undefined) {
+      if (previousCchHome === undefined) {
         delete process.env.CCH_HOME
       } else {
-        process.env.CCH_HOME = previousDshHome
+        process.env.CCH_HOME = previousCchHome
       }
       if (previousAgentsHome === undefined) {
         delete process.env.CCH_AGENTS_HOME
