@@ -4,7 +4,7 @@ Start the Web UI through the [root README](../../../README.md#run); the command 
 
 ## Configure a model
 
-Open **Settings → Models**, enter a DeepSeek API key, and save it. The model route becomes usable immediately without restarting the server.
+No provider is configured by default. Open **Settings → Models**, add a provider (for example the official DeepSeek route or any OpenAI-compatible endpoint), enter its API key, and save it. The model route becomes usable immediately without restarting the server.
 
 The [model configuration guide](./providers.md) covers other providers and custom OpenAI-compatible endpoints.
 

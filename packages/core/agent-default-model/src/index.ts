@@ -22,31 +22,32 @@ export const AGENT_DEFAULT_MODEL_SETTINGS_NAMESPACE = settingsNamespace('agent-d
 
 /** Stored and composed default model selection. */
 export interface AgentDefaultModelSettings {
-  /** Registered provider route. */
-  provider: string
-  /** Provider-owned model id. */
-  model: string
+  /** Registered provider route; absent until a default is saved. */
+  provider?: string
+  /** Provider-owned model id; absent until a default is saved. */
+  model?: string
   /** Adapter-owned reasoning effort, or provider/default behavior when absent. */
   reasoningEffort?: string
 }
 
 /** Schema of the default Agent model settings section. */
 export const AGENT_DEFAULT_MODEL_SETTINGS_SCHEMA: z<AgentDefaultModelSettings> = z.object({
-  provider: z.string().required(),
-  model: z.string().required(),
+  provider: z.string(),
+  model: z.string(),
   reasoningEffort: z.string(),
 })
 
 /** Composition entry for the default model selection. */
 export interface Config {
-  /** Registered provider route. */
-  provider: string
-  /** Provider-owned model id. */
-  model: string
+  /** Registered provider route; a composition may ship no default. */
+  provider?: string
+  /** Provider-owned model id; a composition may ship no default. */
+  model?: string
 }
 
 /** Project stored settings onto the Agent-facing selection type. */
-function selection(settings: AgentDefaultModelSettings): ModelSelection {
+function selection(settings: AgentDefaultModelSettings): ModelSelection | undefined {
+  if (settings.provider === undefined || settings.model === undefined) return undefined
   return {
     provider: settings.provider,
     model: settings.model,
@@ -63,15 +64,18 @@ function selection(settings: AgentDefaultModelSettings): ModelSelection {
  */
 export class AgentDefaultModelConfig extends Service {
   static Config: z<Config> = z.object({
-    provider: z.string().required(),
-    model: z.string().required(),
+    provider: z.string(),
+    model: z.string(),
   })
 
   private source: () => AgentDefaultModelSettings
 
   constructor(ctx: Context, config: Config) {
     super(ctx, 'agentDefaultModel')
-    const entry: AgentDefaultModelSettings = { provider: config.provider, model: config.model }
+    const entry: AgentDefaultModelSettings = {
+      ...config.provider === undefined ? {} : { provider: config.provider },
+      ...config.model === undefined ? {} : { model: config.model },
+    }
     this.source = () => entry
     installSettingsSection(ctx, AGENT_DEFAULT_MODEL_SETTINGS_NAMESPACE, AGENT_DEFAULT_MODEL_SETTINGS_SCHEMA, entry, {
       setSource: (current) => { this.source = current },
@@ -83,9 +87,10 @@ export class AgentDefaultModelConfig extends Service {
 
   /**
    * Read the current default model selection.
-   * @returns a detached provider, model, and optional reasoning selection.
+   * @returns a detached provider, model, and optional reasoning selection, or
+   *   `undefined` while no default is composed or saved.
    */
-  currentSelection(): ModelSelection {
+  currentSelection(): ModelSelection | undefined {
     return selection(this.source())
   }
 

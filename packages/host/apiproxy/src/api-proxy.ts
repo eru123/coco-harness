@@ -637,9 +637,11 @@ export interface ApiProxyDefaults {
   /**
    * The model selection a session starts from when its own log names none. Read on
    * every access rather than captured, so a default saved during this process
-   * reaches the sessions that have not run a turn yet.
+   * reaches the sessions that have not run a turn yet. `undefined` while the
+   * deployment composes no default and none has been saved; sessions then
+   * require an explicit selection before their first turn.
    */
-  defaultModelSelection: () => ModelSelection
+  defaultModelSelection: () => ModelSelection | undefined
   /**
    * Record a selection as the new default. Either absent, or a closure that
    * may itself decline — the gateway plugin always passes one, and it no-ops
@@ -1110,8 +1112,11 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
     ?? DEFAULT_COLD_BLANK_PROBE_MAX_BYTES
   /** The seed model each create/resume declares; re-read so it never goes stale. */
   const agentOptions = (): AgentOptions => {
-    const { provider, model } = defaults.defaultModelSelection()
-    return { provider, model }
+    const selection = defaults.defaultModelSelection()
+    return {
+      ...selection?.provider === undefined ? {} : { provider: selection.provider },
+      ...selection?.model === undefined ? {} : { model: selection.model },
+    }
   }
   type WebModelSelectionRef = ModelSelectionRef & { current: ModelSelection }
   const selections = new WeakMap<Agent, WebModelSelectionRef>()
@@ -1161,7 +1166,13 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
         // Incrementally folded by the session, so a per-step read costs
         // O(new events) rather than a rescan.
         const logged = agent.session.requestHeader()?.config
-        if (logged === undefined) return defaults.defaultModelSelection()
+        if (logged === undefined) {
+          const fallback = defaults.defaultModelSelection()
+          if (fallback === undefined) {
+            throw new Error('no model selected: pick a model before starting this session')
+          }
+          return fallback
+        }
         return {
           provider: logged.provider,
           model: logged.model,
@@ -2930,9 +2941,9 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
           // must match where an unspecified-cwd session actually lands.
           cwd: defaults.cwd,
           // Read live for the same reason: this is what the NEXT session will
-          // start from, so a saved default has to be what it reports.
-          provider: selection.provider,
-          model: selection.model,
+          // start from, so a saved default has to be what it reports. Absent
+          // while no default is composed or saved.
+          ...selection === undefined ? {} : { provider: selection.provider, model: selection.model },
           attachedSessions: ctx.agents.list().length,
           canOpenPath: canOpenPaths(),
         }))

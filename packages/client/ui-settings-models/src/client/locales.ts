@@ -91,11 +91,6 @@ export const en = {
   welcomeBody: WELCOME_NOTICE_COPY.en.body,
   welcomeContinue: WELCOME_NOTICE_COPY.en.continueLabel,
   welcomeError: 'The acknowledgement could not be saved. Please try again.',
-  onboardingTitle: 'Add an API key to get started',
-  onboardingDescription: 'Configure the official DeepSeek provider to start building.',
-  onboardingLater: 'Configure later',
-  onboardingSave: 'Save and continue',
-  onboardingSaving: 'Saving…',
   keyRequired: 'Enter an API key to continue.',
 }
 

@@ -93,10 +93,10 @@ Source: [`packages/examples/acp-demo/src/index.ts:39`](../packages/examples/acp-
 ```ts config-catalog
 /** Composition entry for the default model selection. */
 export interface Config {
-  /** Registered provider route. */
-  provider: string
-  /** Provider-owned model id. */
-  model: string
+  /** Registered provider route; a composition may ship no default. */
+  provider?: string
+  /** Provider-owned model id; a composition may ship no default. */
+  model?: string
 }
 ```
 
@@ -1071,10 +1071,11 @@ export type PiAiThinkingFormat = Exclude<PiThinkingFormat, WithheldThinkingForma
 type PiThinkingFormat = NonNullable<OpenAICompletionsCompat['thinkingFormat']>
 
 /**
- * pi-ai thinking formats a profile cannot name: both drive the request through
- * `chatTemplateKwargs`, which this configuration does not expose.
+ * pi-ai thinking formats a profile cannot name: all drive the request through
+ * `chatTemplateKwargs`/`chatTemplateArgs`, which this configuration does not
+ * expose.
  */
-type WithheldThinkingFormat = 'chat-template' | 'qwen-chat-template'
+type WithheldThinkingFormat = 'chat-template' | 'qwen-chat-template' | 'baseten'
 ```
 
 Depends on: `Api` (`@earendil-works/pi-ai`) · `CacheRetention` (`@earendil-works/pi-ai`) · `Model` (`@earendil-works/pi-ai`) · `ModelThinkingLevel` (`@earendil-works/pi-ai`) · `OpenAICompletionsCompat` (`@earendil-works/pi-ai`) · [`RetryPolicyConfig`](../packages/llm/llm/src/index.ts) · `ThinkingBudgets` (`@earendil-works/pi-ai`) · `Transport` (`@earendil-works/pi-ai`)
@@ -2074,48 +2075,6 @@ export type PermissionPolicy = 'allow' | 'reject'
 
 Source: [`packages/subagent/subagent-acp/src/index.ts:27`](../packages/subagent/subagent-acp/src/index.ts)
 
-<a id="coco-harnesscch-subagent-claude-code"></a>
-
-## `@coco-harness/cch-subagent-claude-code`
-
-Requires: `subagents` · `subprocess`
-
-```ts config-catalog
-/** Deployment-owned environment and process-release bound. */
-export interface Config {
-  /**
-   * Explicit environment entries layered over the subprocess seam's
-   * credential-scrubbed parent environment.
-   */
-  env?: Record<string, string>
-  /** Grace in milliseconds for Claude Code process-tree termination. */
-  disposeGraceMs?: number
-}
-```
-
-Source: [`packages/subagent/subagent-claude-code/src/index.ts:32`](../packages/subagent/subagent-claude-code/src/index.ts)
-
-<a id="coco-harnesscch-subagent-codex"></a>
-
-## `@coco-harness/cch-subagent-codex`
-
-Requires: `subagents` · `subprocess`
-
-```ts config-catalog
-/** Deployment-owned environment and process-release bound. */
-export interface Config {
-  /**
-   * Explicit environment entries layered over the subprocess seam's
-   * credential-scrubbed parent environment.
-   */
-  env?: Record<string, string>
-  /** Grace in milliseconds for app-server process-tree termination. */
-  disposeGraceMs?: number
-}
-```
-
-Source: [`packages/subagent/subagent-codex/src/index.ts:30`](../packages/subagent/subagent-codex/src/index.ts)
-
 <a id="coco-harnesscch-subagent-cch-sdk"></a>
 
 ## `@coco-harness/cch-subagent-cch-sdk`
@@ -2168,6 +2127,48 @@ export interface Config {
 ```
 
 Source: [`packages/subagent/subagent-cch-sdk/src/index.ts:29`](../packages/subagent/subagent-cch-sdk/src/index.ts)
+
+<a id="coco-harnesscch-subagent-claude-code"></a>
+
+## `@coco-harness/cch-subagent-claude-code`
+
+Requires: `subagents` · `subprocess`
+
+```ts config-catalog
+/** Deployment-owned environment and process-release bound. */
+export interface Config {
+  /**
+   * Explicit environment entries layered over the subprocess seam's
+   * credential-scrubbed parent environment.
+   */
+  env?: Record<string, string>
+  /** Grace in milliseconds for Claude Code process-tree termination. */
+  disposeGraceMs?: number
+}
+```
+
+Source: [`packages/subagent/subagent-claude-code/src/index.ts:32`](../packages/subagent/subagent-claude-code/src/index.ts)
+
+<a id="coco-harnesscch-subagent-codex"></a>
+
+## `@coco-harness/cch-subagent-codex`
+
+Requires: `subagents` · `subprocess`
+
+```ts config-catalog
+/** Deployment-owned environment and process-release bound. */
+export interface Config {
+  /**
+   * Explicit environment entries layered over the subprocess seam's
+   * credential-scrubbed parent environment.
+   */
+  env?: Record<string, string>
+  /** Grace in milliseconds for app-server process-tree termination. */
+  disposeGraceMs?: number
+}
+```
+
+Source: [`packages/subagent/subagent-codex/src/index.ts:30`](../packages/subagent/subagent-codex/src/index.ts)
 
 <a id="coco-harnesscch-subagent-fork-in-process"></a>
 
