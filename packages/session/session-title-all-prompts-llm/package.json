@@ -24,7 +24,11 @@
     },
     "./package.json": "./package.json"
   },
-  "files": ["lib/index.js", "lib/invariant.js", "lib/types/**/*.d.ts"],
+  "files": [
+    "lib/index.js",
+    "lib/invariant.js",
+    "lib/types/**/*.d.ts"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",
@@ -35,7 +39,7 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",

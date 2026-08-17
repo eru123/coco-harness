@@ -45,8 +45,8 @@
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-attachment": "workspace:^",
     "@coco-harness/cch-client-connection": "workspace:^",
-    "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
+    "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-host-apiproxy": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-llm-retry": "workspace:^",
@@ -54,25 +54,25 @@
     "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-session-title": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "immer": "^10.1.1",
-    "react": "^18.2.0",
-    "zustand": "~4.4.7"
+    "immer": "^11.1.17",
+    "react": "^19.2.8",
+    "zustand": "~5.0.15"
   },
   "peerDependencies": {
-    "@coco-harness/cordis": "workspace:^",
     "@coco-harness/cch-api-remotes": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-typert-protocol": "workspace:^",
-    "@coco-harness/cch-typert-registry": "workspace:^"
+    "@coco-harness/cch-typert-registry": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
   },
   "devDependencies": {
-    "@coco-harness/cordis": "workspace:^",
     "@coco-harness/cch-api-remotes": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
     "@coco-harness/cch-typert-protocol": "workspace:^",
     "@coco-harness/cch-typert-registry": "workspace:^",
-    "@types/react": "~18.3.1"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/react": "~19.2.18"
   },
   "files": [
     "lib/index.js",

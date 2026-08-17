@@ -38,21 +38,21 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "peerDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-client-modules": "workspace:^",
     "@coco-harness/cch-host-webserver": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-client-modules": "workspace:^",
     "@coco-harness/cch-host-webserver": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   },
   "files": [
     "lib/index.js",

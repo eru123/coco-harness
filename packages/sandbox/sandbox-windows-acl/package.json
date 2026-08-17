@@ -42,7 +42,7 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "koffi": "^3.1.0"
+    "koffi": "^3.1.5"
   },
   "devDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",

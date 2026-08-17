@@ -30,11 +30,11 @@
   "author": "Shigma <shigma10826@gmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/cosmokit": "workspace:^",
-    "js-yaml": "^4.1.0"
+    "@coco-harness/cosmokit": "link:..\\cosmokit",
+    "js-yaml": "^5.3.0"
   }
 }

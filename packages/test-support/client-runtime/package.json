@@ -29,7 +29,7 @@
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/react": "^16.3.2",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.10"
   },
   "peerDependencies": {
     "@coco-harness/cch-client-runtime": "workspace:^",
@@ -47,11 +47,11 @@
     "@coco-harness/cch-client-web-react": "workspace:^",
     "@coco-harness/cch-host-apiproxy": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@types/react-dom": "~18.3.0",
     "@coco-harness/cordis": "workspace:^",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@types/react": "~19.2.18",
+    "@types/react-dom": "~19.2.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "files": [
     "lib/index.js",

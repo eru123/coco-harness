@@ -54,28 +54,28 @@
   "license": "MIT",
   "peerDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
-    "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-brand": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-scope": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-typert-protocol": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^",
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
-    "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-brand": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-loader-smoke": "workspace:^",
     "@coco-harness/cch-scope": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-typert-protocol": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   }

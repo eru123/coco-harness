@@ -49,11 +49,10 @@
   "license": "MIT",
   "dependencies": {
     "@coco-harness/cch-settings": "workspace:^",
-    "clsx": "^2.0.0",
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "clsx": "^2.1.1"
   },
   "peerDependencies": {
-    "@coco-harness/cordis": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-api-remotes": "workspace:^",
     "@coco-harness/cch-attachment": "workspace:^",
@@ -62,9 +61,9 @@
     "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
     "@coco-harness/cch-client-ui-attachment": "workspace:^",
+    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-settings": "workspace:^",
-    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-compaction": "workspace:^",
@@ -73,10 +72,10 @@
     "@coco-harness/cch-session-stats": "workspace:^",
     "@coco-harness/cch-token-meter": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@coco-harness/cordis": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-api-remotes": "workspace:^",
     "@coco-harness/cch-attachment": "workspace:^",
@@ -85,11 +84,11 @@
     "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
     "@coco-harness/cch-client-test-runtime": "workspace:^",
-    "@coco-harness/cch-client-ui-layout": "workspace:^",
     "@coco-harness/cch-client-ui-attachment": "workspace:^",
+    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
+    "@coco-harness/cch-client-ui-layout": "workspace:^",
     "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-settings": "workspace:^",
-    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-compaction": "workspace:^",
@@ -103,8 +102,9 @@
     "@coco-harness/cch-token-meter": "workspace:^",
     "@coco-harness/cch-tool-todo": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "@types/react": "~18.3.1",
-    "react": "^18.2.0"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/react": "~19.2.18",
+    "react": "^19.2.8"
   },
   "files": [
     "lib/index.js",

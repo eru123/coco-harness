@@ -41,7 +41,6 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-sandbox": "workspace:^",
@@ -49,15 +48,15 @@
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-settings": "workspace:^",
+    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-user-approval": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^",
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-sandbox": "workspace:^",
@@ -65,6 +64,7 @@
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-settings": "workspace:^",
+    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-user-approval": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   }

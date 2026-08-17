@@ -32,21 +32,21 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "peerDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
-    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "devDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
-    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
+    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-system-prompt": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   }

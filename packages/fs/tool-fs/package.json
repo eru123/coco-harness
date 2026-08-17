@@ -32,8 +32,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "diff": "^9.0.0",
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "diff": "^9.0.0"
   },
   "peerDependencies": {
     "@coco-harness/cch-attachment": "workspace:^",

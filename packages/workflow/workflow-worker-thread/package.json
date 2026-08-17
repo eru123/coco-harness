@@ -48,7 +48,7 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
@@ -64,6 +64,6 @@
     "@coco-harness/cch-tools": "workspace:^",
     "@coco-harness/cch-workflow": "workspace:^",
     "@coco-harness/cordis": "workspace:^",
-    "tsx": "^4.19.2"
+    "tsx": "^4.23.12"
   }
 }

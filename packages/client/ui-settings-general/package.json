@@ -49,8 +49,8 @@
   "license": "MIT",
   "dependencies": {
     "@coco-harness/cch-settings": "workspace:^",
-    "@coco-harness/schemastery": "workspace:^",
-    "clsx": "^2.0.0"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "clsx": "^2.1.1"
   },
   "peerDependencies": {
     "@coco-harness/cch-api-remotes": "workspace:^",
@@ -79,8 +79,8 @@
     "@coco-harness/cch-client-web-react": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cordis": "workspace:^",
-    "@types/react": "~18.3.1",
-    "react": "^18.2.0"
+    "@types/react": "~19.2.18",
+    "react": "^19.2.8"
   },
   "files": [
     "lib/index.js",

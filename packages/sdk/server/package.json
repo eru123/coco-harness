@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "peerDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
@@ -46,7 +46,6 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-spine-demo": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
@@ -57,6 +56,7 @@
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-persistence-jsonl": "workspace:^",
     "@coco-harness/cch-subagent": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

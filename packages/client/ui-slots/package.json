@@ -28,8 +28,8 @@
   "license": "MIT",
   "devDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/react": "~19.2.18"
   },
   "files": [
     "lib/index.js",

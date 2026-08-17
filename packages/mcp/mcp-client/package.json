@@ -40,8 +40,8 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
-    "@coco-harness/schemastery": "workspace:^",
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
@@ -50,8 +50,8 @@
     "@coco-harness/cch-subprocess": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
     "@modelcontextprotocol/server-everything": "^2026.7.4",
-    "@modelcontextprotocol/server-filesystem": "^2026.7.4",
-    "@coco-harness/cordis": "workspace:^"
+    "@modelcontextprotocol/server-filesystem": "^2026.7.10"
   }
 }

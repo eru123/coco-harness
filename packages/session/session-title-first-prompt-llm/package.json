@@ -24,7 +24,11 @@
     },
     "./package.json": "./package.json"
   },
-  "files": ["lib/index.js", "lib/invariant.js", "lib/types/**/*.d.ts"],
+  "files": [
+    "lib/index.js",
+    "lib/invariant.js",
+    "lib/types/**/*.d.ts"
+  ],
   "license": "MIT",
   "peerDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",
@@ -35,17 +39,17 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-include": "workspace:^",
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-llm-deepseek": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-title": "workspace:^",
     "@coco-harness/cch-session-title-llm": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-include": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

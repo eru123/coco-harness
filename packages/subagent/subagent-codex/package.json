@@ -42,10 +42,9 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
@@ -56,7 +55,8 @@
     "@coco-harness/cch-subprocess": "workspace:^",
     "@coco-harness/cch-subprocess-local": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
-    "@openai/codex": "0.147.0",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^",
+    "@openai/codex": "0.147.0"
   }
 }

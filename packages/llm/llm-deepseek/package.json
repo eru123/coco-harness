@@ -32,27 +32,27 @@
   ],
   "license": "MIT",
   "peerDependencies": {
+    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cch-credentials": "workspace:^",
-    "@coco-harness/cch-launch-environment": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-launch-environment": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-settings": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "eventsource-parser": "^3.1.0",
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "eventsource-parser": "^4.0.0"
   },
   "devDependencies": {
+    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cch-credentials": "workspace:^",
-    "@coco-harness/cch-launch-environment": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-launch-environment": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-settings": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   }
 }

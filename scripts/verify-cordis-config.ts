@@ -56,15 +56,11 @@ const CHOOSER_BACKEND_PACKAGES = [
   '@coco-harness/cch-client-ui-directory-picker-browse',
   '@coco-harness/cch-client-ui-directory-picker-native',
 ]
-const jsExprType = new yaml.Type('tag:yaml.org,2002:js', {
-  kind: 'scalar',
-  resolve: data => typeof data === 'string',
-  construct: (data: unknown): JsExpr => {
-    if (typeof data !== 'string') throw new TypeError('!!js requires a scalar string')
-    return { __jsExpr: data }
-  },
+const jsExprType = yaml.defineScalarTag<JsExpr>('tag:yaml.org,2002:js', {
+  resolve: source => ({ __jsExpr: source }),
+  identify: () => false,
 })
-const schema = yaml.JSON_SCHEMA.extend(jsExprType)
+const schema = new yaml.Schema([...yaml.JSON_SCHEMA.tags, jsExprType])
 
 const errors: string[] = []
 const pluginReferences: PluginReference[] = []

@@ -32,23 +32,23 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-settings": "workspace:^",
+    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-subprocess": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
-    "@coco-harness/cordis": "workspace:^",
-    "@coco-harness/cch-settings": "workspace:^"
+    "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-settings": "workspace:^",
+    "@coco-harness/cch-shell": "workspace:^",
     "@coco-harness/cch-subprocess": "workspace:^",
     "@coco-harness/cch-subprocess-local": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
-    "@coco-harness/cordis": "workspace:^",
-    "@coco-harness/cch-settings": "workspace:^"
+    "@coco-harness/cordis": "workspace:^"
   }
 }

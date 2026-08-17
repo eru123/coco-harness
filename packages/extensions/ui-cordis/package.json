@@ -52,14 +52,14 @@
   "peerDependencies": {
     "@coco-harness/cch-api-remotes": "workspace:^",
     "@coco-harness/cch-client-connection": "workspace:^",
-    "@coco-harness/cch-cordis-client-runner": "workspace:^",
     "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-sidebar": "workspace:^",
-    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-client-ui-tool": "workspace:^",
+    "@coco-harness/cch-cordis-client-runner": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0"
@@ -67,18 +67,18 @@
   "devDependencies": {
     "@coco-harness/cch-api-remotes": "workspace:^",
     "@coco-harness/cch-client-connection": "workspace:^",
-    "@coco-harness/cch-cordis-client-runner": "workspace:^",
     "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-sidebar": "workspace:^",
-    "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-client-ui-tool": "workspace:^",
+    "@coco-harness/cch-cordis-client-runner": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
     "@coco-harness/cordis": "workspace:^",
-    "react": "^18.2.0"
+    "@types/react": "~19.2.18",
+    "react": "^19.2.8"
   },
   "files": [
     "lib/index.js",

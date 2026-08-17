@@ -32,8 +32,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@vscode/ripgrep": "^1.18.0",
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "@vscode/ripgrep": "^1.18.0"
   },
   "peerDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",
@@ -49,13 +49,13 @@
   },
   "devDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
-    "@coco-harness/cch-subprocess": "workspace:^",
-    "@coco-harness/cch-subprocess-local": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-output-retention": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-spill": "workspace:^",
+    "@coco-harness/cch-subprocess": "workspace:^",
+    "@coco-harness/cch-subprocess-local": "workspace:^",
     "@coco-harness/cch-system-prompt": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",

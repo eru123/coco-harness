@@ -32,7 +32,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^",
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
     "zod": "^4.4.3"
   },
   "peerDependencies": {

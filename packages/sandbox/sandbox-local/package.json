@@ -41,7 +41,7 @@
   "dependencies": {
     "@coco-harness/cch-sandbox-windows-acl": "workspace:^",
     "@coco-harness/node-addon-landlock-run": "workspace:^",
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",

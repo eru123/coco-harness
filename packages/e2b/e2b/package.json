@@ -36,8 +36,8 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "e2b": "2.29.1",
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "e2b": "2.39.0"
   },
   "devDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",

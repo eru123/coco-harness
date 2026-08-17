@@ -51,7 +51,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "react": "^18.2.0"
+    "react": "^19.2.8"
   },
   "peerDependencies": {
     "@coco-harness/cch-client-locale": "workspace:^",
@@ -76,7 +76,7 @@
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-tool-workflow": "workspace:^",
     "@coco-harness/cch-workflow": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/react": "~19.2.18"
   }
 }

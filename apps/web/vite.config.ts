@@ -93,6 +93,10 @@ export default defineConfig({
   plugins: [rejectStandaloneServe(), react()],
   build: {
     sourcemap: true,
+    // The vendor chunk deliberately carries the heavy render families and the
+    // cpp grammar regularly clears 600 kB by itself; both are cache-stable by
+    // design (see VENDOR_PACKAGES), so their size is not actionable churn.
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
         // Output layout: the two main chunks stay at assets/ root; lazy

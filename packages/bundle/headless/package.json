@@ -46,25 +46,25 @@
   "dependencies": {
     "@coco-harness/cch-cmdline": "workspace:^",
     "@coco-harness/cch-code-runtime-worker-thread": "workspace:^",
-    "@coco-harness/schemastery": "workspace:^",
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
     "commander": "^15.0.0"
   },
   "peerDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-default-model": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-default-model": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

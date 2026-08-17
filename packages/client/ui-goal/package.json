@@ -46,8 +46,8 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-api-remotes": "workspace:^",
+    "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
     "@coco-harness/cch-client-ui-conversation": "workspace:^",
     "@coco-harness/cch-client-ui-primitives": "workspace:^",
@@ -59,8 +59,8 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-api-remotes": "workspace:^",
+    "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
     "@coco-harness/cch-client-test-runtime": "workspace:^",
     "@coco-harness/cch-client-ui-conversation": "workspace:^",
@@ -69,11 +69,11 @@
     "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-goal": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@testing-library/react": "^16.1.0",
-    "@types/react": "~18.3.1",
     "@coco-harness/cordis": "workspace:^",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@testing-library/react": "^16.3.2",
+    "@types/react": "~19.2.18",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "files": [
     "lib/index.js",

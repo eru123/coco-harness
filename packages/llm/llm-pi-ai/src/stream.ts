@@ -65,12 +65,21 @@ function classifyPiAiError(message: string): string {
  * Map a terminal pi-ai event to the harness finish reason.
  * @param message - the assistant message carried by the `done` or `error` event.
  * @param contextWindow - resolved catalog capacity for usage-based overflow detection.
+ * @param callerAborted - live probe of the caller's abort signal; pi-ai 0.84+
+ *   delivers a caller abort as a terminal `error` event, which the harness
+ *   vocabulary still spells `aborted`.
  * @returns the mapped harness reason. Recognized error text, `stop` usage above
  *   `contextWindow`, and zero-output `length` usage that fills the window map
  *   to `CONTEXT_WINDOW_EXCEEDED`; a `stop` with no content blocks maps to an
  *   `EMPTY_RESPONSE` error.
  */
-export function mapStopReason(message: AssistantMessage, contextWindow?: number): FinishReason {
+export function mapStopReason(message: AssistantMessage, contextWindow?: number, callerAborted?: () => boolean): FinishReason {
+  if (message.stopReason === 'error' && callerAborted?.()) {
+    return {
+      kind: 'aborted',
+      failure: { message: message.errorMessage ?? 'pi-ai stream aborted by caller', code: 'ABORTED' },
+    }
+  }
   const piAiOverflow = isContextOverflow(message, contextWindow)
   const harnessOverflow = message.stopReason === 'error'
     && message.errorMessage !== undefined
@@ -105,6 +114,18 @@ export function mapStopReason(message: AssistantMessage, contextWindow?: number)
       kind: 'aborted',
       failure: { message: message.errorMessage ?? 'pi-ai stream aborted', code: 'ABORTED' },
     }
+    // Deferred responses only occur when the caller opts into a durable handle,
+    // which this harness never does; treat one as a provider contract violation.
+    case 'deferred': return {
+      kind: 'error',
+      failure: { message: 'pi-ai returned a deferred response the harness did not request', code: 'PI_AI_ERROR' },
+    }
+    // A terminal event never carries a pending stop reason; treat one as a
+    // provider contract violation rather than silently dropping the turn.
+    case 'pending': return {
+      kind: 'error',
+      failure: { message: 'pi-ai stream ended with a pending stop reason', code: 'PI_AI_ERROR' },
+    }
     case 'error': {
       const text = message.errorMessage ?? 'pi-ai stream error'
       return { kind: 'error', failure: { message: text, code: classifyPiAiError(text) } }
@@ -124,6 +145,7 @@ export function mapStopReason(message: AssistantMessage, contextWindow?: number)
 export async function* toStreamChunks(
   events: AsyncIterable<AssistantMessageEvent>,
   contextWindow?: number,
+  callerAborted?: () => boolean,
 ): AsyncGenerator<StreamChunk> {
   // pi-ai contentIndex ↔ our block index map 1:1 (both count blocks from 0
   // in stream order), but we track ids per index for tool calls.
@@ -189,7 +211,7 @@ export async function* toStreamChunks(
         yield { type: 'usage', usage: mapUsage(event.message.usage) }
         yield {
           type: 'finish',
-          reason: mapStopReason(event.message, contextWindow),
+          reason: mapStopReason(event.message, contextWindow, callerAborted),
           replayState: toPiReplayState(event.message),
         }
         return
@@ -197,7 +219,7 @@ export async function* toStreamChunks(
         // In-stream error delivery (pi-ai's style) → error finish chunk
         // (the harness's other sanctioned error path besides throwing).
         yield { type: 'usage', usage: mapUsage(event.error.usage) }
-        yield { type: 'finish', reason: mapStopReason(event.error, contextWindow) }
+        yield { type: 'finish', reason: mapStopReason(event.error, contextWindow, callerAborted) }
         return
       // no default: AssistantMessageEvent is pi-ai's closed union; a new
       // event type should fail compilation here via tsc's exhaustiveness

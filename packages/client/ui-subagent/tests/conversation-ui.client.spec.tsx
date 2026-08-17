@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { makeTranslate } from '@coco-harness/cch-client-test-runtime'
 import type {
   SessionId, SessionListState, SessionSummary, SubagentCatalogSnapshot,
@@ -344,7 +344,7 @@ describe('SubagentCatalogAction', () => {
     expect(screen.getByText('~2y 3mo')).toBeTruthy()
     expect(screen.getByText('~1y')).toBeTruthy()
 
-    await vi.advanceTimersByTimeAsync(1_000)
+    await act(async () => { await vi.advanceTimersByTimeAsync(1_000) })
     expect(screen.getByRole('treeitem', { name: /running.*4\.6K tok · 1m 11s/ })).toBeTruthy()
     expect(screen.getByRole('treeitem', { name: /finished.*123 tok · 1h 02m 03s/ })).toBeTruthy()
     expect(screen.getByRole('treeitem', { name: /interrupted.*123M tok · 6s/ })).toBeTruthy()

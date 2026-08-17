@@ -45,7 +45,7 @@
     }
   },
   "dependencies": {
-    "@standard-schema/spec": "^1.1.0",
-    "@coco-harness/cosmokit": "workspace:^"
+    "@coco-harness/cosmokit": "link:..\\cosmokit",
+    "@standard-schema/spec": "^1.1.0"
   }
 }

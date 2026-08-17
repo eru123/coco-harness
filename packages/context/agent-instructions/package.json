@@ -34,30 +34,30 @@
   "peerDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-fs": "workspace:^",
+    "@coco-harness/cch-home-paths": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
-    "@coco-harness/cch-home-paths": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-loop": "workspace:^",
     "@coco-harness/cch-fs": "workspace:^",
     "@coco-harness/cch-fs-local": "workspace:^",
+    "@coco-harness/cch-home-paths": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-llm-deepseek": "workspace:^",
-    "@coco-harness/cch-home-paths": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-system-prompt": "workspace:^",
     "@coco-harness/cch-tool-fs": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

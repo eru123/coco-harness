@@ -27,25 +27,25 @@
   "license": "MIT",
   "dependencies": {
     "@coco-harness/cch-client-web": "workspace:^",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-group": "workspace:^",
     "@coco-harness/cch-client-modules": "workspace:^",
     "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-client-web-react": "workspace:^",
     "@coco-harness/cch-cmdline": "workspace:^",
     "@coco-harness/cch-pwsh-local": "workspace:^",
-    "@types/node": "^22.0.0",
-    "@types/react": "~18.3.1",
-    "@types/react-dom": "~18.3.0",
-    "@vitejs/plugin-react": "^4.0.0",
-    "playwright": "^1.49.0",
+    "@coco-harness/cordis-plugin-group": "workspace:^",
+    "@types/node": "^26.2.0",
+    "@types/react": "~19.2.18",
+    "@types/react-dom": "~19.2.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "fflate": "^0.8.3",
+    "playwright": "^1.62.1",
     "typescript": "^6.0.3",
-    "vite": "^6.0.0",
-    "vitest": "^4.1.8",
-    "fflate": "^0.8.2"
+    "vite": "^8.2.1",
+    "vitest": "^4.1.10"
   }
 }

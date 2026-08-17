@@ -42,10 +42,9 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-loop": "workspace:^",
     "@coco-harness/cch-agent-loop-testkit": "workspace:^",
@@ -59,6 +58,7 @@
     "@coco-harness/cch-tools": "workspace:^",
     "@coco-harness/cch-workflow": "workspace:^",
     "@coco-harness/cch-workflow-worker-thread": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

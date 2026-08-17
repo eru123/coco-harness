@@ -32,31 +32,31 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
     "@opentelemetry/api": "^1.9.1",
-    "@opentelemetry/api-logs": "^0.220.0",
-    "@opentelemetry/exporter-logs-otlp-http": "^0.220.0",
-    "@opentelemetry/otlp-exporter-base": "^0.220.0",
-    "@opentelemetry/resources": "^2.9.0",
-    "@opentelemetry/sdk-logs": "^0.220.0",
-    "@coco-harness/schemastery": "workspace:^"
+    "@opentelemetry/api-logs": "^0.221.0",
+    "@opentelemetry/exporter-logs-otlp-http": "^0.221.0",
+    "@opentelemetry/otlp-exporter-base": "^0.221.0",
+    "@opentelemetry/resources": "^2.10.0",
+    "@opentelemetry/sdk-logs": "^0.221.0"
   },
   "peerDependencies": {
+    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cch-command-feedback": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-telemetry": "workspace:^",
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
+    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cch-command-feedback": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-telemetry": "workspace:^",
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

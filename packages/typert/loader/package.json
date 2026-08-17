@@ -32,19 +32,19 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
-    "@coco-harness/cch-invariants": "workspace:^",
-    "@coco-harness/cch-typert-registry": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
-  },
-  "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
-  },
-  "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-typert-registry": "workspace:^",
     "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
+  },
+  "dependencies": {
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
+  },
+  "devDependencies": {
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-typert-registry": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "zod": "^4.4.3"
   }
 }

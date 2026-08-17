@@ -39,6 +39,6 @@
     }
   },
   "dependencies": {
-    "@coco-harness/cosmokit": "workspace:^"
+    "@coco-harness/cosmokit": "link:..\\cosmokit"
   }
 }

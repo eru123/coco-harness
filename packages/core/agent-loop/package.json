@@ -37,13 +37,13 @@
     "@coco-harness/cch-scope": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-persistence": "workspace:^",
+    "@coco-harness/cch-settings": "workspace:^",
     "@coco-harness/cch-system-prompt": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "@coco-harness/cordis": "workspace:^",
-    "@coco-harness/cch-settings": "workspace:^"
+    "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
@@ -53,9 +53,9 @@
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-persistence": "workspace:^",
     "@coco-harness/cch-session-persistence-jsonl": "workspace:^",
+    "@coco-harness/cch-settings": "workspace:^",
     "@coco-harness/cch-system-prompt": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "@coco-harness/cordis": "workspace:^",
-    "@coco-harness/cch-settings": "workspace:^"
+    "@coco-harness/cordis": "workspace:^"
   }
 }

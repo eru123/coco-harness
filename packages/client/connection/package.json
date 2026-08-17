@@ -39,13 +39,13 @@
   "license": "MIT",
   "dependencies": {
     "@coco-harness/cch-attachment": "workspace:^",
-    "@coco-harness/cch-host-apiproxy": "workspace:^",
     "@coco-harness/cch-commands": "workspace:^",
+    "@coco-harness/cch-host-apiproxy": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "@coco-harness/schemastery": "workspace:^",
-    "ws": "^8.21.0"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "ws": "^8.21.3"
   },
   "files": [
     "lib/index.js",
@@ -61,7 +61,7 @@
   "devDependencies": {
     "@coco-harness/cch-host-webserver": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/ws": "^8.18.1",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/ws": "^8.18.1"
   }
 }

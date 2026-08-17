@@ -37,8 +37,8 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "koffi": "^3.1.0",
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
+    "koffi": "^3.1.5"
   },
   "devDependencies": {
     "@coco-harness/cch-fs": "workspace:^",

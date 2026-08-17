@@ -48,7 +48,6 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cordis": "workspace:^",
     "@coco-harness/cch-api-remotes": "workspace:^",
     "@coco-harness/cch-client-connection": "workspace:^",
     "@coco-harness/cch-client-locale": "workspace:^",
@@ -59,6 +58,7 @@
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-client-web-react": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
     "react": "^18.2.0"
   },
   "devDependencies": {
@@ -73,9 +73,9 @@
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-client-web-react": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
     "@coco-harness/cordis": "workspace:^",
-    "react": "^18.2.0"
+    "@types/react": "~19.2.18",
+    "react": "^19.2.8"
   },
   "files": [
     "lib/index.js",

@@ -29,15 +29,15 @@
   "dependencies": {
     "@coco-harness/cch-attachment": "workspace:^",
     "@coco-harness/cch-client-ui-primitives": "workspace:^",
-    "clsx": "^2.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "clsx": "^2.1.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@coco-harness/cordis": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@types/react-dom": "~18.3.0"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/react": "~19.2.18",
+    "@types/react-dom": "~19.2.4"
   },
   "files": [
     "lib/index.js",
@@ -45,7 +45,7 @@
     "lib/types/**/*.d.ts"
   ],
   "peerDependencies": {
-    "@coco-harness/cordis": "workspace:^",
-    "@coco-harness/cch-invariants": "workspace:^"
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cordis": "workspace:^"
   }
 }

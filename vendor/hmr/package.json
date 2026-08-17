@@ -40,19 +40,19 @@
     }
   },
   "peerDependencies": {
-    "@coco-harness/cordis-plugin-timer": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-timer": "workspace:^"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.29.0",
-    "chokidar": "^4.0.3",
-    "@coco-harness/cosmokit": "workspace:^",
-    "picomatch": "^4.0.3",
-    "@coco-harness/schemastery": "workspace:^"
+    "@babel/code-frame": "^8.0.0",
+    "@coco-harness/cosmokit": "link:..\\cosmokit",
+    "@coco-harness/schemastery": "link:..\\schemastery",
+    "chokidar": "^5.0.0",
+    "picomatch": "^4.0.5"
   },
   "devDependencies": {
     "@types/babel__code-frame": "^7.27.0",
-    "@types/picomatch": "^3.0.2",
-    "esbuild": "^0.28.1"
+    "@types/picomatch": "^4.0.3",
+    "esbuild": "^0.28.2"
   }
 }

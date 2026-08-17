@@ -35,8 +35,8 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/cosmokit": "workspace:^",
-    "@coco-harness/schemastery": "workspace:^",
-    "supports-color": "^9.4.0"
+    "@coco-harness/cosmokit": "link:..\\cosmokit",
+    "@coco-harness/schemastery": "link:..\\schemastery",
+    "supports-color": "^11.0.0"
   }
 }

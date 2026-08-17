@@ -47,14 +47,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "react": "^18.2.0"
+    "react": "^19.2.8"
   },
   "peerDependencies": {
     "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
     "@coco-harness/cch-client-ui-conversation": "workspace:^",
-    "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
+    "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-subagent": "workspace:^",
@@ -66,14 +66,14 @@
     "@coco-harness/cch-client-runtime": "workspace:^",
     "@coco-harness/cch-client-test-runtime": "workspace:^",
     "@coco-harness/cch-client-ui-conversation": "workspace:^",
-    "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
+    "@coco-harness/cch-client-ui-primitives": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-subagent": "workspace:^",
     "@coco-harness/cch-token-meter": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/react": "~19.2.18"
   },
   "files": [
     "lib/index.js",

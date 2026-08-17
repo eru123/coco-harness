@@ -38,23 +38,23 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-loop": "workspace:^",
     "@coco-harness/cch-agent-loop-testkit": "workspace:^",
     "@coco-harness/cch-bash-local": "workspace:^",
-    "@coco-harness/cch-subprocess-local": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-llm-deepseek": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-subagent": "workspace:^",
     "@coco-harness/cch-subagent-in-process-driver": "workspace:^",
+    "@coco-harness/cch-subprocess-local": "workspace:^",
     "@coco-harness/cch-tool-bash": "workspace:^",
     "@coco-harness/cch-tool-subagent": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

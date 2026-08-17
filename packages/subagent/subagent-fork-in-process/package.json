@@ -40,10 +40,9 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-loop": "workspace:^",
     "@coco-harness/cch-agent-loop-testkit": "workspace:^",
@@ -53,6 +52,7 @@
     "@coco-harness/cch-subagent": "workspace:^",
     "@coco-harness/cch-subagent-in-process-driver": "workspace:^",
     "@coco-harness/cch-subagent-spawn-in-process": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

@@ -34,20 +34,21 @@
   "peerDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-jobs": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-subagent": "workspace:^",
     "@coco-harness/cch-system-prompt": "workspace:^",
-    "@coco-harness/cch-jobs": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cch-jobs": "workspace:^",
+    "@coco-harness/cch-jobs-local": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
     "@coco-harness/cch-session-persistence": "workspace:^",
@@ -55,10 +56,9 @@
     "@coco-harness/cch-subagent": "workspace:^",
     "@coco-harness/cch-subagent-spawn-in-process": "workspace:^",
     "@coco-harness/cch-system-prompt": "workspace:^",
-    "@coco-harness/cch-jobs": "workspace:^",
-    "@coco-harness/cch-jobs-local": "workspace:^",
     "@coco-harness/cch-tool-jobs": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

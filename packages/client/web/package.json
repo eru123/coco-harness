@@ -34,23 +34,23 @@
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-client-ui-theme": "workspace:^",
     "@coco-harness/cch-client-web-react": "workspace:^",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
     "@coco-harness/cch-client-test-runtime": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
-    "@types/react-dom": "~18.3.0",
     "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^",
+    "@types/react": "~19.2.18",
+    "@types/react-dom": "~19.2.4",
     "typescript": "^6.0.3"
   },
   "peerDependencies": {
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   },
   "files": [
     "lib/index.js",

@@ -57,9 +57,9 @@
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-client-ui-theme": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
     "@coco-harness/cordis": "workspace:^",
-    "react": "^18.2.0"
+    "@types/react": "~19.2.18",
+    "react": "^19.2.8"
   },
   "files": [
     "lib/index.js",

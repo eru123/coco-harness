@@ -40,13 +40,12 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery",
     "@joplin/turndown-plugin-gfm": "^1.0.67",
-    "@coco-harness/schemastery": "workspace:^",
     "turndown": "^7.2.4"
   },
   "devDependencies": {
     "@coco-harness/cch-agent": "workspace:^",
-    "@types/turndown": "^5.0.6",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
@@ -58,6 +57,7 @@
     "@coco-harness/cch-web": "workspace:^",
     "@coco-harness/cch-web-fetch-http": "workspace:^",
     "@coco-harness/cch-web-search-exa": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@types/turndown": "^5.0.6"
   }
 }

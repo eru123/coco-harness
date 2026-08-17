@@ -33,6 +33,6 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/cosmokit": "workspace:^"
+    "@coco-harness/cosmokit": "link:..\\cosmokit"
   }
 }

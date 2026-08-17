@@ -36,8 +36,8 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cch-brand": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
+    "@coco-harness/cch-brand": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
@@ -45,15 +45,13 @@
     "@coco-harness/cordis": "workspace:^"
   },
   "dependencies": {
-    "@coco-harness/schemastery": "workspace:^"
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "devDependencies": {
-    "@coco-harness/cch-brand": "workspace:^",
-    "@coco-harness/cordis-plugin-include": "workspace:^",
-    "@coco-harness/cordis-plugin-loader": "workspace:^",
     "@coco-harness/cch-agent": "workspace:^",
     "@coco-harness/cch-agent-loop": "workspace:^",
     "@coco-harness/cch-agent-loop-testkit": "workspace:^",
+    "@coco-harness/cch-brand": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-llm-deepseek": "workspace:^",
@@ -64,6 +62,8 @@
     "@coco-harness/cch-system-prompt": "workspace:^",
     "@coco-harness/cch-timeout": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "@coco-harness/cordis": "workspace:^"
+    "@coco-harness/cordis": "workspace:^",
+    "@coco-harness/cordis-plugin-include": "workspace:^",
+    "@coco-harness/cordis-plugin-loader": "workspace:^"
   }
 }

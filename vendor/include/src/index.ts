@@ -6,11 +6,11 @@ import { setTimeout as delay } from 'node:timers/promises'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import * as yaml from 'js-yaml'
 
-const JsExpr = new yaml.Type('tag:yaml.org,2002:js', {
-  kind: 'scalar',
-  resolve: (data) => typeof data === 'string',
-  construct: (data) => ({ __jsExpr: data }),
-  predicate: isJsExpr,
+const JsExpr = yaml.defineScalarTag('tag:yaml.org,2002:js', {
+  // An empty body is not an expression: reject it at parse time (js-yaml 4's
+  // construct path failed these loudly; NOT_RESOLVED keeps that contract).
+  resolve: (source) => (source.trim() === '' ? yaml.NOT_RESOLVED : { __jsExpr: source }),
+  identify: isJsExpr,
   represent: (data) => data['__jsExpr'],
 })
 
@@ -20,7 +20,7 @@ const JsExpr = new yaml.Type('tag:yaml.org,2002:js', {
  * (`cch --dump-config`) parses and prints exactly the dialect this include
  * mounts.
  */
-export const entryListSchema = yaml.JSON_SCHEMA.extend(JsExpr)
+export const entryListSchema = new yaml.Schema([...yaml.JSON_SCHEMA.tags, JsExpr])
 
 const schema = entryListSchema
 

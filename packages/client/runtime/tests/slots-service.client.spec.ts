@@ -7,7 +7,6 @@
  */
 import { Context } from '@coco-harness/cordis'
 import { describe, expect, it, vi } from 'vitest'
-import type { FC } from 'react'
 import type { SlotRendererHost } from '@coco-harness/cch-client-ui-slots'
 import { SlotRegistry } from '../src/client/slots.ts'
 
@@ -20,7 +19,9 @@ declare module '@coco-harness/cch-client-ui-slots' {
   }
 }
 
-const C: FC<object> = () => null
+// React 19's FC return type includes async components (Promise<AwaitedReactNode>),
+// which SlotComponent does not accept; the inferred sync signature does.
+const C = () => null
 
 /**
  * Register/install/renderSlot through a type-erased view: the typed register
@@ -385,7 +386,7 @@ describe('declaration injection', () => {
     }, C)
     const componentA = (): null => null
     const componentB = (): null => null
-    const mount = (name: string, component: FC<object>) => bench.ctx.plugin({
+    const mount = (name: string, component: () => null) => bench.ctx.plugin({
       name,
       inject: ['slots'],
       apply: (ctx: Context) => { ctx.slots.inject('t.host', () => ctx.slots.register({ name: 't.host' }, component)) },

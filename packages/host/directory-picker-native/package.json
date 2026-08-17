@@ -39,7 +39,7 @@
   "dependencies": {
     "@coco-harness/cch-host-directory-picker": "workspace:^",
     "@coco-harness/cch-native-command": "workspace:^",
-    "koffi": "^3.1.0"
+    "koffi": "^3.1.5"
   },
   "peerDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",
@@ -48,6 +48,6 @@
   "devDependencies": {
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cordis": "workspace:^",
-    "tsx": "^4.19.2"
+    "tsx": "^4.23.12"
   }
 }

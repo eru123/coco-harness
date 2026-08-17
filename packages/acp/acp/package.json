@@ -32,8 +32,8 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@agentclientprotocol/sdk": "0.25.1",
-    "@coco-harness/schemastery": "workspace:^"
+    "@agentclientprotocol/sdk": "1.3.0",
+    "@coco-harness/schemastery": "link:..\\..\\..\\vendor\\schemastery"
   },
   "peerDependencies": {
     "@coco-harness/cch-agent": "workspace:^",

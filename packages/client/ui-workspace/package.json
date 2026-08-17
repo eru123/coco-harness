@@ -46,7 +46,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "clsx": "^2.0.0"
+    "clsx": "^2.1.1"
   },
   "peerDependencies": {
     "@coco-harness/cch-client-locale": "workspace:^",
@@ -66,9 +66,9 @@
     "@coco-harness/cch-client-ui-sidebar": "workspace:^",
     "@coco-harness/cch-client-ui-slots": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
-    "@types/react": "~18.3.1",
     "@coco-harness/cordis": "workspace:^",
-    "react": "^18.2.0"
+    "@types/react": "~19.2.18",
+    "react": "^19.2.8"
   },
   "files": [
     "lib/index.js",
