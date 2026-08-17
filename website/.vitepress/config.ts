@@ -3,7 +3,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import type { DefaultTheme, PageData } from 'vitepress'
-import type { ViteDevServer } from 'vite'
+import type { Plugin } from 'vite'
 import { withMermaid } from 'vitepress-plugin-mermaid'
 import { landingLink, orderedPages, routeLink, sectionSpec, type DocsLocale, type DocsPage, type DocsSidebar } from '../docs.ts'
 import { docsSourceFiles, projectDocs } from '../../scripts/project-doc-site.ts'
@@ -102,7 +102,13 @@ function moduleNav(locale: DocsLocale): DefaultTheme.NavItem[] {
   ]
 }
 
-function watchCanonicalDocs(server: ViteDevServer): void {
+/**
+ * The dev server is typed structurally (watcher only) so the hook satisfies
+ * both VitePress's bundled Vite and the workspace's own Vite major.
+ */
+function watchCanonicalDocs(server: {
+  watcher: { add: (files: string[]) => void; on: (event: 'change', listener: (path: string) => void) => void }
+}): void {
   const sources = docsSourceFiles()
   server.watcher.add(sources)
   server.watcher.on('change', (changed) => {
@@ -158,19 +164,6 @@ const wordmark = readFileSync(resolve(import.meta.dirname, '../public/wordmark.s
 const siteStyle = `
 .cch-lockup { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
 .cch-wordmark { display: block; height: 22px; width: auto; color: var(--vp-c-text-1); }
-.cch-tag {
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--vp-c-brand-soft);
-  border-radius: 999px;
-  padding: 1px 9px;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
-  white-space: nowrap;
-  color: var(--vp-c-brand-1);
-}
-
 .VPSidebar::-webkit-scrollbar { width: 6px; }
 .VPSidebar::-webkit-scrollbar-track { background: transparent; }
 .VPSidebar::-webkit-scrollbar-thumb {
@@ -209,19 +202,18 @@ const scrollbarScript = `
 `
 
 /**
- * Navigation-bar title: the Coco Harness wordmark and the release-stage tag.
+ * Navigation-bar title: the Coco Harness wordmark.
  * VitePress renders `siteTitle` as HTML.
  *
- * @param previewTag - Localized release-stage label.
  * @returns Markup placed beside the navigation-bar home link.
  */
-function siteTitle(previewTag: string): string {
-  return `<span class="cch-lockup">${wordmark}<span class="cch-tag">${previewTag}</span></span>`
+function siteTitle(): string {
+  return `<span class="cch-lockup">${wordmark}</span>`
 }
 
 export default withMermaid({
   title: 'Coco Harness',
-  description: 'A pluggable SDK for building agent harnesses',
+  description: "Nothing is baked in. That's the point. — Coco Harness, a pluggable SDK for building agent harnesses",
   base,
   head: [
     // VitePress leaves head hrefs untouched, so the base belongs here explicitly.
@@ -238,7 +230,7 @@ export default withMermaid({
       label: 'English',
       lang: 'en-US',
       themeConfig: {
-        siteTitle: siteTitle('Preview'),
+        siteTitle: siteTitle(),
         nav: [
           { text: 'Guide', link: landingLink('root', guideModules.root.guide), activeMatch: '^/guide/' },
           ...moduleNav('root'),
@@ -255,7 +247,7 @@ export default withMermaid({
       lang: 'en-US',
       link: '/en/',
       themeConfig: {
-        siteTitle: siteTitle('Preview'),
+        siteTitle: siteTitle(),
         nav: [
           { text: 'Guide', link: landingLink('en', guideModules.en.guide), activeMatch: '^/en/guide/' },
           ...moduleNav('en'),
@@ -287,7 +279,7 @@ export default withMermaid({
       {
         name: 'coco-harness-doc-projector',
         configureServer: watchCanonicalDocs,
-      },
+      } satisfies Plugin,
     ],
   },
   markdown: {

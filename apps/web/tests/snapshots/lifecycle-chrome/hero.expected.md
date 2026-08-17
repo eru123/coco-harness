@@ -20,7 +20,7 @@
 - button "Settings":
   - img
   - text: Settings
-- text: Into the Unknown Preview
+- text: "Nothing is baked in. That's the point."
 - button "Choose workspace":
   - img
   - text: workspace

@@ -1,6 +1,7 @@
 {
   "id": "/",
   "name": "Coco Harness",
+  "description": "Nothing is baked in. That's the point.",
   "short_name": "CCH",
   "start_url": "/",
   "scope": "/",
