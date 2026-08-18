@@ -50,8 +50,6 @@ flowchart LR
   cfg --> plugin_cch_base_session_query_sqlite
   plugin_cch_base_session_projection["session-projection<br/>@coco-harness/cch-session-projection"]
   cfg --> plugin_cch_base_session_projection
-  plugin_cch_base_session_telemetry_otel["session-telemetry-otel<br/>@coco-harness/cch-session-telemetry-otel"]
-  cfg --> plugin_cch_base_session_telemetry_otel
   plugin_cch_base_subprocess["subprocess<br/>@coco-harness/cch-subprocess-local"]
   cfg --> plugin_cch_base_subprocess
   plugin_cch_base_sandbox["sandbox<br/>@coco-harness/cch-sandbox-local"]
@@ -150,8 +148,6 @@ flowchart LR
   cfg --> plugin_cch_base_repeat_tool_reminder
   plugin_cch_base_web["web<br/>@coco-harness/cch-web"]
   cfg --> plugin_cch_base_web
-  plugin_cch_base_web_search_deepseek["web-search-deepseek<br/>@coco-harness/cch-web-search-deepseek"]
-  cfg --> plugin_cch_base_web_search_deepseek
   plugin_cch_base_tool_web["tool-web<br/>@coco-harness/cch-tool-web"]
   cfg --> plugin_cch_base_tool_web
   plugin_cch_base_tools["tools<br/>@coco-harness/cch-tools"]
@@ -162,8 +158,6 @@ flowchart LR
   cfg --> plugin_cch_base_agent_loop
   plugin_cch_base_fs_sandbox["fs-sandbox<br/>@coco-harness/cch-fs-sandbox"]
   cfg --> plugin_cch_base_fs_sandbox
-  plugin_cch_base_llm_deepseek["llm-deepseek<br/>@coco-harness/cch-llm-deepseek"]
-  cfg --> plugin_cch_base_llm_deepseek
 ```
 
 | Plugin id | Package / module |
@@ -189,7 +183,6 @@ flowchart LR
 | `attachment-local` | `@coco-harness/cch-attachment-local` |
 | `session-query-sqlite` | `@coco-harness/cch-session-query-sqlite` |
 | `session-projection` | `@coco-harness/cch-session-projection` |
-| `session-telemetry-otel` | `@coco-harness/cch-session-telemetry-otel` |
 | `subprocess` | `@coco-harness/cch-subprocess-local` |
 | `sandbox` | `@coco-harness/cch-sandbox-local` |
 | `sandbox-policy` | `@coco-harness/cch-sandbox-policy` |
@@ -239,13 +232,11 @@ flowchart LR
 | `tool-str-replace-editor` | `@coco-harness/cch-tool-str-replace-editor` |
 | `repeat-tool-reminder` | `@coco-harness/cch-repeat-tool-reminder` |
 | `web` | `@coco-harness/cch-web` |
-| `web-search-deepseek` | `@coco-harness/cch-web-search-deepseek` |
 | `tool-web` | `@coco-harness/cch-tool-web` |
 | `tools` | `@coco-harness/cch-tools` |
 | `system-prompt` | `@coco-harness/cch-system-prompt` |
 | `agent-loop` | `@coco-harness/cch-agent-loop` |
 | `fs-sandbox` | `@coco-harness/cch-fs-sandbox` |
-| `llm-deepseek` | `@coco-harness/cch-llm-deepseek` |
 
 Source config: [`packages/bundle/base/cordis.patch.yml`](../../packages/bundle/base/cordis.patch.yml).
 

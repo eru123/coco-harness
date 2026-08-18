@@ -35,8 +35,6 @@
     "@coco-harness/cch-commands": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
-    "@coco-harness/cch-session-telemetry": "workspace:^",
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   },
   "devDependencies": {
@@ -47,8 +45,6 @@
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-llm": "workspace:^",
     "@coco-harness/cch-session": "workspace:^",
-    "@coco-harness/cch-session-telemetry": "workspace:^",
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cordis": "workspace:^"
   }
 }

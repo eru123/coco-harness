@@ -889,7 +889,7 @@ export interface DeepSeekCatalogModel {
 
 Depends on: [`RetryPolicyConfig`](../packages/llm/llm/src/index.ts)
 
-Source: [`packages/llm/llm-deepseek/src/index.ts:62`](../packages/llm/llm-deepseek/src/index.ts)
+Source: [`packages/llm/llm-deepseek/src/index.ts:61`](../packages/llm/llm-deepseek/src/index.ts)
 
 <a id="coco-harnesscch-llm-pi-ai"></a>
 
@@ -1717,52 +1717,6 @@ export interface Config {
 ```
 
 Source: [`packages/context/session-reference/src/config.ts:11`](../packages/context/session-reference/src/config.ts)
-
-<a id="coco-harnesscch-session-telemetry-otel"></a>
-
-## `@coco-harness/cch-session-telemetry-otel`
-
-Requires: `sessions`
-
-```ts config-catalog
-/**
- * Plugin configuration: one sharing policy, two verbatim SDK option objects,
- * and one CCH-owned shutdown bound. Uploading modes validate their endpoint
- * and shutdown deadline at plugin load; `DISABLED` reads neither.
- */
-export interface Config {
-  /** Sharing policy; defaults to local-only `DISABLED` behavior. */
-  mode?: SessionTelemetryMode
-  /**
-   * Passed verbatim to the SDK's OTLP/HTTP log exporter — the complete
-   * `OTLPExporterNodeConfigBase` shape (`headers`, `timeoutMillis`,
-   * `compression`, `keepAlive`, …), owned and documented by the SDK. `url`
-   * is the one field this package requires and validates itself.
-   */
-  exporter?: OTLPExporterNodeConfigBase & {
-    /** Full logs endpoint (e.g. `https://collector.example.com/v1/logs`). Required outside `DISABLED`; validated at load. */
-    url?: string
-  }
-  /**
-   * Passed verbatim to `BatchLogRecordProcessor` (minus the exporter slot,
-   * which this plugin fills); the SDK owns and documents these knobs.
-   */
-  processor?: Omit<BatchLogRecordProcessorOptions, 'exporter'>
-  /** Maximum time spent awaiting the SDK provider's complete shutdown path. */
-  shutdownTimeoutMillis?: number
-}
-
-/** Session-sharing policy selected by {@link Config.mode}. */
-export enum SessionTelemetryMode {
-  FULL = 'FULL',
-  FEEDBACK_ONLY = 'FEEDBACK_ONLY',
-  DISABLED = 'DISABLED',
-}
-```
-
-Depends on: `BatchLogRecordProcessorOptions` (`@opentelemetry/sdk-logs`) · `OTLPExporterNodeConfigBase` (`@opentelemetry/otlp-exporter-base`)
-
-Source: [`packages/session/session-telemetry-otel/src/index.ts:91`](../packages/session/session-telemetry-otel/src/index.ts)
 
 <a id="coco-harnesscch-session-title"></a>
 
@@ -3118,7 +3072,6 @@ Imported as libraries by other packages; a `cordis.yml` cannot load them.
 
 - `@coco-harness/cch-acp-snapshot` ([`packages/test-support/acp-snapshot/src/index.ts`](../packages/test-support/acp-snapshot/src/index.ts))
 - `@coco-harness/cch-agent-loop-testkit` ([`packages/test-support/agent-loop-testkit/src/index.ts`](../packages/test-support/agent-loop-testkit/src/index.ts))
-- `@coco-harness/cch-anonymous-user-id` ([`packages/identity/anonymous-user-id/src/index.ts`](../packages/identity/anonymous-user-id/src/index.ts))
 - `@coco-harness/cch-app-boot` ([`packages/boot/app-boot/src/index.ts`](../packages/boot/app-boot/src/index.ts))
 - `@coco-harness/cch-atomic-write` ([`packages/util/atomic-write/src/index.ts`](../packages/util/atomic-write/src/index.ts))
 - `@coco-harness/cch-base` ([`packages/bundle/base/src/index.ts`](../packages/bundle/base/src/index.ts))
@@ -3143,7 +3096,6 @@ Imported as libraries by other packages; a `cordis.yml` cannot load them.
 - `@coco-harness/cch-sdk-client` ([`packages/sdk/client/src/index.ts`](../packages/sdk/client/src/index.ts))
 - `@coco-harness/cch-sdk-jsonrpc-demo` ([`packages/examples/jsonrpc-demo/src/index.ts`](../packages/examples/jsonrpc-demo/src/index.ts))
 - `@coco-harness/cch-sdk-protocol` ([`packages/sdk/protocol/src/index.ts`](../packages/sdk/protocol/src/index.ts))
-- `@coco-harness/cch-session-telemetry` ([`packages/session/session-telemetry/src/index.ts`](../packages/session/session-telemetry/src/index.ts))
 - `@coco-harness/cch-session-title-llm` ([`packages/session/session-title-llm/src/index.ts`](../packages/session/session-title-llm/src/index.ts))
 - `@coco-harness/cch-subagent-in-process-driver` ([`packages/subagent/subagent-in-process-driver/src/index.ts`](../packages/subagent/subagent-in-process-driver/src/index.ts))
 - `@coco-harness/cch-timeout` ([`packages/util/timeout/src/index.ts`](../packages/util/timeout/src/index.ts))

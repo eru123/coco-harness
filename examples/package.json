@@ -63,7 +63,6 @@
     "@coco-harness/cch-session-query": "workspace:*",
     "@coco-harness/cch-session-query-sqlite": "workspace:*",
     "@coco-harness/cch-session-reference": "workspace:*",
-    "@coco-harness/cch-session-telemetry-otel": "workspace:*",
     "@coco-harness/cch-session-title": "workspace:*",
     "@coco-harness/cch-session-title-first-prompt-llm": "workspace:*",
     "@coco-harness/cch-settings-file": "workspace:*",

@@ -60,7 +60,7 @@ The plugin also declares its route in the configurable-provider directory (`ctx.
 
 Every request carries the shared attribution header from cch-llm's `attributionHeaders()` - the mandatory `User-Agent` baseline identifying the harness (see [cch-llm § App attribution](../llm/README.md#app-attribution-attributionts)). Direct DeepSeek requests and OpenAI-compatible gateway requests get no provider-specific app-attribution headers under this adapter contract; OpenRouter app attribution is deferred to a future explicit OpenRouter adapter or mode. A request whose `GenerateOptions.purpose` is `compaction` (cch-compaction-basic's auxiliary summarization call) additionally carries `x-coco-harness-compact: 1`, so the host can separate compaction traffic from conversation requests.
 
-DeepSeek request identity is separate from app attribution. After credential resolution, every provider request carries `x-coco-harness-user-id` with the stable anonymous id from [`@coco-harness/cch-anonymous-user-id`](../../identity/anonymous-user-id/README.md); a request carrying `GenerateOptions.sessionId` also sends that exact value as `x-coco-harness-session-id`, while a direct call without a session omits the session header. Both headers go to the resolved `baseURL`, including a configured gateway, and remain outside the request body and model-visible content.
+Provider requests carry no harness identity headers: neither a user id nor a session id is sent, so nothing in the wire traffic can correlate requests back to an install or session. App attribution rides the standard `user-agent` only, and stays outside the request body and model-visible content.
 
 ## Wire-format notes
 

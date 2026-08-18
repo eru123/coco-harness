@@ -189,15 +189,6 @@ const SERVICE_ROLES: ServiceRole[] = [
     note: 'Configuration carries references to secrets; providers own the values. Consumers resolve per operation, so a rotated credential reaches the very next request; the web gateway exposes value-free views and write-only storage.',
   },
   {
-    key: 'sessionTelemetry',
-    pkg: 'session-telemetry',
-    title: 'Session telemetry seam',
-    mode: 'seam',
-    implementations: ['session-telemetry-otel'],
-    consumers: [],
-    note: 'The seam captures, redacts, and hands session records to one backend; nothing else consumes the service — its output leaves the process.',
-  },
-  {
     key: 'storage',
     pkg: 'storage',
     title: 'Non-session storage hub',

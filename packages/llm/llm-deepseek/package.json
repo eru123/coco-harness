@@ -32,7 +32,6 @@
   ],
   "license": "MIT",
   "peerDependencies": {
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cch-credentials": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-launch-environment": "workspace:^",
@@ -46,7 +45,6 @@
     "eventsource-parser": "^4.0.0"
   },
   "devDependencies": {
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cch-credentials": "workspace:^",
     "@coco-harness/cch-invariants": "workspace:^",
     "@coco-harness/cch-launch-environment": "workspace:^",

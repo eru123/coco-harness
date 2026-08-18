@@ -10,7 +10,6 @@
     "@coco-harness/cch-agent-instructions": "workspace:^",
     "@coco-harness/cch-agent-loop": "workspace:^",
     "@coco-harness/cch-agent-spine-demo": "workspace:^",
-    "@coco-harness/cch-anonymous-user-id": "workspace:^",
     "@coco-harness/cch-app-boot": "workspace:^",
     "@coco-harness/cch-attachment": "workspace:^",
     "@coco-harness/cch-bash-local": "workspace:^",

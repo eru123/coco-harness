@@ -21,7 +21,6 @@ import { credentialRef } from '@coco-harness/cch-credentials'
 import LocalCredentialProvider from '@coco-harness/cch-credentials-local'
 import { settingsNamespace } from '@coco-harness/cch-settings'
 import FileSettingsProvider from '@coco-harness/cch-settings-file'
-import { getOrCreateAnonymousUserId } from '@coco-harness/cch-anonymous-user-id'
 import * as LlmDeepSeek from '@coco-harness/cch-llm-deepseek'
 import { assemble } from './assemble.ts'
 import { closeMockServers, mockServer, textEvents } from './mock-server.ts'
@@ -117,7 +116,7 @@ describe('llm-deepseek real dynamic composition', () => {
     expect(ctx.get('settings')!.describe().map(entry => entry.ns)).toEqual([NS])
     await assemble(ctx, { model: 'deepseek-v4-flash', messages: [] })
     expect(serverA.headers[0]?.authorization).toBe('Bearer boot-key')
-    expect(serverA.headers[0]?.['x-coco-harness-user-id']).toBe(getOrCreateAnonymousUserId())
+    expect(serverA.headers[0]).not.toHaveProperty('x-coco-harness-user-id')
 
     // External edits, exactly as a user or the web UI would leave them on disk.
     await writeFile(settingsPath, `llm-deepseek:\n  baseURL: ${serverB.url}\n`)

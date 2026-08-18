@@ -19,7 +19,6 @@ import type {
 } from '@coco-harness/cch-llm'
 import type { CredentialRef } from '@coco-harness/cch-credentials'
 import { idleWatchdog, timeoutOf } from '@coco-harness/cch-timeout'
-import type { AnonymousUserId } from '@coco-harness/cch-anonymous-user-id'
 import { serializeRequest } from './serialize.ts'
 import type { RequestDefaults } from './serialize.ts'
 import { parseSse } from './sse.ts'
@@ -81,8 +80,6 @@ export interface DeepSeekAdapterOptions {
    * `MISSING_CREDENTIAL` when no key is available anywhere.
    */
   resolveApiKey: (connection: DeepSeekConnectionOptions) => Promise<string>
-  /** Resolve the harness-home anonymous id shared with telemetry and feedback. */
-  resolveUserId: () => AnonymousUserId
 }
 
 /** Default maximum idle interval while an adapter stream read is outstanding. */
@@ -219,7 +216,6 @@ export class DeepSeekAdapter extends LlmAdapter {
     // sent to it can never come from different configuration generations.
     const connection = this.config.options()
     const apiKey = await this.config.resolveApiKey(connection)
-    const userId = this.config.resolveUserId()
     const consumer = new AbortController()
     const upstream = options.signal === undefined
       ? consumer.signal
@@ -230,7 +226,6 @@ export class DeepSeekAdapter extends LlmAdapter {
       watchdog.signal,
       connection,
       apiKey,
-      userId,
       () => { watchdog.pulse() },
     )[Symbol.asyncIterator]()
     let exhausted = false
@@ -273,7 +268,6 @@ export class DeepSeekAdapter extends LlmAdapter {
     signal: AbortSignal,
     connection: DeepSeekConnectionOptions,
     apiKey: string,
-    userId: AnonymousUserId,
     onComment: () => void,
   ): AsyncIterable<StreamChunk> {
     const body = serializeRequest(options, connection.defaults)
@@ -285,10 +279,6 @@ export class DeepSeekAdapter extends LlmAdapter {
       'content-type': 'application/json',
       'accept': 'text/event-stream',
       ...attributionHeaders(),
-      'x-coco-harness-user-id': String(userId),
-      ...options.sessionId !== undefined
-        ? { 'x-coco-harness-session-id': String(options.sessionId) }
-        : {},
       ...options.purpose === 'compaction'
         ? { 'x-coco-harness-compact': '1' }
         : {},

@@ -75,7 +75,6 @@
     "@coco-harness/cch-session-persistence-jsonl": "workspace:^",
     "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-session-query-sqlite": "workspace:^",
-    "@coco-harness/cch-session-telemetry-otel": "workspace:^",
     "@coco-harness/cch-session-title": "workspace:^",
     "@coco-harness/cch-session-title-first-prompt-llm": "workspace:^",
     "@coco-harness/cch-settings-file": "workspace:^",

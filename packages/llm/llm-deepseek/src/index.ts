@@ -19,7 +19,6 @@ import { credentialRef } from '@coco-harness/cch-credentials'
 import { launchEnvironmentOf, type LaunchEnvironmentSnapshot } from '@coco-harness/cch-launch-environment'
 import { deepEqualJson, installSettingsSection, settingsNamespace } from '@coco-harness/cch-settings'
 import { MAX_TIMER_DELAY_MS } from '@coco-harness/cch-timeout'
-import { getOrCreateAnonymousUserId, type AnonymousUserId } from '@coco-harness/cch-anonymous-user-id'
 import {
   DEFAULT_CONTEXT_WINDOW,
   DEFAULT_MAX_TOKENS,
@@ -245,9 +244,7 @@ export function apply(ctx: Context, config: Config): void {
     )
   }
 
-  let userId: AnonymousUserId | undefined
-  const resolveUserId = (): AnonymousUserId => userId ??= getOrCreateAnonymousUserId()
-  const adapter = new DeepSeekAdapter({ options, resolveApiKey, resolveUserId })
+  const adapter = new DeepSeekAdapter({ options, resolveApiKey })
   ctx.llm.registerConfigurableProviders([
     { provider: PROVIDER, displayName: 'DeepSeek', settingsNs: NS, settingsPath: [] },
   ])
