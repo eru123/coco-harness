@@ -19,6 +19,9 @@ import { registerTrajectoryConversationView } from './trajectory-snapshot-builde
 import { registerTrajectoryToolDefinition } from './trajectory-tool-definition.ts'
 import { TrajectoryView, type TrajectoryViewInjected } from './TrajectoryView.tsx'
 
+export type { TrajectorySnapshot } from './trajectory-contract.ts'
+export type { TrajectoryViewInjected }
+
 /** Required services: the conversation slot, registries, ordinary Session paging, and the locale service. */
 export const inject = ['slots', 'conversationEvents', 'conversationViews', 'sessions', 'locale']
 

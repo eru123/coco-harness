@@ -60,6 +60,7 @@
     "@coco-harness/cch-client-ui-directory-picker-browse": "workspace:^",
     "@coco-harness/cch-client-ui-directory-picker-native": "workspace:^",
     "@coco-harness/cch-client-ui-goal": "workspace:^",
+    "@coco-harness/cch-client-ui-graphs": "workspace:^",
     "@coco-harness/cch-client-ui-input-trigger": "workspace:^",
     "@coco-harness/cch-client-ui-jobs": "workspace:^",
     "@coco-harness/cch-client-ui-layout": "workspace:^",

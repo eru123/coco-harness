@@ -2994,6 +2994,7 @@ These load from a `cordis.yml` entry with no `config:` block; they declare no co
 - `@coco-harness/cch-client-ui-directory-picker-browse` ([`packages/client/ui-directory-picker-browse/src/index.ts`](../packages/client/ui-directory-picker-browse/src/index.ts))
 - `@coco-harness/cch-client-ui-directory-picker-native` ([`packages/client/ui-directory-picker-native/src/index.ts`](../packages/client/ui-directory-picker-native/src/index.ts))
 - `@coco-harness/cch-client-ui-goal` ([`packages/client/ui-goal/src/index.ts`](../packages/client/ui-goal/src/index.ts))
+- `@coco-harness/cch-client-ui-graphs` ([`packages/client/ui-graphs/src/index.ts`](../packages/client/ui-graphs/src/index.ts))
 - `@coco-harness/cch-client-ui-input-trigger` ([`packages/client/ui-input-trigger/src/index.ts`](../packages/client/ui-input-trigger/src/index.ts))
 - `@coco-harness/cch-client-ui-jobs` ([`packages/client/ui-jobs/src/index.ts`](../packages/client/ui-jobs/src/index.ts))
 - `@coco-harness/cch-client-ui-layout` ([`packages/client/ui-layout/src/index.ts`](../packages/client/ui-layout/src/index.ts))

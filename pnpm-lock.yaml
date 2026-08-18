@@ -1291,6 +1291,9 @@ importers:
       '@coco-harness/cch-client-ui-goal':
         specifier: workspace:^
         version: link:../../client/ui-goal
+      '@coco-harness/cch-client-ui-graphs':
+        specifier: workspace:^
+        version: link:../../client/ui-graphs
       '@coco-harness/cch-client-ui-input-trigger':
         specifier: workspace:^
         version: link:../../client/ui-input-trigger
@@ -2013,6 +2016,49 @@ importers:
       '@types/react':
         specifier: ~19.2.18
         version: 19.2.18
+      react:
+        specifier: ^19.2.8
+        version: 19.2.8
+      react-dom:
+        specifier: ^19.2.8
+        version: 19.2.8(react@19.2.8)
+
+  packages/client/ui-graphs:
+    dependencies:
+      mermaid:
+        specifier: ^11.12.2
+        version: 11.16.1
+    devDependencies:
+      '@coco-harness/cch-client-locale':
+        specifier: workspace:^
+        version: link:../locale
+      '@coco-harness/cch-client-runtime':
+        specifier: workspace:^
+        version: link:../runtime
+      '@coco-harness/cch-client-test-runtime':
+        specifier: workspace:^
+        version: link:../../test-support/client-runtime
+      '@coco-harness/cch-client-ui-conversation':
+        specifier: workspace:^
+        version: link:../ui-conversation
+      '@coco-harness/cch-client-ui-slots':
+        specifier: workspace:^
+        version: link:../ui-slots
+      '@coco-harness/cch-client-ui-trajectory':
+        specifier: workspace:^
+        version: link:../ui-trajectory
+      '@coco-harness/cch-invariants':
+        specifier: workspace:^
+        version: link:../../runtime-diagnostics/invariants
+      '@coco-harness/cordis':
+        specifier: workspace:^
+        version: link:../../../vendor/cordis
+      '@types/react':
+        specifier: ~19.2.18
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: ~19.2.4
+        version: 19.2.4(@types/react@19.2.18)
       react:
         specifier: ^19.2.8
         version: 19.2.8

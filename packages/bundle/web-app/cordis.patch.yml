@@ -273,6 +273,9 @@
     - id: ui-trajectory
       name: '@coco-harness/cch-client-ui-trajectory'
 
+    - id: ui-graphs
+      name: '@coco-harness/cch-client-ui-graphs'
+
 # ── the agent plane moves behind agent presets ─────────────────────────────
 #
 # Every row below composes what ONE agent contributes to the host registries:

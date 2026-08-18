@@ -100,7 +100,7 @@ export function clientBundle(
     const face = buildFace(env?.CCH_BUILD_FACE)
     const client = clientConfig(id, face === undefined
       ? 'src/client/index.ts'
-      : 'lib/types/client/index.js')
+      : 'lib/types/client/index.js', options.client)
     const node = [lib, ...(options.companions ?? [])]
     if (face === 'host') return options.hostPhase === true ? node : [SKIP_WORKSPACE_BUILD]
     if (face === 'client') return options.hostPhase === true ? [client] : [...node, client]
@@ -137,6 +137,8 @@ interface ClientBundleOptions {
   readonly companions?: readonly UserConfig[]
   /** Overrides for the package's primary Node-side library config. */
   readonly lib?: UserConfig
+  /** Overrides for the browser client bundle (output merges one level deep). */
+  readonly client?: UserConfig
 }
 
 type BuildFace = 'host' | 'client' | undefined
@@ -167,7 +169,10 @@ function clientLibraryConfig(
   }
 }
 
-function clientConfig(id: string, entry: string): UserConfig {
+function clientConfig(id: string, entry: string, overrides: UserConfig = {}): UserConfig {
+  const {
+    outputOptions: outputOverrides, ...restOverrides
+  } = overrides
   return {
     name: `${id}/client`,
     entry: { client: entry },
@@ -259,8 +264,10 @@ function clientConfig(id: string, entry: string): UserConfig {
         ].join('\n')
       },
     }],
+    ...restOverrides,
     outputOptions: {
       entryFileNames: 'client.js',
+      ...outputOverrides,
       // The map is served from /plugins/<scoped-package>/client.js.map. The
       // browser resolves its local sources back into URLs that mirror the
       // /packages/<group>/<package>/src directories; sourcesContent keeps them usable

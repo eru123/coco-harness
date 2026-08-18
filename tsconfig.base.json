@@ -212,6 +212,7 @@
       "@coco-harness/cch-client-ui-plan": ["./packages/client/ui-plan/src"],
       "@coco-harness/cch-client-ui-user-questions": ["./packages/client/ui-user-questions/src"],
       "@coco-harness/cch-client-ui-trajectory": ["./packages/client/ui-trajectory/src"],
+    "@coco-harness/cch-client-ui-graphs": ["./packages/client/ui-graphs/src"],
       "@coco-harness/cch-client-ui-workspace": ["./packages/client/ui-workspace/src"],
       "@coco-harness/cch-client-ui-theme": ["./packages/client/ui-theme/src"],
       "@coco-harness/cch-client-ui-settings": ["./packages/client/ui-settings/src"],

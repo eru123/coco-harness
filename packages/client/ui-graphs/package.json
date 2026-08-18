@@ -1,0 +1,82 @@
+{
+  "name": "@coco-harness/cch-client-ui-graphs",
+  "description": "Live mermaid projection of session progress: pure-consumer plugin registering into the conversation ViewMap (no service)",
+  "version": "0.1.0-rc.5",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eru123/coco-harness.git",
+    "directory": "packages/client/ui-graphs"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./invariant": {
+      "types": "./lib/types/invariant.d.ts",
+      "default": "./lib/invariant.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "cch": {
+    "client": {
+      "inject": [
+        "@coco-harness/cch-client-locale",
+        "@coco-harness/cch-client-runtime",
+        "@coco-harness/cch-client-ui-conversation",
+        "@coco-harness/cch-client-ui-trajectory"
+      ],
+      "platform": "web"
+    }
+  },
+  "scripts": {
+    "bundle": "tsdown",
+    "watch": "tsdown --watch"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "mermaid": "^11.12.2"
+  },
+  "peerDependencies": {
+    "@coco-harness/cch-client-locale": "workspace:^",
+    "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-conversation": "workspace:^",
+    "@coco-harness/cch-client-ui-slots": "workspace:^",
+    "@coco-harness/cch-client-ui-trajectory": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@coco-harness/cch-client-locale": "workspace:^",
+    "@coco-harness/cch-client-runtime": "workspace:^",
+    "@coco-harness/cch-client-test-runtime": "workspace:^",
+    "@coco-harness/cch-client-ui-conversation": "workspace:^",
+    "@coco-harness/cch-client-ui-slots": "workspace:^",
+    "@coco-harness/cch-client-ui-trajectory": "workspace:^",
+    "@coco-harness/cch-invariants": "workspace:^",
+    "@coco-harness/cordis": "workspace:^",
+    "@types/react": "~19.2.18",
+    "@types/react-dom": "~19.2.4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/invariant.js",
+    "lib/client.js",
+    "lib/types/**/*.d.ts"
+  ]
+}
