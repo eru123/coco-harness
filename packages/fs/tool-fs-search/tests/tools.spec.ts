@@ -11,6 +11,7 @@
  */
 
 import { describe, expect, it } from 'vitest'
+import { homedir } from 'node:os'
 import { Context } from '@coco-harness/cordis'
 import { join, sep } from 'node:path'
 import { createUserMessage, CallId } from '@coco-harness/cch-llm'
@@ -386,12 +387,12 @@ describe('workdir derivation and signal forwarding', () => {
     expect(subprocess.spawns[0]?.cwd).toBe('/sessions/s1')
   })
 
-  it('defaults the spawn cwd to process.cwd() without a session cwd', async () => {
+  it('works a cwd-less agent session (buddy task) from the user home; an agentless call keeps process.cwd()', async () => {
     const { ctx, subprocess } = await setup()
     subprocess.handler = () => runResult('a.ts\n')
     await call(ctx, 'glob', { pattern: '*' }, { agent: agent() })
-    expect(subprocess.spawns[0]?.cwd).toBe(process.cwd())
-    // A non-agent caller takes the same default.
+    expect(subprocess.spawns[0]?.cwd).toBe(homedir())
+    // A non-agent caller takes the process default.
     await call(ctx, 'grep', { pattern: 'x' })
     expect(subprocess.spawns[1]?.cwd).toBe(process.cwd())
   })

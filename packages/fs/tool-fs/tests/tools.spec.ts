@@ -6,7 +6,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { Context } from '@coco-harness/cordis'
 import { mkdirSync, mkdtempSync, realpathSync, rmSync, symlinkSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { homedir, tmpdir } from 'node:os'
 import { join, resolve, sep } from 'node:path'
 import { CallId } from '@coco-harness/cch-llm'
 import SystemPrompt, { renderPrompt } from '@coco-harness/cch-system-prompt'
@@ -125,9 +125,9 @@ function text(result: { content: { type: string; text?: string }[] }): string {
 }
 
 describe('session cwd resolution', () => {
-  const execution = (cwd?: string) => cwd === undefined
-    ? {}
-    : { agent: { session: { header: { cwd } } } }
+  const execution = (cwd?: string, withAgent = cwd !== undefined) => withAgent
+    ? { agent: { session: { header: cwd === undefined ? {} : { cwd } } } }
+    : {}
 
   it('retains ordinary spelling but resolves the cwd before parent traversal', () => {
     const cwd = process.cwd()
@@ -147,6 +147,11 @@ describe('session cwd resolution', () => {
     } finally {
       rmSync(root, { recursive: true, force: true })
     }
+  })
+
+  it('works a cwd-less agent session from the user home; an agentless call keeps the provider fallback', () => {
+    expect(sessionCwd(execution(undefined, true) as never, 'file.txt')).toBe(homedir())
+    expect(sessionCwd(execution() as never, 'file.txt')).toBeUndefined()
   })
 })
 

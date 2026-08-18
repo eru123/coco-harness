@@ -7,6 +7,7 @@
 
 import { Context, FiberState, Service } from '@coco-harness/cordis'
 import { randomUUID } from 'node:crypto'
+import { homedir } from 'node:os'
 import z from '@coco-harness/schemastery'
 import { emitAgentEvent } from '@coco-harness/cch-agent'
 import type {
@@ -350,7 +351,9 @@ export class AgentLoop extends Service implements AgentFactory {
     ctx.effect(() => ctx.agents.setFactory(this), 'agentLoop.setFactory()')
     ctx.systemPrompt.variable('provider', context => context.agent?.options.provider)
     ctx.systemPrompt.variable('model', context => context.agent?.options.model)
-    ctx.systemPrompt.variable('cwd', context => context.agent?.session.header.cwd)
+    // A cwd-less session (buddy task) works from the user's home directory,
+    // the same identity the shell/fs tool resolvers give it.
+    ctx.systemPrompt.variable('cwd', context => context.agent?.session.header.cwd ?? homedir())
 
     for (const { id, sessionId, cwd, resumeSessionId, ...options } of this.config.agents) {
       const meta = cwd === undefined ? {} : { cwd }

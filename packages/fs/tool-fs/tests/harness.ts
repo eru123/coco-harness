@@ -8,8 +8,9 @@ import * as ToolFs from '@coco-harness/cch-tool-fs'
 import * as LlmDeepSeek from '@coco-harness/cch-llm-deepseek'
 
 /**
- * Build the real fs-tool stack for with-key e2e tests. Agents have no session
- * cwd, so `fsCwd` is their workspace; `persona` configures the deployment prompt.
+ * Build the real fs-tool stack for with-key e2e tests. `fsCwd` is the backend
+ * fallback (agentless calls); state an agent workspace through its session
+ * cwd. `persona` configures the deployment prompt.
  * This helper lives outside the e2e glob so imports do not register tests.
  */
 export async function fsHarness(fsCwd: string, persona = ''): Promise<Context> {

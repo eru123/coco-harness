@@ -19,6 +19,7 @@
  * @module @coco-harness/cch-tool-fs-search/search-core
  */
 
+import { homedir } from 'node:os'
 import { isAbsolute, relative, sep } from 'node:path'
 import type { Context } from '@coco-harness/cordis'
 import { HarnessError } from '@coco-harness/cch-llm'
@@ -176,8 +177,9 @@ export function resolveRgPath(): Promise<string> {
 /**
  * Run the packaged ripgrep binary with a plain argv vector and return its
  * complete raw stdout. The working directory is the calling agent's session
- * cwd (`exec.agent.session.header.cwd`) when available, else
- * `process.cwd()`. `exec.signal` is forwarded so the cooperative tool timeout
+ * cwd (`exec.agent.session.header.cwd`), the user's home directory for a
+ * cwd-less agent session (buddy task), or `process.cwd()` for an agentless
+ * call. `exec.signal` is forwarded so the cooperative tool timeout
  * (`@coco-harness/cch-tool-call-timeout-policy`) and caller cancellation terminate the
  * process tree.
  *
@@ -220,7 +222,8 @@ export async function runRipgrep(
   if (exec.signal.aborted) {
     throw new SearchError(`${toolName} was aborted before completion (tool timeout or caller cancellation)`, 'SEARCH_ABORTED')
   }
-  const cwd = exec.agent?.session.header.cwd
+  const agent = exec.agent
+  const cwd = agent === undefined ? undefined : agent.session.header.cwd ?? homedir()
   const workdir = cwd ?? process.cwd()
   let handle: SubprocessHandle
   try {

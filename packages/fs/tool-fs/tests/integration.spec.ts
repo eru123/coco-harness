@@ -22,8 +22,9 @@ const testToolSignal = new AbortController().signal
 let dir: string
 let ctx: Context
 let fiber: Awaited<ReturnType<Context['plugin']>>
-// No header cwd: sessionCwd returns undefined and the provider's configured test dir applies.
-const session = { header: {} }
+// The session states its workspace through the header cwd (a cwd-less agent
+// session works from the user's home, not the provider's configured dir).
+const session = { header: { cwd: '' } }
 
 let callCounter = 0
 function call(name: string, args: unknown) {
@@ -51,6 +52,7 @@ afterEach(async () => {
 describe('default deployment (with cch-fs-observation-policy)', () => {
   beforeEach(async () => {
     dir = await mkdtemp(join(tmpdir(), 'cch-tool-fs-'))
+    session.header.cwd = dir
     ctx = new Context()
     await ctx.plugin(SystemPrompt)
     await ctx.plugin(ToolRuntime)
@@ -313,6 +315,7 @@ describe('default deployment (with cch-fs-observation-policy)', () => {
 describe('bare provider (no cch-fs-observation-policy)', () => {
   beforeEach(async () => {
     dir = await mkdtemp(join(tmpdir(), 'cch-tool-fs-bare-'))
+    session.header.cwd = dir
     ctx = new Context()
     await ctx.plugin(SystemPrompt)
     await ctx.plugin(ToolRuntime)
@@ -426,6 +429,7 @@ describe('per-session cwd', () => {
 describe('signal, concurrency, and the fs/observed contract', () => {
   beforeEach(async () => {
     dir = await mkdtemp(join(tmpdir(), 'cch-tool-fs-'))
+    session.header.cwd = dir
     ctx = new Context()
     await ctx.plugin(SystemPrompt)
     await ctx.plugin(ToolRuntime)
@@ -434,7 +438,7 @@ describe('signal, concurrency, and the fs/observed contract', () => {
     fiber = await ctx.plugin(ToolFs)
   })
 
-  const session = { header: {} }
+  const session = { header: { cwd: '' } }
   const callSig = (signal: AbortSignal, name: string, args: unknown) =>
     ctx.tools.execute({ callId: CallId(`c-${++callCounter}`), name, arguments: args, agent: { session } as never, signal })
   const callOwned = (name: string, args: unknown) =>

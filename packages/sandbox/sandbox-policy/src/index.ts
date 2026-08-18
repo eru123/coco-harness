@@ -19,6 +19,7 @@
  */
 
 import { resolve as resolvePath } from 'node:path'
+import { homedir } from 'node:os'
 import { Context, Service } from '@coco-harness/cordis'
 import z from '@coco-harness/schemastery'
 import type {} from '@coco-harness/cch-agent'
@@ -68,8 +69,9 @@ export interface Config {
   /** File-sandbox mode a session starts from (default: `read-only`). */
   mode?: SandboxMode
   /**
-   * Fallback root for agentless calls and sessions without a cwd (default:
-   * `process.cwd()`). Normal agent calls use their session cwd instead.
+   * Fallback root for agentless calls (default: `process.cwd()`). Normal agent
+   * calls use their session cwd instead; a cwd-less session (buddy task) uses
+   * the user's home directory.
    */
   workspaceRoot?: string
 }
@@ -99,7 +101,7 @@ export class SandboxPolicyService extends Service {
 
   /** The deployment default mode — the fallback beneath a session override. */
   readonly defaultMode: SandboxMode
-  /** The absolute `workspace-write` fallback root for calls without a session cwd. */
+  /** The absolute `workspace-write` fallback root for agentless calls. */
   readonly workspaceRoot: string
   constructor(ctx: Context, config: Config) {
     super(ctx, 'sandboxPolicy')
@@ -126,9 +128,9 @@ export class SandboxPolicyService extends Service {
   /**
    * Resolve the complete policy for one capability call. An approved explicit
    * mode outranks the session's last `sandbox/mode` event, which outranks the
-   * deployment default. A session cwd is its workspace-write boundary; the
-   * configured root is the fallback for agentless calls and sessions without a
-   * cwd.
+   * deployment default. A session cwd is its workspace-write boundary; a
+   * cwd-less session (buddy task) works from the user's home directory; the
+   * configured root is the fallback for agentless calls.
    * @param request - optional session and approved mode override.
    * @returns the fully resolved per-call mode and absolute workspace root.
    */
@@ -136,7 +138,9 @@ export class SandboxPolicyService extends Service {
     const { session } = request
     return {
       mode: request.mode ?? (session === undefined ? undefined : this.overrideOf(session)) ?? this.defaultMode,
-      workspaceRoot: resolveWorkspaceRoot(session?.header.cwd ?? this.workspaceRoot),
+      workspaceRoot: resolveWorkspaceRoot(session === undefined
+        ? this.workspaceRoot
+        : session.header.cwd ?? homedir()),
       ...session === undefined ? {} : { sessionId: session.id },
     }
   }

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { homedir } from 'node:os'
 import { Context } from '@coco-harness/cordis'
 import LlmRuntime, { createUserMessage, CallId, LlmError, StreamChunk  } from '@coco-harness/cch-llm'
 import SessionStore, { SessionId, TurnEndReason } from '@coco-harness/cch-session'
@@ -273,9 +274,12 @@ describe('agent loop', () => {
   })
 
   it('contains a strict-variable render failure: the turn errors, the loop keeps serving turns', async () => {
-    // A missing cwd variable must fail one turn without preventing a later valid turn.
+    // A valueless variable must fail one turn without preventing a later valid
+    // turn. {{unset}} is registered but never carries a value — unlike
+    // {{cwd}}, which defaults a cwd-less session to the user's home.
     const adapter = new MockAdapter([textResponse('ok after rescue')])
-    const ctx = await harness(adapter, 'In {{cwd}}.')
+    const ctx = await harness(adapter, 'In {{unset}}.')
+    ctx.systemPrompt.variable('unset', () => undefined)
     const errors: Error[] = []
     ctx.on('agent/error', ({ error }) => {
       if (error instanceof Error) errors.push(error)
@@ -287,7 +291,7 @@ describe('agent loop', () => {
 
     expect(adapter.requests).toHaveLength(0) // the request was never sent
     expect(errors.map(error => error.message)).toEqual([
-      'prompt variable "{{cwd}}" has no value for this assembly (section "deployment:persona")',
+      'prompt variable "{{unset}}" has no value for this assembly (section "deployment:persona")',
     ])
     const turnEnd = agent.session.events.find(e => e.type === 'turn/end')
     expect(turnEnd?.type === 'turn/end' && turnEnd.data.reason.kind).toBe('error')
@@ -295,10 +299,10 @@ describe('agent loop', () => {
       ? turnEnd.data.reason.error.message
       : '').toContain('no value for this assembly')
 
-    // The loop survived: a waterfall listener rescues {{cwd}} and the SAME
+    // The loop survived: a waterfall listener rescues {{unset}} and the SAME
     // agent completes a real model turn.
     ctx.on('system-prompt/assemble', async (assembly, _context, next) => {
-      assembly.variables['cwd'] = '/rescued'
+      assembly.variables['unset'] = '/rescued'
       return next()
     })
     send(agent, 'again')
@@ -309,6 +313,17 @@ describe('agent loop', () => {
     const turnEnds = agent.session.events.filter(e => e.type === 'turn/end')
     expect(turnEnds).toHaveLength(2)
     expect(turnEnds[1]?.type === 'turn/end' && turnEnds[1].data.reason.kind).toBe('completed')
+  })
+
+  it('defaults {{cwd}} to the user home for a cwd-less session (buddy task)', async () => {
+    const adapter = new MockAdapter([textResponse('ok')])
+    const ctx = await harness(adapter, 'Working in {{cwd}}.')
+    const agent = ctx.agentLoop.create(SessionId('a2'), { provider: 'mock', model: 'mock' })
+
+    send(agent, 'hi')
+    await waitForIdle(ctx, agent)
+
+    expect(adapter.requests[0]!.system).toBe(`You are an AI agent powered by Coco Harness.\n\nWorking in ${homedir()}.`)
   })
 
   it('supports the model-via-agent/request path with a {{model}} persona: the supplier states it via the assemble waterfall', async () => {

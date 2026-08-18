@@ -11,6 +11,7 @@
 import type { Context } from '@coco-harness/cordis'
 import z from '@coco-harness/schemastery'
 import { isAbsolute, resolve as resolvePath } from 'node:path'
+import { homedir } from 'node:os'
 import { defineTool, TOOL_ABORTED } from '@coco-harness/cch-tools'
 import type { GenericCallView, TerminalCallView, ToolExecution, ToolResult, ToolResultView } from '@coco-harness/cch-tools'
 import { HarnessError } from '@coco-harness/cch-llm'
@@ -138,16 +139,20 @@ function presentBashResult(args: unknown, result: ToolResult): ToolResultView | 
 /**
  * Resolve an explicit workdir first, making a relative one session-workspace-relative;
  * otherwise use the filesystem identity of the session cwd and leave executor
- * defaulting as the fallback. A resolved sandbox-policy root wins so workdir
- * and confinement use the exact same per-call identity.
+ * defaulting as the fallback for agentless calls. A cwd-less agent session
+ * (buddy task) works from the user's home directory. A resolved sandbox-policy
+ * root wins so workdir and confinement use the exact same per-call identity.
  */
 function resolveWorkdir(
   modelWorkdir: string | undefined,
   exec: { agent?: Agent },
   policyWorkspaceRoot?: string,
 ): string | undefined {
-  const headerCwd = exec.agent?.session.header.cwd
-  const sessionCwd = policyWorkspaceRoot ?? (headerCwd === undefined ? undefined : canonicalPath(headerCwd))
+  const agent = exec.agent
+  const headerCwd = agent?.session.header.cwd
+  const sessionCwd = policyWorkspaceRoot ?? (agent === undefined
+    ? (headerCwd === undefined ? undefined : canonicalPath(headerCwd))
+    : canonicalPath(headerCwd ?? homedir()))
   if (modelWorkdir === undefined) return sessionCwd
   if (sessionCwd !== undefined && !isAbsolute(modelWorkdir)) {
     return resolvePath(sessionCwd, modelWorkdir)

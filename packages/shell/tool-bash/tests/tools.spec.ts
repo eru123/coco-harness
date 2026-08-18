@@ -1,5 +1,5 @@
-import { mkdtempSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { mkdtempSync, realpathSync } from 'node:fs'
+import { homedir, tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { describe, expect, it, vi } from 'vitest'
 import { Context } from '@coco-harness/cordis'
@@ -296,6 +296,13 @@ describe('bash tool', () => {
     const ctx = await setup()
     const result = await call(ctx, 'bash', { command: 'pwd', description: 'test command', workdir: '/tmp' })
     expect(text(result).trim()).toMatch(/\/tmp$/)
+  })
+
+  it('works a cwd-less agent session (buddy task) from the user home', async () => {
+    const ctx = await setup()
+    const agent = registerFakeAgent(ctx, 'bash-no-cwd')
+    const result = await call(ctx, 'bash', { command: 'pwd', description: 'test command' }, agent)
+    expect(text(result).trim()).toBe(realpathSync.native(homedir()))
   })
 
   it('surfaces spawn failures as isError', async () => {

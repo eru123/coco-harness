@@ -162,7 +162,7 @@ export interface Config {
 
 Depends on: [`AgentOptions`](subsystems/core.md) · [`SessionId`](subsystems/core.md)
 
-Source: [`packages/core/agent-loop/src/index.ts:255`](../packages/core/agent-loop/src/index.ts)
+Source: [`packages/core/agent-loop/src/index.ts:256`](../packages/core/agent-loop/src/index.ts)
 
 <a id="coco-harnesscch-agent-presets"></a>
 
@@ -1510,8 +1510,9 @@ export interface Config {
   /** File-sandbox mode a session starts from (default: `read-only`). */
   mode?: SandboxMode
   /**
-   * Fallback root for agentless calls and sessions without a cwd (default:
-   * `process.cwd()`). Normal agent calls use their session cwd instead.
+   * Fallback root for agentless calls (default: `process.cwd()`). Normal agent
+   * calls use their session cwd instead; a cwd-less session (buddy task) uses
+   * the user's home directory.
    */
   workspaceRoot?: string
 }
@@ -1519,7 +1520,7 @@ export interface Config {
 
 Depends on: [`SandboxMode`](subsystems/sandbox.md)
 
-Source: [`packages/sandbox/sandbox-policy/src/index.ts:67`](../packages/sandbox/sandbox-policy/src/index.ts)
+Source: [`packages/sandbox/sandbox-policy/src/index.ts:68`](../packages/sandbox/sandbox-policy/src/index.ts)
 
 <a id="coco-harnesscch-sdk-jsonrpc-server"></a>
 
@@ -2303,7 +2304,7 @@ export interface Config {
 }
 ```
 
-Source: [`packages/shell/tool-bash/src/index.ts:34`](../packages/shell/tool-bash/src/index.ts)
+Source: [`packages/shell/tool-bash/src/index.ts:35`](../packages/shell/tool-bash/src/index.ts)
 
 <a id="coco-harnesscch-tool-bash-persistent"></a>
 

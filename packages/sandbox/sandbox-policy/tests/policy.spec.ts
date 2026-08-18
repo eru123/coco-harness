@@ -5,7 +5,7 @@
  */
 
 import { mkdirSync, mkdtempSync, realpathSync, rmSync, symlinkSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { homedir, tmpdir } from 'node:os'
 import { join, resolve, sep } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { Context } from '@coco-harness/cordis'
@@ -118,9 +118,10 @@ describe('SandboxPolicyService', () => {
     })
   })
 
-  it('uses the configured root when a session has no cwd', async () => {
+  it('works a cwd-less session (buddy task) from the user home, keeping the configured root for agentless calls', async () => {
     const ctx = await mounted({ workspaceRoot: '/fallback' })
-    expect(ctx.sandboxPolicy.resolve({ session: session('sess-no-cwd') }).workspaceRoot).toBe(resolve('/fallback'))
+    expect(ctx.sandboxPolicy.resolve({ session: session('sess-no-cwd') }).workspaceRoot).toBe(homedir())
+    expect(ctx.sandboxPolicy.resolve().workspaceRoot).toBe(resolve('/fallback'))
   })
 
   it('rejects a mode outside the closed vocabulary at load', async () => {
