@@ -153,16 +153,16 @@ function requestText(request: GenerateOptions): string {
 
 describe('durable step context', () => {
   it('records turn, step, zoned time, and the preceding model-visible message baseline', async () => {
-    const { ctx } = await mount({ timeZone: 'Asia/Shanghai' })
+    const { ctx } = await mount({ timeZone: 'Asia/Manila' })
     const session = Session.create(SessionId('first'))
-    openMessageTurn(session, 1, 'Asia/Shanghai')
+    openMessageTurn(session, 1, 'Asia/Manila')
     vi.setSystemTime(BASE + 90_061_000)
 
     await fire(ctx, sessionAgent(session), 1, 1)
 
     expect(contextTexts(session)).toEqual([
-      'Time sampled while preparing turn 1, step 1: 2026-07-15T09:01:01+08:00[Asia/Shanghai]\n'
-      + 'Browser time zone for this request: Asia/Shanghai. Interpret otherwise-unqualified dates and times in this zone.\n'
+      'Time sampled while preparing turn 1, step 1: 2026-07-15T09:01:01+08:00[Asia/Manila]\n'
+      + 'Browser time zone for this request: Asia/Manila. Interpret otherwise-unqualified dates and times in this zone.\n'
       + 'Elapsed since the preceding model-visible message: 1d 1h 1m 1s.',
     ])
     const event = session.events.at(-1)
@@ -177,8 +177,8 @@ describe('durable step context', () => {
       form: 'snapshot',
       sections: [{
         name: 'time-context',
-        text: 'Time sampled while preparing turn 1, step 1: 2026-07-15T09:01:01+08:00[Asia/Shanghai]\n'
-          + 'Browser time zone for this request: Asia/Shanghai. Interpret otherwise-unqualified dates and times in this zone.\n'
+        text: 'Time sampled while preparing turn 1, step 1: 2026-07-15T09:01:01+08:00[Asia/Manila]\n'
+          + 'Browser time zone for this request: Asia/Manila. Interpret otherwise-unqualified dates and times in this zone.\n'
           + 'Elapsed since the preceding model-visible message: 1d 1h 1m 1s.',
       }],
     })
@@ -229,7 +229,7 @@ describe('durable step context', () => {
     )
 
     const mixed = Session.create(SessionId('browser-zone-mixed'))
-    openMessageTurn(mixed, 1, 'Asia/Shanghai')
+    openMessageTurn(mixed, 1, 'Asia/Manila')
     mixed.append('user/message', createUserMessage({
       content: [{ type: 'text', text: 'steering from another browser' }],
       source: {
@@ -241,7 +241,7 @@ describe('durable step context', () => {
     await fire(ctx, sessionAgent(mixed), 1, 1)
     expect(contextTexts(mixed)[0]).toContain(
       '2026-07-14T00:00:00+00:00[UTC]\n'
-      + 'Browser time zone for this request: mixed ["America/New_York","Asia/Shanghai"]. '
+      + 'Browser time zone for this request: mixed ["America/New_York","Asia/Manila"]. '
       + 'Ask the user to clarify otherwise-unqualified dates and times.',
     )
   })
@@ -360,7 +360,7 @@ describe('durable step context', () => {
 
 describe('configuration and lifecycle', () => {
   it('defaults to the process system zone and retains the zone resolved at plugin load', async () => {
-    process.env['TZ'] = 'Asia/Shanghai'
+    process.env['TZ'] = 'Asia/Manila'
     const { ctx } = await mount()
     process.env['TZ'] = 'America/New_York'
     const session = Session.create(SessionId('system-zone'))
@@ -368,7 +368,7 @@ describe('configuration and lifecycle', () => {
 
     await fire(ctx, sessionAgent(session), 1, 1)
 
-    expect(contextTexts(session)[0]).toContain('2026-07-14T08:00:00+08:00[Asia/Shanghai]')
+    expect(contextTexts(session)[0]).toContain('2026-07-14T08:00:00+08:00[Asia/Manila]')
   })
 
   it('fails loud for an invalid explicit zone or an unavailable process zone', async () => {

@@ -22,7 +22,7 @@ Internal inference cost is not the limiting constraint, so the workflow optimize
 
 ### Triggers: trusted events only
 
-`workflow_dispatch` + `push` to `main`/`master` + nightly `schedule` (`17 0 * * *`, 08:17 Asia/Shanghai) + `pull_request`. Push gives a post-merge signal; schedule catches external-API drift; dispatch is the manual escape hatch; and trusted pull requests get a pre-merge gate. That pre-merge signal deliberately accepts the larger key-exposure surface described under § Security.
+`workflow_dispatch` + `push` to `main`/`master` + nightly `schedule` (`17 0 * * *`, 08:17 Asia/Manila) + `pull_request`. Push gives a post-merge signal; schedule catches external-API drift; dispatch is the manual escape hatch; and trusted pull requests get a pre-merge gate. That pre-merge signal deliberately accepts the larger key-exposure surface described under § Security.
 
 ### The untrusted-PR gate
 

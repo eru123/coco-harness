@@ -222,7 +222,7 @@ describe('Schedule tool protocol', () => {
     })
     expect(value(await execute(test, 'schedule_create', {
       prompt: 'local meeting',
-      at: { date: '2026-08-07', time: '09:30:00', time_zone: 'Asia/Shanghai' },
+      at: { date: '2026-08-07', time: '09:30:00', time_zone: 'Asia/Manila' },
     }))).toMatchObject({
       id: 'schedule-2',
       kind: 'at',

@@ -9,7 +9,7 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "0 4 * * *"
-      timezone: "Asia/Shanghai"
+      timezone: "Asia/Manila"
     cooldown:
       default-days: 30
     labels:
@@ -21,7 +21,7 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "0 4 * * *"
-      timezone: "Asia/Shanghai"
+      timezone: "Asia/Manila"
     cooldown:
       default-days: 30
     labels:
@@ -33,7 +33,7 @@ updates:
     schedule:
       interval: "cron"
       cronjob: "0 4 * * *"
-      timezone: "Asia/Shanghai"
+      timezone: "Asia/Manila"
     cooldown:
       default-days: 30
     labels:

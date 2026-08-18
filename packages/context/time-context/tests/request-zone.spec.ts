@@ -21,15 +21,15 @@ describe('browser request-zone context', () => {
     })
     expect(deriveBrowserTimeZoneContext([plugin])).toEqual({ kind: 'missing' })
     expect(deriveBrowserTimeZoneContext([
-      browserMessage('Asia/Shanghai'),
-      browserMessage('Asia/Shanghai'),
-    ])).toEqual({ kind: 'resolved', timeZone: 'Asia/Shanghai' })
+      browserMessage('Asia/Manila'),
+      browserMessage('Asia/Manila'),
+    ])).toEqual({ kind: 'resolved', timeZone: 'Asia/Manila' })
     expect(deriveBrowserTimeZoneContext([
-      browserMessage('Asia/Shanghai'),
+      browserMessage('Asia/Manila'),
       browserMessage('America/New_York'),
     ])).toEqual({
       kind: 'mixed',
-      timeZones: ['America/New_York', 'Asia/Shanghai'],
+      timeZones: ['America/New_York', 'Asia/Manila'],
     })
   })
 
@@ -38,7 +38,7 @@ describe('browser request-zone context', () => {
       browserMessage('+08:00'),
     ])).toThrow(/canonical UTC or IANA Area\/Location/)
     expect(() => deriveBrowserTimeZoneContext([
-      browserMessage('Asia/Shanghai'),
+      browserMessage('Asia/Manila'),
       browserMessage('Not/A_Real_Zone'),
     ])).toThrow(/browser time zone is unsupported/)
     expect(() => deriveBrowserTimeZoneContext([
@@ -47,11 +47,11 @@ describe('browser request-zone context', () => {
   })
 
   it('renders one explicit model policy for every context', () => {
-    expect(renderBrowserTimeZoneContext({ kind: 'resolved', timeZone: 'Asia/Shanghai' }))
+    expect(renderBrowserTimeZoneContext({ kind: 'resolved', timeZone: 'Asia/Manila' }))
       .toContain('Interpret otherwise-unqualified dates and times in this zone.')
     expect(renderBrowserTimeZoneContext({
-      kind: 'mixed', timeZones: ['America/New_York', 'Asia/Shanghai'],
-    })).toContain('mixed ["America/New_York","Asia/Shanghai"]')
+      kind: 'mixed', timeZones: ['America/New_York', 'Asia/Manila'],
+    })).toContain('mixed ["America/New_York","Asia/Manila"]')
     expect(renderBrowserTimeZoneContext({ kind: 'missing' })).toContain('unavailable')
   })
 })

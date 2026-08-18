@@ -37,11 +37,11 @@ describe('time-context through a real headless cordis.yml', () => {
       libBinScript: driver,
       configPath,
       tsconfigPath: repoTsconfig,
-      env: { TZ: 'Asia/Shanghai' },
+      env: { TZ: 'Asia/Manila' },
       inspect: async (cwd) => {
         const logs = await jsonlFiles(join(cwd, '.sessions'))
         expect(logs).toHaveLength(1)
-        const lines = (await readFile(logs[0] as string, 'utf8')).trimEnd().split('\n')
+        const lines = (await readFile(logs[0] as string, 'utf8')).trimEnd().split('[Asia/Manila]')
         events = lines.slice(1).map(line => JSON.parse(line) as SessionEvent)
       },
     })
@@ -68,9 +68,9 @@ describe('time-context through a real headless cordis.yml', () => {
     const contextText = contexts.map(event => event.data.content
       .filter(block => block.type === 'text')
       .map(block => block.text)
-      .join('\n'))
+      .join('[Asia/Manila]'))
     expect(contextText[0]).toMatch(
-      /Time sampled while preparing turn 1, step 1: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+08:00\[Asia\/Shanghai\]/,
+      /Time sampled while preparing turn 1, step 1: \d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+08:00\[Asia\/Manila\]/,
     )
     expect(contextText[0]).toContain('Elapsed since the preceding model-visible message: unavailable.')
     expect(contextText[1]).toMatch(/Time sampled while preparing turn 2, step 1:/)

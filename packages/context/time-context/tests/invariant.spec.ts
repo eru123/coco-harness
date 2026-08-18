@@ -103,22 +103,22 @@ describe('time-context invariants', () => {
 
   it('requires browser-zone policy and timestamp to match current-turn request provenance', async () => {
     const ctx = await setup()
-    const policy = 'Browser time zone for this request: Asia/Shanghai. '
+    const policy = 'Browser time zone for this request: Asia/Manila. '
       + 'Interpret otherwise-unqualified dates and times in this zone.'
     expect(() => {
-      ctx.emit('session/event', preparing(1, 1, 'Asia/Shanghai'), event(reading(
+      ctx.emit('session/event', preparing(1, 1, 'Asia/Manila'), event(reading(
         '1',
         '1',
         'model-visible message',
-        '2026-07-14T08:00:00+08:00[Asia/Shanghai]',
+        '2026-07-14T08:00:00+08:00[Asia/Manila]',
         policy,
       ), SECOND + 456))
     }).not.toThrow()
     expect(() => {
-      ctx.emit('session/event', preparing(1, 1, 'Asia/Shanghai'), event(reading()))
+      ctx.emit('session/event', preparing(1, 1, 'Asia/Manila'), event(reading()))
     }).toThrow(/browser-zone text/)
     expect(() => {
-      ctx.emit('session/event', preparing(1, 1, 'Asia/Shanghai'), event(reading(
+      ctx.emit('session/event', preparing(1, 1, 'Asia/Manila'), event(reading(
         '1',
         '1',
         'model-visible message',
@@ -130,17 +130,17 @@ describe('time-context invariants', () => {
 
   it('reports browser-zone timestamp formatter failures as invariant violations', async () => {
     const ctx = await setup()
-    const policy = 'Browser time zone for this request: Asia/Shanghai. '
+    const policy = 'Browser time zone for this request: Asia/Manila. '
       + 'Interpret otherwise-unqualified dates and times in this zone.'
     const formatToParts = vi.spyOn(Intl.DateTimeFormat.prototype, 'formatToParts')
       .mockImplementationOnce(() => { throw new RangeError('formatter unavailable') })
     try {
       expect(() => {
-        ctx.emit('session/event', preparing(1, 1, 'Asia/Shanghai'), event(reading(
+        ctx.emit('session/event', preparing(1, 1, 'Asia/Manila'), event(reading(
           '1',
           '1',
           'model-visible message',
-          '2026-07-14T08:00:00+08:00[Asia/Shanghai]',
+          '2026-07-14T08:00:00+08:00[Asia/Manila]',
           policy,
         )))
       }).toThrow(/browser zone cannot format its durable timestamp: RangeError: formatter unavailable/)
@@ -167,7 +167,7 @@ describe('time-context invariants', () => {
 
   it('rejects one corrupt zone even when another zone would classify the turn as mixed', async () => {
     const ctx = await setup()
-    const session = preparing(1, 1, 'Asia/Shanghai')
+    const session = preparing(1, 1, 'Asia/Manila')
     session.append('user/message', createUserMessage({
       content: [{ type: 'text', text: 'second browser prompt' }],
       source: {
@@ -182,7 +182,7 @@ describe('time-context invariants', () => {
         '1',
         'model-visible message',
         '2026-07-14T00:00:00+00:00[UTC]',
-        'Browser time zone for this request: mixed ["Asia/Shanghai","Not/A_Real_Zone"]. '
+        'Browser time zone for this request: mixed ["Asia/Manila","Not/A_Real_Zone"]. '
         + 'Ask the user to clarify otherwise-unqualified dates and times.',
       )))
     }).toThrow(/browser time zone is unsupported/)

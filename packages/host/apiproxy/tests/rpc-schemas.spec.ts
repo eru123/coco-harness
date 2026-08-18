@@ -258,10 +258,10 @@ describe('sessions domain schemas', () => {
       sessionId: 's1',
       mode: 'queue',
       content: [{ type: 'text', text: 'hi' }],
-      clientTimeZone: 'Asia/Shanghai',
+      clientTimeZone: 'Asia/Manila',
     })
     expect(prompt.mode).toBe('queue')
-    expect(prompt.clientTimeZone).toBe('Asia/Shanghai')
+    expect(prompt.clientTimeZone).toBe('Asia/Manila')
     expect(sessionPromptRequestSchema.parse({
       sessionId: 's1', mode: 'queue', content: [],
     }).clientTimeZone).toBeUndefined()
@@ -297,8 +297,8 @@ describe('subagent domain schemas', () => {
       childSessionId: 'child',
       mode: 'continuable',
       content: [{ type: 'text', text: 'continue' }],
-      clientTimeZone: 'Asia/Shanghai',
-    }).clientTimeZone).toBe('Asia/Shanghai')
+      clientTimeZone: 'Asia/Manila',
+    }).clientTimeZone).toBe('Asia/Manila')
     expect(subagentPromptRequestSchema.parse({
       parentSessionId: 'parent',
       childSessionId: 'child',

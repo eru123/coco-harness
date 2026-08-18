@@ -409,7 +409,7 @@ describe('absolute record and time-zone resolution', () => {
 
   it('resolves explicit local time, rejects a DST gap, and chooses the first overlap instant', () => {
     expect(createAtScheduleRecord(ScheduleId('shanghai'), 'x', {
-      date: '2026-08-06', time: '09:00:00.25', time_zone: 'Asia/Shanghai',
+      date: '2026-08-06', time: '09:00:00.25', time_zone: 'Asia/Manila',
     }, now).scheduledAt).toBe('2026-08-06T01:00:00.250Z')
     expect(createAtScheduleRecord(ScheduleId('utc'), 'x', {
       date: '2026-08-06', time: '09:00:00', time_zone: 'UTC',
