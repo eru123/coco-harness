@@ -90,6 +90,8 @@ function mount(
     overlayTakeover?: boolean
     /** The session list summary's `blank` flag — independent of the snapshot's. */
     summaryBlank?: boolean
+    /** Omit the summary's cwd: a workspace-less Buddy (Tasks) session. */
+    buddy?: boolean
     /** Drop the session's summary row entirely (a session the list has not caught up with). */
     omitSummaryRow?: boolean
     /** Classify the selected child as a subagent instead of an ordinary fork. */
@@ -103,7 +105,8 @@ function mount(
   const root = sid('root')
   const rootRow = { id: root, displayTitle: 'Root', running: false, blank: false, updatedAt: 1 }
   const childRow = {
-    id: SID, displayTitle: 'Child', parentId: root, cwd: '/projects/one',
+    id: SID, displayTitle: 'Child', parentId: root,
+    ...(options.buddy === true ? {} : { cwd: '/projects/one' }),
     running: false, blank: options.summaryBlank ?? false, updatedAt: 2,
     ...(options.summaryOrigin === undefined ? {} : { origin: options.summaryOrigin }),
   }
@@ -124,6 +127,7 @@ function mount(
   const inputActions = wiring.actions
   const stop = vi.fn()
   const open = vi.fn()
+  const startBuddySession = vi.fn()
   const slotCalls: string[] = []
   const viewTabs = options.viewTabs ?? [
     { id: 'chat', label: 'Chat' },
@@ -246,12 +250,12 @@ function mount(
     renderSlot,
     renderSlotChain,
     selectWorkspace: retargetWorkspace,
-    startBuddySession: vi.fn(),
+    startBuddySession,
     t,
   }
   const view = render(<ConversationRoot {...props} />)
   return {
-    view, chat, sink, retargetWorkspace, session, slotCalls, seatOwners, open,
+    view, chat, sink, retargetWorkspace, session, slotCalls, seatOwners, open, startBuddySession,
     pickerOwner: () => pickerOwner,
     rerender: () => { view.rerender(<ConversationRoot {...props} />) },
   }
@@ -378,6 +382,32 @@ describe('ConversationRoot resident composer', () => {
     act(() => { owner.onPick(wid('second')) })
     expect(b.retargetWorkspace).toHaveBeenCalledWith(wid('second'))
     expect(b.view.getByText('Selected Folder')).toBeTruthy()
+  })
+
+  it('hero row: the New task entry trails the chip family and starts a Buddy session', () => {
+    const b = mount(conversationSnapshot({ composerPhase: 'blank', blank: true }))
+    const entry = b.view.getByRole('button', { name: 'New task' })
+    // The workspace chip keeps the row's tuned leading position; the entry
+    // joins the family after it.
+    const chip = b.view.getByRole('button', { name: 'Choose workspace' })
+    expect(chip.compareDocumentPosition(entry) & Node.DOCUMENT_POSITION_FOLLOWING)
+      .toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+    fireEvent.click(entry)
+    expect(b.startBuddySession).toHaveBeenCalledTimes(1)
+  })
+
+  it('buddy hero: the chip reads Tasks, no New task entry, composer live', () => {
+    const b = mount(
+      conversationSnapshot({ composerPhase: 'blank', blank: true }),
+      [workspace('one')],
+      undefined,
+      { buddy: true },
+    )
+    expect(b.view.getByText('Tasks')).toBeTruthy()
+    expect(b.view.queryByRole('button', { name: 'New task' })).toBeNull()
+    const box = b.view.getByRole('textbox') as HTMLTextAreaElement
+    expect(box.disabled).toBe(false)
+    expect(box.getAttribute('placeholder')).toBe('Describe what you want to build')
   })
 
   it('settling phase: a summary that does not prove the session blank hides the composer while it opens', () => {

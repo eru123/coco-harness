@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
 import type { WorkspaceId } from '@coco-harness/cch-client-runtime/client'
 import type { ConversationSlotProps, InputZone } from '../contract/slots.ts'
+import { IconNewChatOutline16 } from '@coco-harness/cch-client-ui-primitives'
 import { HeroGlow, HeroShell, WorkspaceChip, workspaceLabel } from './EmptyHero.tsx'
 import css from './ConversationRoot.module.css'
 
@@ -108,15 +109,6 @@ export function ConversationRoot({
 
   const heroWorkspaceRow = (
     <div className={css.heroWorkspaceRow}>
-      {hero && !buddy && (
-        <button
-          type="button"
-          className={css.newTaskButton}
-          onClick={() => { startBuddySession() }}
-        >
-          {t('hero.newTask')}
-        </button>
-      )}
       <WorkspaceChip
         buttonRef={pickerAnchor}
         label={chipTitle}
@@ -138,6 +130,17 @@ export function ConversationRoot({
         onClose: () => { setPickerOpen(false) },
       })}
       {renderSlot('conversation.hero.agentPreset', {})}
+      {/* Hidden on a Buddy hero: that session already is a workspace-less task. */}
+      {!buddy && (
+        <button
+          type="button"
+          className={css.newTaskButton}
+          onClick={() => { startBuddySession() }}
+        >
+          <IconNewChatOutline16 size={16} />
+          {t('hero.newTask')}
+        </button>
+      )}
     </div>
   )
 
