@@ -65,6 +65,11 @@ export class TestWorkspaces implements IWorkspaces {
    * New-session flow (recorded; stubbed behavior runs when installed).
    * @param workspaceId - optional explicit workspace target.
    */
+  startBuddySession(): void {
+    this.calls.push({ method: 'startBuddySession', args: [] })
+    this.stubs.get('startBuddySession')?.()
+  }
+
   startSession(workspaceId?: WorkspaceId): void {
     this.calls.push({ method: 'startSession', args: [workspaceId] })
     this.stubs.get('startSession')?.(workspaceId)

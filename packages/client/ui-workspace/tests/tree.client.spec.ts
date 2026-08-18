@@ -4,13 +4,15 @@ import type {
 } from '@coco-harness/cch-client-runtime/client'
 import {
   deriveFlat, deriveGroups, deriveSearchResults, workspaceLabel, relativeTime,
-  UNGROUPED_KEY, UNGROUPED_LABEL,
+  UNGROUPED_KEY, UNGROUPED_LABEL, BUDDY_KEY,
 } from '../src/client/tree.ts'
 import { createWorkspaceViewStore } from '../src/client/stores.ts'
 
 const sid = (id: string) => id as SessionId
 const wid = (id: string) => id as WorkspaceId
-const summary = (id: string, updatedAt: number, cwd?: string): SessionSummary => ({
+// Loose sessions default to a cwd no Workspace account owns (Ungrouped);
+// pass `undefined` explicitly for a workspace-less Buddy (Tasks) session.
+const summary = (id: string, updatedAt: number, cwd: string | undefined = '/loose'): SessionSummary => ({
   id: sid(id), displayTitle: id, running: false, blank: false,
   updatedAt, ...(cwd === undefined ? {} : { cwd }),
 })
@@ -32,6 +34,18 @@ const noArchive: readonly SessionId[] = []
 const archived = (...ids: string[]): readonly SessionId[] => ids.map(sid)
 
 describe('deriveGroups', () => {
+  it('places cwd-less buddy sessions in their own Tasks bucket ahead of workspaces', () => {
+    const summaryWithCwd = summary('task', 5)
+    const { cwd: _cwd, ...buddy } = summaryWithCwd
+    void _cwd
+    const loose = summary('loose', 3)
+    const sessions = list(buddy, loose)
+    const groups = deriveGroups(sessions, [workspace('first', [sid('owned')])], noArchive, view([BUDDY_KEY, 'first', UNGROUPED_KEY]))
+    expect(groups.map(group => group.key)).toEqual([BUDDY_KEY, 'first', UNGROUPED_KEY])
+    expect(groups[0]!.sessions.map(session => session.id)).toEqual([sid('task')])
+    expect(groups[2]!.sessions.map(session => session.id)).toEqual([sid('loose')])
+  })
+
   it('keeps Host Workspace and sessionIds order without Client recency sorting', () => {
     const sessions = list(summary('newer', 20), summary('older', 10))
     const workspaces = [workspace('first', ['older', 'newer']), workspace('empty', [])]

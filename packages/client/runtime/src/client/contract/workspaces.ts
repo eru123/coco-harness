@@ -29,6 +29,13 @@ export interface IWorkspaces {
    */
   startSession(workspaceId?: WorkspaceId): void
   /**
+   * Start a workspace-less Buddy session: personal chat/tasks with no gated
+   * directory; the session header carries no cwd and the sidebar shows it in
+   * the Tasks bucket. The workspace picker stays available to continue in a
+   * project later.
+   */
+  startBuddySession(): void
+  /**
    * Register an existing path as a Workspace.
    * @param input - the Host create payload.
    * @returns the created or idempotently resolved Workspace.

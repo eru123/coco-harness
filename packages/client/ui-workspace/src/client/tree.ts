@@ -11,6 +11,8 @@ import {
 
 /** Group key for Sessions outside every Workspace. */
 export const UNGROUPED_KEY = ''
+/** Group key of the workspace-less Buddy (personal chat/tasks) bucket. */
+export const BUDDY_KEY = 'buddy'
 
 /** Display label for the ungrouped bucket row. */
 export const UNGROUPED_LABEL = 'Ungrouped'
@@ -197,14 +199,21 @@ function groupByWorkspace(
     .map(id => list.byId[id])
     .filter((s): s is SessionSummary =>
       s !== undefined && !accounted.has(s.id) && sessionVisible(s, list.current, archived))
-  if (stray.length > 0) {
+  // Buddy sessions (no cwd on the header) are their own Tasks bucket, ahead of
+  // the workspaces; remaining strays (a cwd no account owns) stay Ungrouped.
+  const buddy = stray.filter(s => s.cwd === undefined)
+  if (buddy.length > 0) {
+    groups.unshift(buildGroup(BUDDY_KEY, undefined, undefined, undefined, BUDDY_KEY, buddy, 'recency'))
+  }
+  const leftover = stray.filter(s => s.cwd !== undefined)
+  if (leftover.length > 0) {
     groups.push(buildGroup(
       UNGROUPED_KEY,
       undefined,
       undefined,
       undefined,
       UNGROUPED_LABEL,
-      ungroupedOrder === undefined ? stray : orderedUngrouped(stray, ungroupedOrder),
+      ungroupedOrder === undefined ? leftover : orderedUngrouped(leftover, ungroupedOrder),
       ungroupedOrder === undefined ? 'recency' : 'account',
     ))
   }
@@ -250,10 +259,13 @@ export function deriveGroups(
   const archived = new Set(archivedSessionIds)
   const expandedGroups = new Set(view.expandedGroups)
   const descendants = indexSubagentDescendants(list.byId)
+  const currentSummary = list.current === undefined ? undefined : list.byId[list.current]
   const currentGroup = list.current === undefined
     ? undefined
     : (workspaces.find(w => w.sessionIds.includes(list.current as SessionId))?.workspaceId as string | undefined)
-        ?? UNGROUPED_KEY
+        // A cwd-less current session is a Buddy task; anything else with a cwd
+        // no account owns lands in Ungrouped.
+        ?? (currentSummary?.cwd === undefined ? BUDDY_KEY : UNGROUPED_KEY)
   const groups: GroupNode[] = []
   for (const g of groupByWorkspace(list, workspaces, archived, view.ungroupedOrder)) {
     const expanded = expandedGroups.has(g.key)

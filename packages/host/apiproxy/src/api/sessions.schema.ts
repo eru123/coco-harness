@@ -98,15 +98,22 @@ export const sessionSearchValueSchema = z.object({
   hasMore: z.boolean(),
 }) satisfies z.ZodType<Wire<ResponseValue<'session.search'>>>
 
-/** session.create request payload (at most one of workspaceId / cwd). */
+/**
+ * session.create request payload (at most one of workspaceId / cwd; `mode:
+ * 'buddy'` excludes both and creates a workspace-less personal session).
+ */
 export const sessionCreateRequestSchema = z.object({
   workspaceId: workspaceIdSchema.optional(),
   cwd: z.string().optional(),
   sessionId: sessionIdSchema.optional(),
   agentPreset: z.string().optional(),
+  mode: z.literal('buddy').optional(),
 }).refine(
   payload => payload.workspaceId === undefined || payload.cwd === undefined,
   { message: 'session.create accepts workspaceId or cwd, not both' },
+).refine(
+  payload => payload.mode !== 'buddy' || (payload.workspaceId === undefined && payload.cwd === undefined),
+  { message: 'session.create mode buddy accepts neither workspaceId nor cwd' },
 ) satisfies z.ZodType<Wire<RequestPayload<'session.create'>>>
 
 /** session.create response value. */

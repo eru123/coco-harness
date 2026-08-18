@@ -20,6 +20,7 @@ import {
 } from '@coco-harness/cch-agent-presets'
 import type {} from '@coco-harness/cch-agent-presets/types'
 import { GoalId } from '@coco-harness/cch-goal'
+import { sessionCreateRequestSchema } from '../src/api/sessions.schema.ts'
 import { createApiProxy } from '../src/api-proxy.ts'
 import { describe, expect, it } from 'vitest'
 
@@ -142,6 +143,24 @@ async function harness(
   })
   return { api, ctx, cwd }
 }
+
+
+describe('session.create buddy mode', () => {
+  it('creates a workspace-less session whose header carries no cwd', async () => {
+    const { api, ctx } = await harness()
+
+    const created = await api.sessions.create(request({ sessionId: SessionId('buddy-1'), mode: 'buddy' }))
+
+    expect(created.result.ok).toBe(true)
+    const header = ctx.sessions.get(SessionId('buddy-1'))?.header
+    expect(header?.cwd).toBeUndefined()
+  })
+
+  it('rejects buddy mode combined with a workspace or cwd at the wire schema', async () => {
+    const parsed = sessionCreateRequestSchema.safeParse({ sessionId: 'buddy-2', mode: 'buddy', cwd: '/proj' })
+    expect(parsed.success).toBe(false)
+  })
+})
 
 describe('session.create with an agent preset', () => {
   it('records the resolved preset on the session header', async () => {

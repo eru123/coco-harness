@@ -246,6 +246,7 @@ function mount(
     renderSlot,
     renderSlotChain,
     selectWorkspace: retargetWorkspace,
+    startBuddySession: vi.fn(),
     t,
   }
   const view = render(<ConversationRoot {...props} />)

@@ -33,10 +33,11 @@ export interface SessionsPort {
   readonly list: ObservableSnapshot<SessionsPortList>
   /**
    * Create a session on the host.
-   * @param opts - target workspace.
+   * @param opts - target workspace, or `mode: 'buddy'` for a workspace-less
+   *   personal session.
    * @returns the new session id.
    */
-  create(opts: { workspaceId: WorkspaceId }): Promise<SessionId>
+  create(opts: { workspaceId: WorkspaceId } | { mode: 'buddy' }): Promise<SessionId>
   /**
    * Select a session as current.
    * @param id - session id (must exist in the list store).

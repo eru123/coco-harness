@@ -14,7 +14,7 @@ export type ConversationRootProps = ConversationSlotProps
 
 export function ConversationRoot({
   sessionId, useSession, useSessions, useWorkspaces, useInput, useComposerBlock,
-  renderSlot, renderSlotChain, selectWorkspace, t,
+  renderSlot, renderSlotChain, selectWorkspace, startBuddySession, t,
 }: ConversationRootProps) {
   const openState = useSession(s => s.openState)
   const composerPhase = useSession(s => s.composerPhase)
@@ -22,6 +22,13 @@ export function ConversationRoot({
   const session = useSession(s => s)
   const inputState = useInput(s => s)
   const cwd = useSessions(s => sessionId === undefined ? undefined : s.byId[sessionId]?.cwd)
+  // A loaded summary with no cwd is a Buddy session: a workspace-less personal
+  // chat/task. It composes freely, shows the Tasks chip, and never gates the
+  // composer on a workspace pick.
+  const buddy = useSessions((s) => {
+    const summary = sessionId === undefined ? undefined : s.byId[sessionId]
+    return summary !== undefined && summary.cwd === undefined
+  })
   const summaryBlank = useSessions(s => sessionId === undefined ? undefined : s.byId[sessionId]?.blank)
   const workspaces = useWorkspaces(s => s)
   // A plugin this package cannot import (ui-model-selection) says this session cannot
@@ -90,15 +97,26 @@ export function ConversationRoot({
   //   5. list ready but no owning workspace (deleted from the sidebar) →
   //      placeholder, never the deleted folder's name via cwd.
   const chipTitle = pendingWorkspace?.title
-    ?? (sessionId === undefined
-      ? undefined
-      : sessionWorkspace?.title
-        ?? (workspaces.phase === 'ready' || cwd === undefined || cwd === ''
-          ? undefined
-          : workspaceLabel(cwd)))
+    ?? (buddy
+      ? t('hero.tasks')
+      : sessionId === undefined
+        ? undefined
+        : sessionWorkspace?.title
+          ?? (workspaces.phase === 'ready' || cwd === undefined || cwd === ''
+            ? undefined
+            : workspaceLabel(cwd)))
 
   const heroWorkspaceRow = (
     <div className={css.heroWorkspaceRow}>
+      {hero && !buddy && (
+        <button
+          type="button"
+          className={css.newTaskButton}
+          onClick={() => { startBuddySession() }}
+        >
+          {t('hero.newTask')}
+        </button>
+      )}
       <WorkspaceChip
         buttonRef={pickerAnchor}
         label={chipTitle}

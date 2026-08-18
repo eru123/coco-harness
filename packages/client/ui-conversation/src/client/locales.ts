@@ -74,6 +74,8 @@ export const en = {
   'access.confirm.enable': 'Enable Full access',
   'hero.headline': "Nothing is baked in. That's the point.",
   'hero.chooseWorkspace': 'Choose workspace',
+  'hero.tasks': 'Tasks',
+  'hero.newTask': 'New task',
   'session.hierarchy': 'Session hierarchy',
   'details.title': 'Details',
   'details.close': 'Close details',

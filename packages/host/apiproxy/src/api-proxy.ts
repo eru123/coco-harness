@@ -1047,7 +1047,7 @@ class AgentPresetConflict extends Error {
 class SessionCwdConflict extends Error {
   constructor(
     readonly sessionId: SessionId,
-    readonly requestedCwd: string,
+    readonly requestedCwd: string | undefined,
     readonly existingCwd: string | undefined,
   ) {
     super(
@@ -1628,7 +1628,7 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
   /** Resolve one requested identity to a live agent, creating or resuming it once. */
   async function ensureSession(
     sessionId: SessionId,
-    cwd: string,
+    cwd: string | undefined,
     checkPersistedIdentity: boolean,
     presetId?: string,
   ): Promise<Agent> {
@@ -1672,17 +1672,19 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
           })).agent
         }
 
-        try {
-          await mkdir(cwd, { recursive: true })
-        } catch (error: unknown) {
-          throw new Error(`failed to ensure project directory "${cwd}": ${String(error)}`, { cause: error })
+        if (cwd !== undefined) {
+          try {
+            await mkdir(cwd, { recursive: true })
+          } catch (error: unknown) {
+            throw new Error(`failed to ensure project directory "${cwd}": ${String(error)}`, { cause: error })
+          }
         }
         const composition = await composeAgent(presetId)
         return (await ctx.agents.create({
           sessionId,
           agentOptions: agentOptions(),
           meta: {
-            cwd,
+            ...cwd === undefined ? {} : { cwd },
             ...composition.agentPreset === undefined ? {} : { agentPreset: composition.agentPreset },
           },
           setup: composition.setup,
@@ -2188,7 +2190,12 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
             })
           }
         }
-        const cwd = workspace?.path ?? request.payload.cwd ?? defaults.cwd
+        // Buddy mode is the explicit no-workspace posture: no directory is
+        // resolved, so the Host-cwd fallback never fires and the session
+        // header carries no cwd at all.
+        const cwd = request.payload.mode === 'buddy'
+          ? undefined
+          : workspace?.path ?? request.payload.cwd ?? defaults.cwd
         const requestedPreset = request.payload.agentPreset
         try {
           await ensureSession(sessionId, cwd, request.payload.sessionId !== undefined, requestedPreset)
@@ -2212,7 +2219,7 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
               message: error.message,
               details: {
                 sessionId: error.sessionId,
-                requestedCwd: error.requestedCwd,
+                ...error.requestedCwd === undefined ? {} : { requestedCwd: error.requestedCwd },
                 ...error.existingCwd === undefined ? {} : { existingCwd: error.existingCwd },
               },
             })
@@ -3227,11 +3234,8 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
             details: { sessionId },
           })
         }
-        if (session.header.cwd === undefined) {
-          // Every served session records its project at create time; a
-          // cwd-less header is a pre-project legacy log (not served).
-          return err(request, { code: 'internal', message: `session "${sessionId}" has no project cwd`, details: {} })
-        }
+        // A cwd-less (buddy) session has no workspace skill roots; the global
+        // catalog below still serves, scoped like any other session.
         const cwd = session.header.cwd
         // The host registry is layered per scope and serves every session. A
         // composition may still realm-mount its own registry instead; that
@@ -3253,7 +3257,7 @@ export function createApiProxy(ctx: Context, defaults: ApiProxyDefaults): ApiPro
         // '/' popup lists the catalog its composition actually serves.
         const scope = await presenterScopeFor(sessionId, session)
         try {
-          const skills = (await skillRegistry.list({ cwd, scope })).filter(isUserInvocable)
+          const skills = (await skillRegistry.list({ ...cwd === undefined ? {} : { cwd }, scope })).filter(isUserInvocable)
           return ok(request, {
             skills: skills.map(skill => ({
               name: skill.name,

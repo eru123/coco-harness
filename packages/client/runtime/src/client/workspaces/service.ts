@@ -174,6 +174,20 @@ export class WorkspaceRuntime implements IWorkspaces {
    * stays usable).
    * @param workspaceId - explicit target Workspace for scoped actions.
    */
+  /**
+   * Start a workspace-less Buddy session: a personal chat/task conversation
+   * with no gated directory. The session header carries no cwd, so it never
+   * joins a workspace group and lands in the Tasks bucket instead. The
+   * workspace picker remains available from the hero to continue in a real
+   * project later (that mints a new workspace session, by design).
+   */
+  startBuddySession(): void {
+    this.sessions.create({ mode: 'buddy' }).then(
+      (sessionId) => { this.sessions.open(sessionId) },
+      (reason: unknown) => { console.warn('buddy session failed:', reason) },
+    )
+  }
+
   startSession(workspaceId?: WorkspaceId): void {
     const workspace = this.list.getSnapshot()
     const current = this.sessions.list.getSnapshot().current

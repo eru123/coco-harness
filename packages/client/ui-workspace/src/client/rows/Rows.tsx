@@ -15,7 +15,7 @@ import {
 import type { StateDotState } from '@coco-harness/cch-client-ui-primitives'
 import type { WorkspaceBrowserProps } from '../contract/slots.ts'
 import type { GroupNode, SearchResultNode, SessionNode } from '../tree.ts'
-import { relativeTime } from '../tree.ts'
+import { BUDDY_KEY, relativeTime } from '../tree.ts'
 import css from './Rows.module.css'
 
 /** The standard locale seat, prop-passed from the browser root. */
@@ -118,8 +118,10 @@ export function ProjectRowItem({ group, onToggle, onCreate, actions, drag, t }: 
   t: RowTranslate
 }) {
   const row = group
-  // The ungrouped bucket has no workspace title: its label is dictionary copy.
-  const label = row.workspaceId === undefined ? t('group.ungrouped') : row.label
+  // The ungrouped and buddy buckets carry no workspace title: their labels are dictionary copy.
+  const label = row.workspaceId === undefined
+    ? (row.key === BUDDY_KEY ? t('group.tasks') : t('group.ungrouped'))
+    : row.label
   const active = group.expanded && group.containsCurrent
   const [menuOpen, setMenuOpen] = useState(false)
   const workspaceMenuItems = [

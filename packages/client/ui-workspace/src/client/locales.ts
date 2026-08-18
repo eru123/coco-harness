@@ -10,6 +10,7 @@ export type WorkspaceKey = keyof typeof en
 /** English dictionary (the key-set source of truth). */
 export const en = {
   'group.ungrouped': 'Ungrouped',
+  'group.tasks': 'Tasks',
   'session.new': 'New Session',
   'section.workspaces': 'Workspaces',
   'section.sessions': 'Sessions',
