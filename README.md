@@ -1,6 +1,6 @@
 # Coco Harness
 
-Coco Harness (`cch`) is an open-source agent harness developed by [DeepSeek AI](https://deepseek.com).
+Coco Harness (`cch`) is an open-source agent harness, initially created by [DeepSeek AI](https://deepseek.com) under the name **DeepSeek Harness** (`dsh`). It is now developed and maintained in this repository as Coco Harness.
 
 It uses an architecture where **everything is a plugin**, and is powered by [Cordis](https://github.com/cordiverse/cordis), whose design is described in [_A Programming Paradigm for Spatiotemporal Composability_](https://github.com/cordiverse/paper).
 
