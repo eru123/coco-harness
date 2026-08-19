@@ -269,7 +269,7 @@ describe('docsPages locale routes', () => {
     const rootPages = docsPages.filter(page => (
       page.locale === 'root' && page.route.startsWith('reference/subsystems/')
     ))
-    expect(rootPages).toHaveLength(43)
+    expect(rootPages).toHaveLength(42)
     expect(rootPages.every(page => page.contentLocale === 'en-US')).toBe(true)
     expect(rootPages.every(page => !page.source.endsWith('.zh.md'))).toBe(true)
   })
@@ -322,7 +322,7 @@ describe('docsPages locale routes', () => {
     ]
     const pages = routes.map(route => docsPages.find(page => page.route === route))
     expect(pages.every(page => page?.contentLocale === 'en-US')).toBe(true)
-      expect(pages.every(page => !page?.source.endsWith('.zh.md'))).toBe(true)
+    expect(pages.every(page => !page?.source.endsWith('.zh.md'))).toBe(true)
   })
 })
 
