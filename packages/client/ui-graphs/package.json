@@ -1,6 +1,6 @@
 {
   "name": "@coco-harness/cch-client-ui-graphs",
-  "description": "Live mermaid projection of session progress: pure-consumer plugin registering into the conversation ViewMap (no service)",
+  "description": "Explorable react-flow canvas of session progress: pure-consumer plugin registering into the conversation ViewMap (no service)",
   "version": "0.1.0-rc.5",
   "publishConfig": {
     "access": "public"
@@ -45,9 +45,6 @@
     "watch": "tsdown --watch"
   },
   "license": "MIT",
-  "dependencies": {
-    "mermaid": "^11.12.2"
-  },
   "peerDependencies": {
     "@coco-harness/cch-client-locale": "workspace:^",
     "@coco-harness/cch-client-runtime": "workspace:^",
@@ -78,5 +75,8 @@
     "lib/invariant.js",
     "lib/client.js",
     "lib/types/**/*.d.ts"
-  ]
+  ],
+  "dependencies": {
+    "@xyflow/react": "^12.11.3"
+  }
 }

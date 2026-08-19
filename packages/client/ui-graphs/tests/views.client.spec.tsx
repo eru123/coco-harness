@@ -2,13 +2,13 @@
 /**
  * View acceptance on the real framework stack: the plugin fiber registers
  * the Graphs tab into a real SlotRegistry view ring (label locale-aware,
- * disposal removes it), and the view renders the live mermaid projection —
- * empty state for a blank session, animated node diff on streaming updates,
- * and the raw-code fallback when mermaid rendering fails.
+ * disposal removes it), and the shell renders the two modes — the timeline
+ * waterfall with duration bars and lane stacking, and the delegation canvas
+ * with session cards over real parentage.
  */
 import { Context } from '@coco-harness/cordis'
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import { cleanup, render, waitFor } from '@testing-library/react'
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { act, cleanup, fireEvent, render, waitFor } from '@testing-library/react'
 import { createElement } from 'react'
 import { bindSnapshotSelector } from '@coco-harness/cch-client-web-react'
 import { resolveSlotLabel } from '@coco-harness/cch-client-ui-slots'
@@ -17,7 +17,7 @@ import {
   createSnapshotStore, EMPTY_CHAT_SNAPSHOT, SlotRegistry,
 } from '@coco-harness/cch-client-runtime/client'
 import type {
-  ConversationSnapshot, SessionId, SessionListState, WorkspaceListState,
+  ConversationSnapshot, SessionId, SessionListState, SessionSummary, WorkspaceListState,
 } from '@coco-harness/cch-client-runtime/client'
 import type { ConvViewProps } from '@coco-harness/cch-client-ui-conversation/client'
 import type { TrajectorySnapshot } from '@coco-harness/cch-client-ui-trajectory/client'
@@ -26,17 +26,20 @@ import { stubSettingsScope } from '@coco-harness/cch-client-test-runtime'
 import { en, type GraphsKey } from '../src/client/locales.ts'
 import { apply, inject } from '@coco-harness/cch-client-ui-graphs/client'
 import { GraphsView } from '../src/client/GraphsView.tsx'
-import { MermaidDiagram } from '../src/client/MermaidDiagram.tsx'
+import { TimelineView } from '../src/client/TimelineView.tsx'
 
-const mocks = vi.hoisted(() => ({
-  render: vi.fn(async (_id: string, code: string) => ({
-    svg: `<svg>${[...code.matchAll(/^  ([A-Za-z0-9_]+)\["/gm)]
-      .map(match => `<g class="node" id="flowchart-${match[1]}-0"><rect/></g>`)
-      .join('')}</svg>`,
-  })),
-}))
-
-vi.mock('mermaid', () => ({ default: { initialize: vi.fn(), render: mocks.render } }))
+// jsdom implements neither browser API React Flow needs at import/measure
+// time; the stubs are inert (never fire), which fitView tolerates.
+beforeAll(() => {
+  vi.stubGlobal('ResizeObserver', class {
+    observe(): void {}
+    unobserve(): void {}
+    disconnect(): void {}
+  })
+  vi.stubGlobal('DOMMatrixReadOnly', class {
+    m22 = 1
+  })
+})
 
 const SID = 's1' as SessionId
 const t = (key: LocaleKeysOf<'graphs'>): string => en[key as GraphsKey] ?? key
@@ -44,9 +47,21 @@ const t = (key: LocaleKeysOf<'graphs'>): string => en[key as GraphsKey] ?? key
 const NODES: ConversationSnapshot['nodes'] = [
   { kind: 'user', seq: 1, time: 1_000, content: [{ type: 'text', text: 'hello' } as never], source: null },
   { kind: 'assistant', seq: 2, time: 2_000, turn: 1, step: 1, blocks: [] },
+  {
+    kind: 'tool-result', seq: 3, time: 5_000, callId: 'c/1', callTime: 2_100,
+    call: { name: 'bash', argsRaw: '' }, content: [], isError: false,
+    callView: null, resultView: null, subCalls: [],
+  },
 ]
 
-function historySnapshot(trajectory: Partial<TrajectorySnapshot> = {}): ConversationSnapshot {
+function historySnapshot(
+  overrides: {
+    trajectory?: Partial<TrajectorySnapshot>
+    running?: boolean
+    turnTimings?: ConversationSnapshot['turnTimings']
+    omitTrajectory?: boolean
+  } = {},
+): ConversationSnapshot {
   const target: TrajectorySnapshot = {
     eventNodes: NODES,
     eventLocations: new Map(),
@@ -54,20 +69,24 @@ function historySnapshot(trajectory: Partial<TrajectorySnapshot> = {}): Conversa
     callSchemas: new Map(),
     partial: null,
     runningCalls: [],
-    ...trajectory,
+    ...overrides.trajectory,
   }
   return {
     sessionId: SID,
-    views: { get: name => name === 'trajectory' ? target : undefined },
+    views: {
+      get: name => overrides.omitTrajectory === true
+        ? undefined
+        : name === 'trajectory' ? target : undefined,
+    },
     chat: EMPTY_CHAT_SNAPSHOT,
     nodes: NODES,
-    turnTimings: new Map(),
+    turnTimings: overrides.turnTimings ?? new Map([[1, { startTime: 2_000, endTime: 5_000 }]]),
     turnEnds: new Map(),
     partial: target.partial,
     runningCalls: target.runningCalls,
     pending: [],
     queue: [],
-    running: false,
+    running: overrides.running ?? false,
     subagent: null,
     composerPhase: 'active',
     removed: false,
@@ -81,97 +100,154 @@ function historySnapshot(trajectory: Partial<TrajectorySnapshot> = {}): Conversa
   }
 }
 
-function emptyGlobalHooks() {
+function sessionsState(summaries: SessionSummary[]): SessionListState {
   return {
-    useSessions: bindSnapshotSelector(createSnapshotStore<SessionListState>(
-      { ids: [], byId: {}, current: undefined, phase: 'ready', subagentsByParent: {}, jobsBySession: {}, currentAddress: undefined })),
-    useWorkspaces: bindSnapshotSelector(createSnapshotStore<WorkspaceListState>(
-      { items: [], archivedSessionIds: [], state: 'idle', phase: 'ready', error: null, baselinesReady: true, recentWorkspaceId: undefined })),
-  }
+    ids: summaries.map(item => item.id),
+    byId: Object.fromEntries(summaries.map(item => [item.id, item])),
+    current: SID,
+    phase: 'ready',
+    subagentsByParent: {},
+    jobsBySession: {},
+    currentAddress: undefined,
+  } as SessionListState
 }
 
 /** Standalone view props: the session-scope standard kit the outlet would bake. */
-function standaloneProps(snapshot: ConversationSnapshot): ConvViewProps & { t: (key: LocaleKeysOf<'graphs'>) => string } {
+function standaloneProps(snapshot: ConversationSnapshot, sessions: SessionListState): ConvViewProps & { t: (key: LocaleKeysOf<'graphs'>) => string } {
   return {
     sessionId: SID,
     useSession: bindSnapshotSelector(createSnapshotStore(snapshot)),
     useProjection: (() => undefined) as never,
     t,
-    ...emptyGlobalHooks(),
+    useSessions: bindSnapshotSelector(createSnapshotStore(sessions)),
+    useWorkspaces: bindSnapshotSelector(createSnapshotStore<WorkspaceListState>(
+      { items: [], archivedSessionIds: [], state: 'idle', phase: 'ready', error: null, baselinesReady: true, recentWorkspaceId: undefined })),
   } as unknown as ConvViewProps & { t: (key: LocaleKeysOf<'graphs'>) => string }
 }
 
 afterEach(() => {
   cleanup()
   vi.clearAllMocks()
+  vi.useRealTimers()
 })
 
 describe('GraphsView', () => {
-  it('renders the mermaid projection of the session window', async () => {
-    const { container } = render(createElement(GraphsView, standaloneProps(historySnapshot())))
+  it('renders the timeline by default: turn groups, duration bars, shared lanes', () => {
+    const { container } = render(createElement(GraphsView,
+      standaloneProps(historySnapshot(), sessionsState([{ id: SID, displayTitle: 's1', running: false } as SessionSummary]))))
+    expect(container.textContent).toContain('Session')
+    expect(container.textContent).toContain('Turn 1')
+    const bars = container.querySelectorAll('button[class*=bar]')
+    expect(bars.length).toBe(3)
+    expect(container.textContent).toContain('bash')
+    // Overlap-free items share one lane: every bar rides the same lane offset.
+    const lanes = new Set([...bars].map(bar => (bar as HTMLElement).style.top))
+    expect(lanes.size).toBe(1)
+  })
+
+  it('opens the inspector with detail on a bar click', () => {
+    const { container, getByText } = render(createElement(GraphsView,
+      standaloneProps(historySnapshot(), sessionsState([{ id: SID, displayTitle: 's1', running: false } as SessionSummary]))))
+    fireEvent.click(getByText('bash'))
+    expect(container.querySelector('[role=complementary]')).not.toBeNull()
+    expect(container.textContent).toContain('Tool call: bash')
+  })
+
+  it('switches to the delegation canvas over real parentage', async () => {
+    const sessions = sessionsState([
+      { id: SID, displayTitle: 'main session', running: false } as SessionSummary,
+      { id: 'sub-1' as SessionId, displayTitle: 'explore', running: true, parentId: SID } as SessionSummary,
+    ])
+    const { container } = render(createElement(GraphsView, standaloneProps(historySnapshot(), sessions)))
+    const delegationTab = [...container.querySelectorAll('[role=tab]')].find(
+      tab => tab.textContent === en['mode.delegation'])
+    expect(delegationTab).toBeDefined()
+    fireEvent.click(delegationTab!)
     await waitFor(() => {
-      expect(container.querySelectorAll('g.node')).toHaveLength(2)
+      expect(container.querySelectorAll('.react-flow__node')).toHaveLength(2)
     })
-    expect((container.querySelector('g.node') as SVGGElement).classList.contains('graphs-new'))
-      .toBe(true)
+    expect(container.textContent).toContain('main session')
+    expect(container.textContent).toContain('explore')
+    // Handles carry the edge anchors (edge paths need real measured bounds).
+    expect(container.querySelectorAll('.react-flow__handle').length).toBeGreaterThanOrEqual(4)
   })
 
-  it('animates only newly added nodes across streaming updates', async () => {
-    const store = createSnapshotStore(historySnapshot())
-    const { container } = render(createElement(GraphsView, {
-      ...standaloneProps(store.getSnapshot()),
-      useSession: bindSnapshotSelector(store),
-    }))
-    await waitFor(() => { expect(container.querySelectorAll('g.node')).toHaveLength(2) })
-    await actStore(store, historySnapshot({
-      runningCalls: [{ callId: 'x', name: 'bash', argsRaw: '', turn: 1, step: 1, time: 3_000, callView: null, subCalls: [] }],
-    }))
-    await waitFor(() => { expect(container.querySelectorAll('g.node')).toHaveLength(3) })
-    const nodes = [...container.querySelectorAll<SVGGElement>('g.node')]
-    expect(nodes.filter(node => node.classList.contains('graphs-new')).map(node => node.id))
-      .toEqual(['flowchart-rx-0'])
+  it('shows the localized empty states: blank session and no delegation', () => {
+    const blank = historySnapshot({ trajectory: { eventNodes: [], partial: null, runningCalls: [] } })
+    const noDelegation = sessionsState([{ id: SID, displayTitle: 's1', running: false } as SessionSummary])
+    const { container } = render(createElement(GraphsView, standaloneProps(blank, noDelegation)))
+    expect(container.textContent).toContain(en['view.empty'])
+    const delegationTab = [...container.querySelectorAll('[role=tab]')].find(
+      tab => tab.textContent === en['mode.delegation'])
+    fireEvent.click(delegationTab!)
+    expect(container.textContent).toContain(en['view.delegationEmpty'])
   })
 
-  it('shows the localized empty state for a blank session', () => {
-    const blank = historySnapshot({ eventNodes: [], partial: null, runningCalls: [] })
-    const { container } = render(createElement(GraphsView, standaloneProps(blank)))
-    expect(container.textContent).toBe(en['view.empty'])
+  it('falls back to the empty trajectory when the view seat holds none', () => {
+    const noTrajectory = historySnapshot({ omitTrajectory: true })
+    const { container } = render(createElement(GraphsView,
+      standaloneProps(noTrajectory, sessionsState([{ id: SID, displayTitle: 's1', running: false } as SessionSummary]))))
+    expect(container.textContent).toContain(en['view.empty'])
   })
 
-  it('falls back to the empty trajectory target when the view is absent', () => {
-    const withoutTarget = { ...historySnapshot(), views: { get: () => undefined } } as never
-    const { container } = render(createElement(GraphsView, standaloneProps(withoutTarget)))
-    expect(container.textContent).toBe(en['view.empty'])
+  it('ticks live bars on the clock and inspects in-flight work', () => {
+    vi.useFakeTimers()
+    const live = historySnapshot({
+      trajectory: {
+        partial: { turn: 1, step: 2 } as never,
+        runningCalls: [{ callId: 'c/2', name: 'search', turn: 1, time: 6_000 } as never],
+      },
+      running: true,
+      turnTimings: new Map([[1, { startTime: 2_000 }]]),
+    })
+    const { container, getByText } = render(createElement(GraphsView,
+      standaloneProps(live, sessionsState([{ id: SID, displayTitle: 's1', running: true } as SessionSummary]))))
+    // The open turn's header marks live work; the clock re-derives bars per tick.
+    expect(container.textContent).toContain('· live')
+    act(() => { vi.advanceTimersByTime(1_000) })
+    fireEvent.click(getByText('search'))
+    const inspector = container.querySelector('[role=complementary]')
+    expect(inspector).not.toBeNull()
+    expect(container.textContent).toContain('search · in flight')
   })
 
-  it('drops a pending render when unmounted before it resolves', async () => {
-    const settleFns: Array<(result: { svg: string } | Error) => void> = []
-    mocks.render.mockImplementation(() => new Promise((resolve, reject) => {
-      settleFns.push((result) => {
-        if (result instanceof Error) {
-          reject(result)
-          return
-        }
-        resolve(result)
-      })
+  it('inspects delegation cards: the current session and its children', async () => {
+    const sessions = sessionsState([
+      { id: SID, displayTitle: 'main session', running: false, completed: true, agentPreset: 'code' } as SessionSummary,
+      { id: 'sub-1' as SessionId, displayTitle: 'explore', running: true, parentId: SID } as SessionSummary,
+      { id: 'sub-2' as SessionId, displayTitle: 'review draft', pendingInteraction: 'question', parentId: SID } as SessionSummary,
+    ])
+    const { container } = render(createElement(GraphsView, standaloneProps(historySnapshot(), sessions)))
+    const delegationTab = [...container.querySelectorAll('[role=tab]')].find(
+      tab => tab.textContent === en['mode.delegation'])
+    fireEvent.click(delegationTab!)
+    await waitFor(() => {
+      expect(container.querySelectorAll('.react-flow__node')).toHaveLength(3)
+    })
+    const cardOf = (title: string): Element => {
+      const card = [...container.querySelectorAll('.react-flow__node')]
+        .find(node => node.textContent?.includes(title))
+      expect(card, `node ${title}`).toBeDefined()
+      return card!
+    }
+    fireEvent.click(cardOf('main session'))
+    expect(container.textContent).toContain('session · done')
+    expect(container.textContent).toContain('main session — this session')
+    // The preset rides the inspector head while the current session is inspected.
+    expect(container.querySelector('[role=complementary]')?.textContent).toContain('code')
+    fireEvent.click(cardOf('explore'))
+    expect(container.textContent).toContain('session · running')
+    expect(container.textContent).not.toContain('explore — this session')
+  })
+
+  it('renders nothing for a blank timeline', () => {
+    const { container } = render(createElement(TimelineView, {
+      trajectory: { eventNodes: [], partial: null, runningCalls: [] },
+      turnTimings: new Map(),
+      live: false,
+      onInspect: () => {},
     }))
-    const first = render(createElement(MermaidDiagram, {
-      code: 'flowchart TD\n  a["A"]',
-      errorLabel: t('view.renderError'),
-    }))
-    await waitFor(() => { expect(mocks.render).toHaveBeenCalledTimes(1) })
-    first.unmount()
-    const firstSettle = settleFns[0]
-    if (firstSettle !== undefined) firstSettle({ svg: '<svg><g class="node" id="flowchart-a-0"/>' })
-    const second = render(createElement(MermaidDiagram, {
-      code: 'flowchart TD\n  b["B"]',
-      errorLabel: t('view.renderError'),
-    }))
-    await waitFor(() => { expect(mocks.render).toHaveBeenCalledTimes(2) })
-    second.unmount()
-    const secondSettle = settleFns[1]
-    if (secondSettle !== undefined) secondSettle(new Error('late failure'))
-    await new Promise((resolve) => { setTimeout(resolve, 0) })
+    expect(container.firstChild).toBeNull()
   })
 
   it('runs the host loader entry as a no-op apply', async () => {
@@ -179,29 +255,7 @@ describe('GraphsView', () => {
     host.apply()
     expect(host.apply).toBeTypeOf('function')
   })
-
-  it('falls back to the raw document with the error label when rendering fails', async () => {
-    mocks.render.mockRejectedValueOnce(new Error('boom'))
-    const { container } = render(createElement(MermaidDiagram, {
-      code: 'flowchart TD\n  a["A"]',
-      errorLabel: t('view.renderError'),
-    }))
-    await waitFor(() => { expect(container.querySelector('[role="alert"]')).not.toBeNull() })
-    expect(container.textContent).toContain(en['view.renderError'])
-    expect(container.textContent).toContain('flowchart TD')
-  })
 })
-
-/** Advance one store write inside the React act boundary. */
-async function actStore(
-  store: ReturnType<typeof createSnapshotStore<ConversationSnapshot>>,
-  next: ConversationSnapshot,
-): Promise<void> {
-  const { act } = await import('@testing-library/react')
-  await act(async () => {
-    store.set(next)
-  })
-}
 
 describe('plugin registration', () => {
   it('registers and disposes the graphs tab on the real view ring', async () => {

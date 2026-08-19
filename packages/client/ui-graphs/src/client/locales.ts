@@ -7,7 +7,9 @@ export const NS = 'graphs'
 export type GraphsKey =
   | 'view.graphs'
   | 'view.empty'
-  | 'view.renderError'
+  | 'view.delegationEmpty'
+  | 'mode.timeline'
+  | 'mode.delegation'
 
 declare module '@coco-harness/cch-client-ui-slots' {
   interface LocaleNamespaceMap {
@@ -20,5 +22,7 @@ declare module '@coco-harness/cch-client-ui-slots' {
 export const en: Record<GraphsKey, string> = {
   'view.graphs': 'Graphs',
   'view.empty': 'No session activity to visualize yet.',
-  'view.renderError': 'Graph rendering failed',
+  'view.delegationEmpty': 'This session has not delegated any subagents.',
+  'mode.timeline': 'Timeline',
+  'mode.delegation': 'Delegation',
 }

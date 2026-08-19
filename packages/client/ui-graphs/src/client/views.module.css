@@ -1,49 +1,159 @@
+/*
+ * Two kinds of rules live here. Local classes style this plugin's cards,
+ * inspector, and follow button. The :global(.react-flow__*) block carries the
+ * structural React Flow rules the library ships as a plain stylesheet — the
+ * client-bundle CSS pipeline compiles only .module.css files, so the library
+ * sheet cannot ride it; the structural subset (viewport transform origin,
+ * absolute node placement, panel positioning, controls/minimap chrome, edge
+ * dash animation) is restated here against the app's theme tokens.
+ */
+
 .root {
   position: relative;
   display: flex;
   flex-direction: column;
   min-height: 0;
   height: 100%;
-  overflow: auto;
 }
 
-.pending {
+.root :global(.react-flow) {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.modeSwitch {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  margin: 10px 12px 0;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.mode,
+.modeActive {
+  padding: 3px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.mode {
+  background: transparent;
+  color: var(--dsw-alias-label-secondary);
+}
+
+.modeActive {
+  background: var(--dsw-alias-bg-multi-select);
+  color: var(--dsw-alias-label-primary);
+}
+
+.modeBody {
   flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+/* Edge anchors: positioned by the structural rules below, visually absent. */
+.handle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Live cards pulse their accent border while their step is in flight. */
+.cardLive {
+  animation: graphs-pulse 1.4s ease-in-out infinite;
+}
+
+.card {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-left: 3px solid var(--dsw-alias-label-secondary);
+  border-radius: 10px;
+  background: var(--dsw-alias-bg-layer-2);
+  color: var(--dsw-alias-label-primary);
+  font-size: 12px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.cardWide {
+  padding-block: 10px;
+}
+
+.cardSelected {
+  border-color: var(--dsw-alias-state-business-primary);
+}
+
+.cardTop {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 8rem;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 11px;
 }
 
-.pending::after {
-  content: '';
-  width: 1.75rem;
-  height: 1.75rem;
-  border-radius: 50%;
-  border: 2px solid color-mix(in srgb, currentColor 25%, transparent);
-  border-top-color: currentColor;
-  animation: graphs-spin 0.9s linear infinite;
+.cardKind {
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
-.diagram {
-  flex: 1;
-  padding: 1rem;
+.cardBadge {
+  color: var(--dsw-alias-label-caption);
+  white-space: nowrap;
 }
 
-.diagram :global(svg) {
-  max-width: 100%;
-  height: auto;
+.cardTitle {
+  overflow-wrap: anywhere;
 }
 
-/* New nodes pop in on the live diff; the mermaid `live` class pulses while
-   the session has in-flight work. Both ride `:global` because mermaid owns
-   the class names inside its rendered SVG. */
-.diagram :global(g.node.graphs-new) {
-  animation: graphs-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+.follow {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  padding: 5px 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 999px;
+  background: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-primary);
+  font-size: 12px;
+  cursor: pointer;
 }
 
-.diagram :global(g.node.live .basic.label-container) {
-  animation: graphs-pulse 1.4s ease-in-out infinite;
+.inspector {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 6;
+  width: min(320px, 60%);
+  padding: 10px 12px;
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  background: var(--dsw-alias-bg-layer-3);
+  color: var(--dsw-alias-label-primary);
+  font-size: 12px;
+}
+
+.inspectorHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.inspectorDetail {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--dsw-alias-label-secondary);
 }
 
 .empty {
@@ -51,40 +161,290 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
   opacity: 0.7;
 }
 
-.error {
-  padding: 1rem;
-}
+/* ---- Timeline waterfall ---- */
 
-.error pre {
+.timeline {
+  --lane-height: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  height: 100%;
   overflow: auto;
-  white-space: pre-wrap;
+  padding: 12px 16px;
 }
 
-@keyframes graphs-spin {
+.turn {
+  border: 1px solid var(--dsw-alias-border-l2);
+  border-radius: 10px;
+  background: var(--dsw-alias-bg-layer-1);
+}
+
+.turnHeader,
+.turnHeaderSession {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--dsw-alias-border-l2);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dsw-alias-label-primary);
+}
+
+.turnHeaderSession {
+  color: var(--dsw-alias-label-secondary);
+  font-weight: 500;
+}
+
+.turnDuration {
+  font-weight: 400;
+  color: var(--dsw-alias-label-caption);
+}
+
+.lanes {
+  position: relative;
+  height: calc(var(--lanes) * var(--lane-height));
+  margin: 6px 12px;
+}
+
+.bar {
+  position: absolute;
+  height: calc(var(--lane-height) - 8px);
+  display: flex;
+  align-items: center;
+  min-width: 4px;
+  padding: 0 6px;
+  border: none;
+  border-left: 3px solid var(--dsw-alias-label-secondary);
+  border-radius: 4px;
+  background: var(--dsw-alias-bg-multi-select);
+  color: var(--dsw-alias-label-primary);
+  font-size: 11px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.barPoint {
+  width: 8px;
+  height: 8px;
+  min-width: 0;
+  padding: 0;
+  border-radius: 50%;
+  transform: translateY(calc(var(--lane-height) / 2 - 8px));
+}
+
+.barPoint .barLabel {
+  display: none;
+}
+
+.barLive {
+  animation: graphs-bar-pulse 1.4s ease-in-out infinite;
+}
+
+.barLabel {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Delegation session cards: slightly taller than step cards. */
+.cardSession {
+  padding-block: 10px;
+}
+
+.cardCurrent {
+  border-color: var(--dsw-alias-state-business-primary);
+}
+
+/* ---- React Flow structural rules (see the file header) ---- */
+
+.root :global(.react-flow) {
+  /* Label, not border, vocabulary: the hairline border tokens sit at ~12%
+     alpha, which vanishes as a diagram line; caption gray stays legible. */
+  --xy-edge-stroke-default: var(--dsw-alias-label-caption);
+  --xy-edge-stroke-selected-default: var(--dsw-alias-state-business-primary);
+  --xy-minimap-background-color-default: var(--dsw-alias-bg-layer-3);
+  --xy-minimap-mask-background-color-default: var(--dsw-alias-bg-mask-1);
+  --xy-minimap-node-background-color-default: var(--dsw-alias-label-secondary);
+  --xy-background-pattern-dots-color-default: var(--dsw-alias-border-l2);
+  --xy-controls-button-background-color-default: var(--dsw-alias-bg-layer-3);
+  --xy-controls-button-background-color-hover-default: var(--dsw-alias-bg-multi-select);
+  --xy-controls-button-color-default: var(--dsw-alias-label-primary);
+  --xy-controls-button-border-color-default: var(--dsw-alias-border-l2);
+  --xy-controls-box-shadow-default: var(--dsw-shadow-lv2);
+}
+
+.root :global(.react-flow__pane) {
+  z-index: 1;
+  touch-action: none;
+}
+
+.root :global(.react-flow__viewport) {
+  transform-origin: 0 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.root :global(.react-flow__viewport-portal) {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.root :global(.react-flow__node) {
+  position: absolute;
+  box-sizing: border-box;
+  user-select: none;
+  pointer-events: all;
+  transform-origin: 0 0;
+  cursor: pointer;
+}
+
+.root :global(.react-flow__edge) {
+  pointer-events: visibleStroke;
+}
+
+.root :global(.react-flow__handle) {
+  position: absolute;
+  min-width: 5px;
+  min-height: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 100%;
+  pointer-events: none;
+}
+
+.root :global(.react-flow__handle-top) {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.root :global(.react-flow__handle-bottom) {
+  top: auto;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
+}
+
+/* Closed arrowheads fill with the edge stroke; the path itself stays unfilled. */
+.root :global(.react-flow__arrowhead) {
+  stroke: none;
+  fill: var(--xy-edge-stroke, var(--xy-edge-stroke-default));
+}
+
+.root :global(.react-flow__edge-path) {
+  stroke: var(--xy-edge-stroke, var(--xy-edge-stroke-default));
+  stroke-width: 2;
+  fill: none;
+}
+
+/* In-flight edges carry the work-in-progress accent, not just motion. */
+.root :global(.react-flow__edge.animated) :global(.react-flow__edge-path) {
+  stroke: var(--dsw-alias-state-warn-label);
+}
+
+.root :global(.react-flow__edge.animated) :global(path) {
+  stroke-dasharray: 5;
+  animation: graphs-dashdraw 0.5s linear infinite;
+}
+
+.root :global(.react-flow__panel) {
+  position: absolute;
+  z-index: 5;
+  margin: 15px;
+}
+
+.root :global(.react-flow__panel.bottom) {
+  bottom: 0;
+}
+
+.root :global(.react-flow__panel.left) {
+  left: 0;
+}
+
+.root :global(.react-flow__controls) {
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--xy-controls-box-shadow, var(--xy-controls-box-shadow-default));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.root :global(.react-flow__controls-button) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 4px;
+  border: none;
+  border-bottom: 1px solid var(--xy-controls-button-border-color, var(--xy-controls-button-border-color-default));
+  background: var(--xy-controls-button-background-color, var(--xy-controls-button-background-color-default));
+  color: var(--xy-controls-button-color, var(--xy-controls-button-color-default));
+  cursor: pointer;
+  user-select: none;
+}
+
+.root :global(.react-flow__controls-button:hover) {
+  background: var(--xy-controls-button-background-color-hover, var(--xy-controls-button-background-color-hover-default));
+}
+
+.root :global(.react-flow__controls-button) :global(svg) {
+  width: 100%;
+  max-width: 12px;
+  max-height: 12px;
+  fill: currentColor;
+}
+
+.root :global(.react-flow__minimap) {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.root :global(.react-flow__minimap-svg) {
+  display: block;
+}
+
+.root :global(.react-flow__minimap-mask) {
+  fill: var(--xy-minimap-mask-background-color, var(--xy-minimap-mask-background-color-default));
+}
+
+.root :global(.react-flow__minimap-node) {
+  fill: var(--xy-minimap-node-background-color, var(--xy-minimap-node-background-color-default));
+  stroke-width: 1;
+}
+
+@keyframes graphs-dashdraw {
   to {
-    transform: rotate(360deg);
+    stroke-dashoffset: -10;
   }
 }
 
-@keyframes graphs-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.6);
+@keyframes graphs-bar-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
   }
 }
 
 @keyframes graphs-pulse {
   0%,
   100% {
-    stroke-width: 2px;
+    border-left-width: 3px;
     opacity: 1;
   }
 
   50% {
-    stroke-width: 5px;
+    border-left-width: 5px;
     opacity: 0.75;
   }
 }
