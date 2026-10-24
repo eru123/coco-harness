@@ -73,9 +73,9 @@
     "@coco-harness/cch-tools": "workspace:^",
     "@coco-harness/cordis": "workspace:^",
     "@types/react": "~19.2.18",
-    "@types/react-dom": "~19.2.4",
+    "@types/react-dom": "~19.3.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.3.0"
   },
   "files": [
     "lib/index.js",
