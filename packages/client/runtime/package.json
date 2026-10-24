@@ -54,7 +54,7 @@
     "@coco-harness/cch-session-projection": "workspace:^",
     "@coco-harness/cch-session-title": "workspace:^",
     "@coco-harness/cch-tools": "workspace:^",
-    "immer": "^11.1.17",
+    "immer": "^11.1.18",
     "react": "^19.2.8",
     "zustand": "~5.0.15"
   },
